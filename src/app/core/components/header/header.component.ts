@@ -1,21 +1,24 @@
-import { Component, effect, input, model, output } from '@angular/core';
-import { AsyncPipe, isPlatformBrowser, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Component, effect, inject, input, model, OnInit, output } from '@angular/core';
+import { AsyncPipe, DOCUMENT, isPlatformBrowser, Location, NgClass, NgIf } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { MenuComponent } from '../menu/menu.component';
+import { FirebaseAuthService } from '../../services/firebase-auth.service';
+import { authState } from '@angular/fire/auth';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, AsyncPipe, NgIf, MenuComponent],
+  imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
-    <header class="h-[7rem] w-full   flex flex-col justify-between ">
+    <header class="h-[7rem] w-full  flex-col justify-between " [ngClass]="pepe ? 'flex' : 'hidden' ">
       <nav>
         <ul class="grid grid-cols-[1fr_1fr_1fr] w-full bg-red-500 place">
           <li class="place-self-start">Busqueda</li>
           <li class="place-self-center"><a routerLink="/">Logo</a></li>
           <li class="place-self-end flex">
-            <ng-container *ngIf="userLogged() !== null || userLogged() !== undefined; else login">
-              <button (click)="menuTrigger()">Cuenta {{userLogged()}}</button>
+            <ng-container *ngIf="user(); else login">
+              <button (click)="menuTrigger()">Account</button>
             </ng-container>
           </li>
         </ul>
@@ -31,21 +34,49 @@ import { MenuComponent } from '../menu/menu.component';
       </ul>
 
       <ng-template #login>
-        <button (click)="onLogin.emit()">Iniciar sesión {{userLogged()}}</button>
+        <a [routerLink]="['/login']">Login</a>
       </ng-template>
     </header>
   `,
   styles: ``,
 })
 export class HeaderComponent {
-  menu = model<boolean>();
-  
-  userLogged = input<boolean|null>();
+  firebaseAuth = inject(FirebaseAuthService)
+  router = inject(Router)
 
-  onLogin = output()
+  authState$ = inject(FirebaseAuthService).authState$
+  user= toSignal(this.authState$)
+
+  menu = model<boolean>();
+  visibility = model<boolean>(true)
+  pepe = false
+
+  document = inject(DOCUMENT)
+  location = inject(Location)
+
+  constructor(){
+    console.log(this.location)
+    effect(()=>{
+      if(this.document.location.pathname === "/login" || this.document.location.pathname === "/register"){
+
+        console.log('anda')
+        this.pepe = false
+
+        // this.visibility.set(false)
+      }
+      else{
+        console.log('anda?')
+        this.pepe = true
+        // this.visibility.set(true)
+      }
+    })
+
+    
+  }
 
   menuTrigger() {
     this.menu.update((value) => !value);
   }
+
 
 }

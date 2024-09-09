@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { Article } from '../../../shared/interfaces/article.interface';
-import ArticlesService from '../../../services/articles.service';
+import ArticlesService from '../../../core/services/articles.service';
 import { catchError, EMPTY, map, Observable, switchMap } from 'rxjs';
 import { Comment } from '../../../shared/interfaces/comment.interface';
 import { NgIf, AsyncPipe } from '@angular/common';

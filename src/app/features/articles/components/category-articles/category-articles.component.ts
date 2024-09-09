@@ -1,6 +1,6 @@
 import { Component, inject, input, Input, numberAttribute } from '@angular/core';
 import { Article } from '../../../../shared/interfaces/article.interface';
-import ArticlesService from '../../../../services/articles.service';
+import ArticlesService from '../../../../core/services/articles.service';
 import { catchError, EMPTY, Observable, Subscription, switchMap } from 'rxjs';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import {

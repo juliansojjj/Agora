@@ -1,5 +1,5 @@
 import { Component, inject} from '@angular/core';
-import ArticlesService from '../../../../services/articles.service';
+import ArticlesService from '../../../../core/services/articles.service';
 import { Article } from '../../../../shared/interfaces/article.interface';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { catchError, EMPTY, Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [NgFor, NgIf, RouterLink, AsyncPipe],
   template: `
-    @if(data$ | async ; as data){<main>
+    <!-- @if(data$ | async ; as data){<main>
       <div class="grid grid-cols-4 gap-y-6 w-full place-items-center pt-4 text-black">
         <ng-template [ngIf]="errorMessage">
           <span class="whitespace-pre-line text-left">{{errorMessage}}</span>
@@ -26,13 +26,13 @@ import { RouterLink } from '@angular/router';
 </a>
         </ng-container>
       </div>
-    </main>}
+    </main>} -->
   `,
   providers:[ArticlesService]
 })
 export class HomeArticlesComponent {
   private articlesService = inject(ArticlesService);
-  data$: Observable<Article[]> = this.articlesService.getNews();
+  // data$: Observable<Article[]> = this.articlesService.getNews();
   errorMessage!:string
 
   trackByFn(index:number,item:Article){

@@ -1,10 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { inject, Injectable, PLATFORM_ID } from "@angular/core";
-import { environment } from "../../environments/environment.development";
+import { environment } from "../../../environments/environment.development";
 import { catchError, firstValueFrom, map, Observable, switchMap, throwError } from "rxjs";
-import { Article } from "../shared/interfaces/article.interface";
-import { Comment } from "../shared/interfaces/comment.interface";
-import { AuthService } from "@auth0/auth0-angular";
+import { Article } from "../../shared/interfaces/article.interface";
+import { Comment } from "../../shared/interfaces/comment.interface";
 
 @Injectable()
 export default class ArticlesService{

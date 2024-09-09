@@ -1,26 +1,22 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideExperimentalZonelessChangeDetection, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient, withFetch, HTTP_INTERCEPTORS, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
-import {provideAuth0} from '@auth0/auth0-angular';
 import { environment } from '../environments/environment.development';
-import { authInterceptor } from './core/interceptors/auth.interceptor';
+
+import {provideAuth, getAuth } from '@angular/fire/auth'
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideExperimentalZonelessChangeDetection(), 
     provideRouter(routes,withComponentInputBinding()), 
     provideClientHydration(), 
-    provideHttpClient(withFetch(),withInterceptors([authInterceptor])),
-    provideAuth0({
-      domain:environment.AUTH_DOMAIN,
-      clientId:environment.AUTH_CLIENT_ID,
-      authorizationParams: {
-        redirect_uri: 'http://localhost:4200'
-      }
-    })
+    provideHttpClient(withFetch()),
+    provideFirebaseApp(()=>initializeApp(environment.firebase)),
+    provideAuth(()=>getAuth())
   ]
 };
