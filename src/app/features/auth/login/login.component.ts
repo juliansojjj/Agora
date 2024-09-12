@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FirebaseAuthService } from '../../../core/services/firebase-auth.service';
+import { FirebaseService } from '../../../core/services/firebase.service';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
@@ -35,7 +35,7 @@ import { Router, RouterLink } from '@angular/router';
   styles: ``
 })
 export class LoginComponent {
-  firebaseAuth = inject(FirebaseAuthService)
+  firebaseAuth = inject(FirebaseService)
   router = inject(Router)
   formBuilder = inject(NonNullableFormBuilder);
 

@@ -1,4 +1,5 @@
-export interface FirebaseUser{
+
+export interface FirebaseAuthUser{
     "uid": string,
     "email": string,
     "emailVerified": boolean,
@@ -22,4 +23,11 @@ export interface FirebaseUser{
     "lastLoginAt": string,
     "apiKey": string,
     "appName": string
+}
+
+
+export interface FirestoreCollectionUser {
+    username:string
+    email:string
+    subscription:boolean
 }

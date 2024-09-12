@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ArticleComponent } from './features/articles/article/article.component';
+import { ArticleComponent } from './features/articles/components/article.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';

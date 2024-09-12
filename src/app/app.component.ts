@@ -20,9 +20,9 @@ import { toSignal, ToSignalOptions } from '@angular/core/rxjs-interop';
   template: ` 
   <div class="h-dvh flex flex-col">
 
-    <app-menu [(menu)]="menu"  (user)="user" (onLogout)="logout()"/>
+    <app-menu [(menu)]="menu"  />
 
-    <app-header [(menu)]="menu" [userLogged]="" (onLogin)="login()"/>
+    <app-header [(menu)]="menu" />
 
     <ng-container *ngIf=""> 
   <span>estas logueado</span>

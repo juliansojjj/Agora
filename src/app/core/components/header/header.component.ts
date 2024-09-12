@@ -1,17 +1,18 @@
 import { Component, effect, inject, input, model, OnInit, output } from '@angular/core';
 import { AsyncPipe, DOCUMENT, isPlatformBrowser, Location, NgClass, NgIf } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { MenuComponent } from '../menu/menu.component';
-import { FirebaseAuthService } from '../../services/firebase-auth.service';
+import { FirebaseService } from '../../services/firebase.service';
 import { authState } from '@angular/fire/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { debounceTime, filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
-    <header class="h-[7rem] w-full  flex-col justify-between " [ngClass]="pepe ? 'flex' : 'hidden' ">
+    <header class="h-[7rem] w-full  flex-col justify-between " [ngClass]="visibility() ? 'flex' : 'hidden' ">
       <nav>
         <ul class="grid grid-cols-[1fr_1fr_1fr] w-full bg-red-500 place">
           <li class="place-self-start">Busqueda</li>
@@ -41,37 +42,27 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styles: ``,
 })
 export class HeaderComponent {
-  firebaseAuth = inject(FirebaseAuthService)
+  firebaseAuth = inject(FirebaseService)
   router = inject(Router)
 
-  authState$ = inject(FirebaseAuthService).authState$
+  authState$ = inject(FirebaseService).authState$
   user= toSignal(this.authState$)
 
   menu = model<boolean>();
   visibility = model<boolean>(true)
-  pepe = false
-
-  document = inject(DOCUMENT)
-  location = inject(Location)
 
   constructor(){
-    console.log(this.location)
-    effect(()=>{
-      if(this.document.location.pathname === "/login" || this.document.location.pathname === "/register"){
-
-        console.log('anda')
-        this.pepe = false
-
-        // this.visibility.set(false)
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd))
+      .subscribe((event)=>{
+      if(event.url === '/login' || event.url === '/register'){
+        this.visibility.set(false)
       }
-      else{
-        console.log('anda?')
-        this.pepe = true
-        // this.visibility.set(true)
+      else {
+        this.visibility.set(true)
       }
     })
 
-    
   }
 
   menuTrigger() {
