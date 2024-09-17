@@ -1,7 +1,7 @@
 import { Component, inject, input, model, OnInit, output, Signal } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FirebaseAuthUser } from '../../../models/firebase.models';
+import { FirebaseAuthUser } from '../../../shared/interfaces/firebase.interfaces';
 
 @Component({
   selector: 'app-menu',
@@ -20,7 +20,7 @@ import { FirebaseAuthUser } from '../../../models/firebase.models';
   `,
   styles: ``,
 })
-export class MenuComponent implements OnInit{
+export class MenuComponent{
   menu = model<boolean>();
   firebaseAuth = inject(FirebaseService)
 
@@ -35,7 +35,4 @@ export class MenuComponent implements OnInit{
     this.menu.update((value) => !value);
   }
 
-  ngOnInit(): void {
-    this.firebaseAuth.user$.subscribe((res:any)=>{})
-  }
 }

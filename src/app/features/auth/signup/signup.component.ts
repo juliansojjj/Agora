@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -12,19 +12,9 @@ import { FirebaseService } from '../../../core/services/firebase.service';
 import { Router, RouterLink } from '@angular/router';
 import { PassInputComponent } from '../../../shared/components/pass-input/pass-input.component';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { FirestoreCollectionUser } from '../../../models/firebase.models';
+import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.interfaces';
 import { NgIf } from '@angular/common';
 
-// export class UsernameAsyncValidator{
-//   static userCheck(firebaseService:any){
-//     return (control:AbstractControl)=>{
-//       const user = control.value.toLowerCase()
-//       this.firebaseService?.checkUsername(user)
-//       .pipe(map(item=>{item.length ? {usernameAvailable:false} : null}))
-
-//     }
-//   }
-// }
 
 @Component({
   selector: 'app-signup',
@@ -78,9 +68,14 @@ import { NgIf } from '@angular/common';
           @if (form.controls.password.errors?.['required']) {
             <span>Password is a required field</span>
           }
+          @if (form.controls.password.errors?.['minlength']) {
+            <span>The min amount of characters is 6</span>
+          }
         }
-
+        
         <button type="submit" [disabled]="form.invalid">Enviar</button>
+        {{ errorMessage }}
+        {{ error() }}
       </form>
       <a [routerLink]="['/login']">Already hace an account? Login</a>
     </div>
@@ -91,6 +86,9 @@ export class SignupComponent {
   firebaseService = inject(FirebaseService);
   router = inject(Router);
   formBuilder = inject(NonNullableFormBuilder);
+
+  errorMessage = '';
+  error = model<string>('')
 
   form = this.formBuilder.group({
     username: this.formBuilder.control('', {
@@ -111,19 +109,28 @@ export class SignupComponent {
 
   onSubmit() {
     const formValues = this.form.getRawValue();
-    // this.firebaseService.checkUsername(formValues.username)
-    // .subscribe((res:any)=>console.log(res))
     this.firebaseService
       .signup(formValues.username, formValues.email, formValues.password)
       .pipe(
-        catchError((err) => {
-          console.log(err);
-          throw new Error(err);
+        catchError((err:Error) => {
+          switch (err.message) {
+            case ('Firebase: Error (auth/email-already-in-use).'):
+              this.error.set('That email is already in use')
+              break;
+
+            case ('Firebase: Error (auth/invalid-email).'):
+              this.error.set('Please enter a valid email')
+              break;
+            
+              case ('Firebase: Error (auth/internal-error).'):
+              this.error.set('There was an error in your request, please try again later')
+              break;
+          }
+          throw new Error(err.message);
         }),
       )
       .subscribe((res) => {
-        console.log(res);
-        // this.router.navigate(['/'])
+        this.router.navigate(['/'])
       });
   }
 
@@ -138,22 +145,10 @@ export class SignupComponent {
 /* 
 https://firebase.google.com/docs/reference/js/auth#autherrorcodes
 
-FirebaseError: Firebase: Error (auth/email-already-in-use).
 
 auth/internal-error
 
-auth/invalid-email
 
 auth/wrong-password
 
-FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password).
-
-
-
-
-
-contraseña corta      LISTO
-contraseña incorrecta LISTO
-mail invalido         LISTO
-mail en uso           LISTO
 */

@@ -12,14 +12,17 @@ import { debounceTime, filter, from, map, Observable, of, take } from 'rxjs';
 import {
   FirebaseAuthUser,
   FirestoreCollectionUser,
-} from '../../models/firebase.models';
+} from '../../shared/interfaces/firebase.interfaces';
 import {
   addDoc,
   collection,
   collectionData,
   Firestore,
+  doc,
+  getDoc
 } from '@angular/fire/firestore';
 import { AbstractControl } from '@angular/forms';
+import { Article } from '../../shared/interfaces/article.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -35,25 +38,43 @@ export class FirebaseService {
 
   constructor() {}
 
+  getLandingArticles() {
+    const ref = collection(this.firestoreService, 'articles');
+    const result = collectionData(ref, { idField: 'id' });
+    return from(result);
+  }
+  getCategoryArticles() {}
+  getSingleArticle(id:string) {
+    const ref = doc(this.firestoreService, 'articles', id);
+    const result = getDoc(ref)
+
+    return from(result.then(docSnapshot => {
+      if (docSnapshot.exists()) {
+        return docSnapshot.data() as Article;
+      } else {
+        throw new Error('No such document!');
+      }
+    }))
+  }
 
   checkUsername() {
+    const ref = collection(this.firestoreService, 'users');
+    const result = collectionData(ref);
     return (control: AbstractControl) => {
-
-      const ref = collection(this.firestoreService, 'users');
-      const result = collectionData(ref);
       return from(result).pipe(
         debounceTime(200),
         take(1),
-        map((users:FirestoreCollectionUser[]) => {
-           return users.filter(
+        map((users: FirestoreCollectionUser[]) => {
+          return users.filter(
             (item: FirestoreCollectionUser) =>
               item.username.toLowerCase() == control.value.toLowerCase(),
-          ).length ? {usernameTaken:true} : null
-        })
+          ).length
+            ? { usernameTaken: true }
+            : null;
+        }),
       );
     };
   }
-
 
   documentUser(username: string, email: string) {
     const ref = collection(this.firestoreService, 'users');
@@ -74,23 +95,17 @@ export class FirebaseService {
       .then((res) => {
         updateProfile(res.user, { displayName: username });
       })
-      .then(() => this.documentUser(username, email))
-      .catch((error) => {
-        throw new Error(error);
-        console.log('alal' + error);
-      });
+      .then(() => this.documentUser(username, email));
 
     return from(createUser);
   }
 
-  login(email: string, password: string): Observable<void> {
+  login(email: string, password: string): Observable<any> {
     const signIn = signInWithEmailAndPassword(
       this.authService,
       email,
       password,
-    ).then((res) => {
-      console.log('login' + res);
-    });
+    );
 
     return from(signIn);
   }

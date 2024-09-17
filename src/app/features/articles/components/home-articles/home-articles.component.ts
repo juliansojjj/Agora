@@ -2,21 +2,22 @@ import { Component, inject} from '@angular/core';
 import ArticlesService from '../../../../core/services/articles.service';
 import { Article } from '../../../../shared/interfaces/article.interface';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
-import { catchError, EMPTY, Observable } from 'rxjs';
+import { catchError, EMPTY, map, Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
+import { FirebaseService } from '../../../../core/services/firebase.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-home-articles',
   standalone: true,
   imports: [NgFor, NgIf, RouterLink, AsyncPipe],
   template: `
-    <!-- @if(data$ | async ; as data){<main>
+    @if(articles()){
+      <main>
       <div class="grid grid-cols-4 gap-y-6 w-full place-items-center pt-4 text-black">
-        <ng-template [ngIf]="errorMessage">
-          <span class="whitespace-pre-line text-left">{{errorMessage}}</span>
-        </ng-template>
-        <ng-container *ngFor="let item of data; trackBy:trackByFn">
-          <a class="bg-slate-200" [routerLink]="['/article', item.articleID]">
+        
+        <ng-container *ngFor="let item of articles(); trackBy:trackByFn">
+          <a class="bg-slate-200" [routerLink]="['/article', item.id]">
             <h4>{{ item.heading }}</h4>
             <img
               [src]="item.frontImage"
@@ -26,13 +27,22 @@ import { RouterLink } from '@angular/router';
 </a>
         </ng-container>
       </div>
-    </main>} -->
+    </main>}@else {
+      <ng-template [ngIf]="errorMessage">
+          <span class="whitespace-pre-line text-left">ERROR</span>
+        </ng-template>
+    }
   `,
   providers:[ArticlesService]
 })
 export class HomeArticlesComponent {
-  private articlesService = inject(ArticlesService);
-  // data$: Observable<Article[]> = this.articlesService.getNews();
+  firebaseService = inject(FirebaseService)
+  articles = toSignal(this.firebaseService.getLandingArticles().pipe(
+    map(res => {
+      console.log(res)
+      return res})
+  ))
+
   errorMessage!:string
 
   trackByFn(index:number,item:Article){
