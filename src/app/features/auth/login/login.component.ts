@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, input, model } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../../../core/services/firebase.service';
 import { Router, RouterLink } from '@angular/router';
@@ -47,7 +47,11 @@ import { catchError } from 'rxjs';
 
         {{error()}}
 
+        @if(subscriptionRedirect()){
+      <a [routerLink]="['/register']" [queryParams]="{subscriptionRedirect:true}">Don't have an account? Create one</a>
+      }@else {
         <a [routerLink]="['/register']">Don't have an account? Create one</a>
+      }
     </div>`,
   styles: ``
 })
@@ -57,6 +61,8 @@ export class LoginComponent {
   formBuilder = inject(NonNullableFormBuilder);
 
   error = model<string>('')
+
+  subscriptionRedirect  = input<boolean>();
 
 
   form = this.formBuilder.group({
@@ -86,8 +92,9 @@ export class LoginComponent {
       }),
     )
     .subscribe(res=>{
-      console.log(res)
-      this.router.navigate(['/'])
+      if(this.subscriptionRedirect()){
+        this.router.navigate(['/subscription/checkout'])
+      } else this.router.navigate(['/'])
     })
 
   }

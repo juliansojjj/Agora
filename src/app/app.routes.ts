@@ -5,6 +5,7 @@ import { SignupComponent } from './features/auth/signup/signup.component';
 import { authGuard } from './core/guards/auth.guard';
 import { SingleArticleComponent } from './features/articles/components/single-article/single-article.component';
 import { SubscriptionComponent } from './features/subscription/subscription.component';
+import { CheckoutComponent } from './features/subscription/checkout/checkout.component';
 
 export const routes: Routes = [
     {path:'', loadComponent: () =>
@@ -16,6 +17,7 @@ export const routes: Routes = [
         import('./features/articles/components/category-articles/category-articles.component').then((c) => c.CategoryArticlesComponent)},
 
     {path:'subscription', component:SubscriptionComponent},
+    {path:'subscription/checkout', component:CheckoutComponent},
 
     {path:'login', component:LoginComponent, canActivate:[authGuard]},
     {path:'register', component:SignupComponent, canActivate:[authGuard]},

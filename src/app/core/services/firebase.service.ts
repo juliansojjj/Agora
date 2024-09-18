@@ -41,7 +41,7 @@ export class FirebaseService {
   user$: Observable<FirebaseAuthUser> = user(this.authService);
 
   constructor() {}
-
+// ----------------------- ARTICLES
   getLandingArticles() {
     const ref = collection(this.firestoreService, 'articles');
     const result = collectionData(ref, { idField: 'id' });
@@ -75,6 +75,21 @@ export class FirebaseService {
     return from(result)
   }
 
+
+// ----------------------- AUTH
+
+checkSubscription(uid:string){
+  const ref = doc(this.firestoreService, 'users', uid);
+    const result = getDoc(ref)
+
+    return from(result.then(docSnapshot => {
+      if (docSnapshot.exists()) {
+        return docSnapshot.data() as FirestoreCollectionUser;
+      } else {
+        throw new Error('No such document!');
+      }
+    }))
+}
   checkUsername() {
     const ref = collection(this.firestoreService, 'users');
     const result = collectionData(ref);
@@ -102,11 +117,6 @@ export class FirebaseService {
       email: email,
       subscription: false,
     } )
-    // const doc = addDoc(ref, {
-    //   username: username,
-    //   email: email,
-    //   subscription: false,
-    // });
     return from(res);
   }
 

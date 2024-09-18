@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, input, model } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -77,7 +77,12 @@ import { NgIf } from '@angular/common';
         {{ errorMessage }}
         {{ error() }}
       </form>
-      <a [routerLink]="['/login']">Already hace an account? Login</a>
+
+      @if(subscriptionRedirect()){
+      <a [routerLink]="['/login']" [queryParams]="{subscriptionRedirect:true}">Already hace an account? Login</a>
+      }@else {
+        <a [routerLink]="['/login']">Already hace an account? Login</a>
+      }
     </div>
   `,
   styles: ``,
@@ -86,6 +91,9 @@ export class SignupComponent {
   firebaseService = inject(FirebaseService);
   router = inject(Router);
   formBuilder = inject(NonNullableFormBuilder);
+
+  subscriptionRedirect  = input<boolean>();
+
 
   errorMessage = '';
   error = model<string>('')
@@ -130,7 +138,9 @@ export class SignupComponent {
         }),
       )
       .subscribe((res) => {
-        this.router.navigate(['/'])
+        if(this.subscriptionRedirect()){
+          this.router.navigate(['/subscription/checkout'])
+        } else this.router.navigate(['/'])
       });
   }
 
