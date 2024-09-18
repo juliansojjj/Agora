@@ -1,9 +1,8 @@
 export interface Comment {
-  commentID: number;
+  commentID?: number;
   userID: number;
-  articleID: number;
   username: string;
   content: string;
-  datetime: Date;
+  date: Date;
   userDelete: boolean;
 }

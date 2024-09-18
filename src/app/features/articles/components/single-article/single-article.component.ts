@@ -13,16 +13,15 @@ import { DataSnapshot } from '@angular/fire/database';
   standalone: true,
   imports: [NgIf, AsyncPipe],
   template: `
-    @if (data()) {
-      <div>
-       <h2>{{ data()?.heading }}</h2> 
-      </div>
-    } @else {
-      <p>Loading...</p>
-
-    }
     @if(data$ | async; as data){
       {{data.heading}}
+    
+      @if(comments$ | async; as comments){
+        comments
+      }
+    }@else {
+      <p>Loading...</p>
+
     }
   `
 })
@@ -30,29 +29,20 @@ export class SingleArticleComponent implements OnInit {
   firebaseService = inject(FirebaseService);
   id  = input.required<string>();
 
-  data = model<Article>()
-  // data!:Signal<any>
-  data$!:Observable<Article>
-
+  data$ = toObservable(this.id).pipe(
+    take(1),
+    switchMap(id=>this.firebaseService.getSingleArticle(id))
+  )
+  comments$ = toObservable(this.id).pipe(
+    take(1),
+    switchMap(id=>this.firebaseService.getArticleComments(id))
+  )
 
   constructor(){
-    //ERROR ctx.data is not a function
-    // effect(()=>{
-    //   this.data = toSignal(this.firebaseService.getSingleArticle(this.id()))
-    // })
-
-    effect(()=>{
-      this.firebaseService.getSingleArticle(this.id())
-      .subscribe((res)=>{
-        console.log(res)
-        this.data.set(res as Article)})
-      
-    })
-
+ 
   }
 
   ngOnInit(): void {
-    this.data$ = this.firebaseService.getSingleArticle(this.id())
     
   }
 

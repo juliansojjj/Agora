@@ -1,7 +1,7 @@
-import { Component, inject, input, Input, numberAttribute } from '@angular/core';
+import { Component, inject, input, Input, numberAttribute, OnInit } from '@angular/core';
 import { Article } from '../../../../shared/interfaces/article.interface';
 import ArticlesService from '../../../../core/services/articles.service';
-import { catchError, EMPTY, Observable, Subscription, switchMap } from 'rxjs';
+import { catchError, EMPTY, map, Observable, Subscription, switchMap, take } from 'rxjs';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import {
   NavigationEnd,
@@ -10,6 +10,7 @@ import {
   RouterLink,
 } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { FirebaseService } from '../../../../core/services/firebase.service';
 
 @Component({
   selector: 'app-category-articles',
@@ -34,22 +35,25 @@ import { toObservable } from '@angular/core/rxjs-interop';
         </a>
       </ng-container>
     </div>
+    } @else{
+      <span>Loading...</span>
     }
   `,
-  providers: [ArticlesService],
 })
 export class CategoryArticlesComponent {
-  private articlesService = inject(ArticlesService);
+  firebaseService = inject(FirebaseService)
   title = input.required<string>();
 
-
   data$ = toObservable(this.title).pipe(
-    switchMap(title => this.articlesService.getCategoryArticles(title))
-  );
+    take(1),
+    switchMap(title=>this.firebaseService.getCategoryArticles(title))
+  )
 
   errorMessage!: string;
 
   trackByFn(index: number, item: Article) {
     return item.articleID;
   }
+
+
 }

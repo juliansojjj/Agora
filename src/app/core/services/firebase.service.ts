@@ -8,7 +8,7 @@ import {
   authState,
   user,
 } from '@angular/fire/auth';
-import { debounceTime, filter, from, map, Observable, of, take } from 'rxjs';
+import { debounceTime, filter, from, map, Observable, ObservableInput, of, take } from 'rxjs';
 import {
   FirebaseAuthUser,
   FirestoreCollectionUser,
@@ -19,7 +19,11 @@ import {
   collectionData,
   Firestore,
   doc,
-  getDoc
+  getDoc,
+  query,
+  where,
+  DocumentData,
+  setDoc
 } from '@angular/fire/firestore';
 import { AbstractControl } from '@angular/forms';
 import { Article } from '../../shared/interfaces/article.interface';
@@ -43,7 +47,15 @@ export class FirebaseService {
     const result = collectionData(ref, { idField: 'id' });
     return from(result);
   }
-  getCategoryArticles() {}
+
+  getCategoryArticles(category:string) {
+    const ref = collection(this.firestoreService, 'articles')
+    const result = collectionData(query(ref,where('category','==',category)))
+
+    return from(result);
+    
+
+  }
   getSingleArticle(id:string) {
     const ref = doc(this.firestoreService, 'articles', id);
     const result = getDoc(ref)
@@ -55,6 +67,12 @@ export class FirebaseService {
         throw new Error('No such document!');
       }
     }))
+  }
+  getArticleComments(id:string){
+    const ref = collection(this.firestoreService, 'articles',id,'comments');
+    const result = collectionData(ref,{ idField: 'id' });
+
+    return from(result)
   }
 
   checkUsername() {
@@ -76,17 +94,24 @@ export class FirebaseService {
     };
   }
 
-  documentUser(username: string, email: string) {
+  documentUser(username: string, email: string, id:string) {
     const ref = collection(this.firestoreService, 'users');
-    const doc = addDoc(ref, {
+    const res = setDoc(doc(ref, id),
+    { 
       username: username,
       email: email,
       subscription: false,
-    });
-    return from(doc);
+    } )
+    // const doc = addDoc(ref, {
+    //   username: username,
+    //   email: email,
+    //   subscription: false,
+    // });
+    return from(res);
   }
 
   signup(username: string, email: string, password: string): Observable<any> {
+    let uid:string
     const createUser = createUserWithEmailAndPassword(
       this.authService,
       email,
@@ -94,8 +119,9 @@ export class FirebaseService {
     )
       .then((res) => {
         updateProfile(res.user, { displayName: username });
+        uid = res.user.uid
       })
-      .then(() => this.documentUser(username, email));
+      .then(() => this.documentUser(username, email,uid));
 
     return from(createUser);
   }
