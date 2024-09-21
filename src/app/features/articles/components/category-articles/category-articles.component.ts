@@ -52,7 +52,7 @@ export class CategoryArticlesComponent {
   errorMessage!: string;
 
   trackByFn(index: number, item: Article) {
-    return item.articleID;
+    return item.id;
   }
 
 

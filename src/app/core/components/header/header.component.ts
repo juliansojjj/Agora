@@ -95,6 +95,8 @@ export class HeaderComponent {
   visibility = model<boolean>(true);
 
   constructor() {
+    this.authState$.subscribe((res:any)=>console.log(res))
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {

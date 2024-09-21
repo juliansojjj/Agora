@@ -30,11 +30,17 @@ export class SingleArticleComponent implements OnInit {
   id  = input.required<string>();
 
   data$ = toObservable(this.id).pipe(
-    take(1),
+    map((url:string)=>{
+      const id = url.split('-')
+      return id[0]
+    }),
     switchMap(id=>this.firebaseService.getSingleArticle(id))
   )
   comments$ = toObservable(this.id).pipe(
-    take(1),
+    map((url:string)=>{
+      const id = url.split('-')
+      return id[0]
+    }),
     switchMap(id=>this.firebaseService.getArticleComments(id))
   )
 

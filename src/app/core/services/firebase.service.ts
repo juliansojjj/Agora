@@ -23,7 +23,8 @@ import {
   query,
   where,
   DocumentData,
-  setDoc
+  setDoc,
+  updateDoc
 } from '@angular/fire/firestore';
 import { AbstractControl } from '@angular/forms';
 import { Article } from '../../shared/interfaces/article.interface';
@@ -76,7 +77,18 @@ export class FirebaseService {
   }
 
 
-// ----------------------- AUTH
+  // ----------------------- FIRESTORE
+
+  handleSubscription(uid:string,operation:boolean){
+    const ref = collection(this.firestoreService, 'users');
+    const res = updateDoc(doc(ref, uid),
+    { 
+      subscription: operation
+    } )
+    return from(res)
+  }
+  
+
 
 checkSubscription(uid:string){
   const ref = doc(this.firestoreService, 'users', uid);
@@ -91,6 +103,7 @@ checkSubscription(uid:string){
     }))
 }
   checkUsername() {
+    
     const ref = collection(this.firestoreService, 'users');
     const result = collectionData(ref);
     return (control: AbstractControl) => {
@@ -117,8 +130,11 @@ checkSubscription(uid:string){
       email: email,
       subscription: false,
     } )
-    return from(res);
   }
+
+  // ----------------------- AUTH
+
+
 
   signup(username: string, email: string, password: string): Observable<any> {
     let uid:string

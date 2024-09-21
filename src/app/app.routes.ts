@@ -6,21 +6,37 @@ import { authGuard } from './core/guards/auth.guard';
 import { SingleArticleComponent } from './features/articles/components/single-article/single-article.component';
 import { SubscriptionComponent } from './features/subscription/subscription.component';
 import { CheckoutComponent } from './features/subscription/checkout/checkout.component';
+import { checkoutGuard } from './core/guards/checkout.guard';
 
 export const routes: Routes = [
-    {path:'', loadComponent: () =>
-        import('./features/articles/components/home-articles/home-articles.component').then((c) => c.HomeArticlesComponent)},
-        
-    {path:'article/:id', component:SingleArticleComponent},
+  {
+    path: '',
+    loadComponent: () =>
+      import(
+        './features/articles/components/home-articles/home-articles.component'
+      ).then((c) => c.HomeArticlesComponent),
+    title: 'Agora',
+  },
 
-    {path:'category/:title', loadComponent: () =>
-        import('./features/articles/components/category-articles/category-articles.component').then((c) => c.CategoryArticlesComponent)},
+  { path: 'article/:id', component: SingleArticleComponent },
 
-    {path:'subscription', component:SubscriptionComponent},
-    {path:'subscription/checkout', component:CheckoutComponent},
+  {
+    path: 'category/:title',
+    loadComponent: () =>
+      import(
+        './features/articles/components/category-articles/category-articles.component'
+      ).then((c) => c.CategoryArticlesComponent),
+  },
 
-    {path:'login', component:LoginComponent, canActivate:[authGuard]},
-    {path:'register', component:SignupComponent, canActivate:[authGuard]},
+  { path: 'subscription', component: SubscriptionComponent },
+  {
+    path: 'subscription/checkout',
+    component: CheckoutComponent,
+    canActivate: [checkoutGuard],
+  },
 
-    {path:'**', component:NotFoundComponent},
+  { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+  { path: 'register', component: SignupComponent, canActivate: [authGuard] },
+
+  { path: '**', component: NotFoundComponent },
 ];
