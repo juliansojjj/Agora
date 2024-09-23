@@ -15,10 +15,9 @@ export const routes: Routes = [
       import(
         './features/articles/components/home-articles/home-articles.component'
       ).then((c) => c.HomeArticlesComponent),
-    title: 'Agora',
   },
 
-  { path: 'article/:id', component: SingleArticleComponent },
+  { path: 'article/:id', component: SingleArticleComponent},
 
   {
     path: 'category/:title',
@@ -28,15 +27,17 @@ export const routes: Routes = [
       ).then((c) => c.CategoryArticlesComponent),
   },
 
-  { path: 'subscription', component: SubscriptionComponent },
+  { path: 'subscription', component: SubscriptionComponent, title: 'Subscribe' }, 
   {
     path: 'subscription/checkout',
     component: CheckoutComponent,
-    canActivate: [checkoutGuard],
+    canActivate: [checkoutGuard], 
+    title: 'Subscribe', 
   },
 
-  { path: 'login', component: LoginComponent, canActivate: [authGuard] },
-  { path: 'register', component: SignupComponent, canActivate: [authGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [authGuard], title: 'Login' },
+  { path: 'register', component: SignupComponent, canActivate: [authGuard], title: 'Register' },
 
-  { path: '**', component: NotFoundComponent },
+  { path: '**', component: NotFoundComponent, title: 'Page Not Found' },
+
 ];

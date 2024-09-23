@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideExperimentalZonelessChangeDetection, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter, TitleStrategy, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -11,6 +11,7 @@ import {provideAuth, getAuth } from '@angular/fire/auth'
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { errorHandlerInterceptor } from './core/interceptors/error-handler.interceptor';
+import { TitleStrategyService } from './core/services/title-strategy.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +21,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),
     provideFirebaseApp(()=>initializeApp(environment.firebase)),
     provideAuth(()=>getAuth()),
-    provideFirestore(()=>getFirestore())
+    provideFirestore(()=>getFirestore()),
+    {
+      provide: TitleStrategy,
+      useClass: TitleStrategyService
+    }
   ]
 };
 
