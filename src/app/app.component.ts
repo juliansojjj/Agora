@@ -6,6 +6,7 @@ import { MenuComponent } from './core/components/menu/menu.component';
 import { AsyncPipe, isPlatformBrowser, JsonPipe, NgIf } from '@angular/common';
 import { toSignal, ToSignalOptions } from '@angular/core/rxjs-interop';
 
+import '@fontsource-variable/montserrat';
 
 
 
@@ -17,23 +18,18 @@ import { toSignal, ToSignalOptions } from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, MenuComponent, AsyncPipe, NgIf],
   template: ` 
-  <div class="h-dvh flex flex-col">
+  <ng-container class="flex flex-col min-h-fit" >
 
     <app-menu [(menu)]="menu"  />
 
-    <app-header [(menu)]="menu" />
+    <app-header [(menu)]="menu"  />
 
 
+  <router-outlet />
 
-    <router-outlet />
 
-  </div>`,
+  </ng-container>`,
 })
-
-
-
-
-
 
 export class AppComponent  {
   menu:boolean = false;

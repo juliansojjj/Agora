@@ -34,11 +34,18 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
   imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
     @if (visibility()) {
-      <header class="h-[7rem] w-full  flex-col justify-between flex">
-        <nav>
-          <ul class="grid grid-cols-[1fr_1fr_1fr] w-full bg-red-500 place">
-            <li class="place-self-start">Busqueda</li>
-            <li class="place-self-center"><a routerLink="/">Logo</a></li>
+      <header class="w-full h-20 flex-col justify-between flex p-2 bg-slate-200 sticky top-0 left-0 z-50"
+      >
+        <nav  >
+          <ul class="grid grid-cols-[1fr_1fr_1fr] w-full relative">
+            <li class="place-self-start">dsa</li>
+            <li class="place-self-center">
+              <a routerLink="/">
+              <object data="agora-logo.svg" type="image/svg+xml"  class="h-14">
+              <!-- <img src="yourfallback.jpg" /> -->
+            </object>
+              </a>
+            </li>
             <li class="place-self-end flex">
               <ng-container *ngIf="authState(); else login">
                 <ng-container
@@ -53,7 +60,7 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
             </li>
           </ul>
         </nav>
-        <ul class="flex justify-evenly w-full bg-green-500">
+        <ul class="flex justify-evenly w-full h-4 relative bg-slate-300">
           <li><a [routerLink]="['/category', 'politics']">Politics</a></li>
           <li><a [routerLink]="['/category', 'economy']">Economy</a></li>
           <li><a [routerLink]="['/category', 'sports']">Sports</a></li>
@@ -71,7 +78,11 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
     } @else {
       <header class="h-[7rem] w-full  flex-col justify-between flex">
         <nav class="flex justify-center w-full bg-red-500 place">
-          <a routerLink="/">Logo</a>
+          <a routerLink="/">
+            <object data="agora-logo.svg" type="image/svg+xml"  class="h-14">
+              <!-- <img src="yourfallback.jpg" /> -->
+            </object>
+          </a>
         </nav>
       </header>
     }
@@ -95,7 +106,7 @@ export class HeaderComponent {
   visibility = model<boolean>(true);
 
   constructor() {
-    this.authState$.subscribe((res:any)=>console.log(res))
+    this.authState$.subscribe((res: any) => console.log(res));
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

@@ -19,21 +19,21 @@ export interface Article {
 
 
 
- type contentItems = quote | paragraph | image | title | subtitle;
+ export type contentItems = quote | paragraph | image | title | subtitle;
 
-type quote = {
+ export type quote = {
   quote:string
 }
-type paragraph = {
+export type paragraph = {
   paragraph:string
 }
-type image = {
+export type image = {
   imageAlt:string
   imageUrl:string
 }
-type title = {
+export type title = {
   title:string
 }
-type subtitle = {
+export type subtitle = {
   subtitle:string
 }
