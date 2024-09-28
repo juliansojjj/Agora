@@ -9,7 +9,7 @@ import { FirebaseAuthUser } from '../../../shared/interfaces/firebase.interfaces
   imports: [],
   template: `
     @if (menu() ) {
-      <div class="absolute right-0 top-0 w-60 h-full z-10 bg-slate-200 flex flex-col items-start">
+      <div class="absolute right-0 top-0 w-60 h-full  bg-slate-300 flex flex-col items-start z-20">
         <div>
           <span>{{user()?.email}}</span>
         <button (click)="menuTrigger()">Close Menu</button>

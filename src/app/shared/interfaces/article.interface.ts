@@ -1,3 +1,5 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export interface Article {
   id: string;
 
@@ -9,10 +11,11 @@ export interface Article {
 
   category: string;
   content: contentItems[];
-  date: Date;
+  date: Timestamp;
 
   frontImage: string;
   frontImageAlt?: string;
+  frontImageBanner?: boolean;
   heading: string;
   subheading: string;
 }

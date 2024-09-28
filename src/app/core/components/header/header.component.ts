@@ -33,19 +33,23 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
   standalone: true,
   imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
-    @if (visibility()) {
-      <header class="w-full h-20 flex-col justify-between flex p-2 bg-slate-200 sticky top-0 left-0 z-50"
-      >
-        <nav  >
-          <ul class="grid grid-cols-[1fr_1fr_1fr] w-full relative">
+    <header
+      class="w-full  flex-col justify-between flex p-2 sticky top-0 left-0 z-10 bg-white" [ngClass]="reduced() ? 'h-[4.5rem]' : 'h-28' "
+    >
+      <nav>
+        <ul class=" w-full relative" [ngClass]="visibility() ? 'grid grid-cols-[1fr_1fr_1fr]' : 'flex justify-center' ">
+
+          <ng-container *ngIf="visibility()">
             <li class="place-self-start">dsa</li>
-            <li class="place-self-center">
-              <a routerLink="/">
-              <object data="agora-logo.svg" type="image/svg+xml"  class="h-14">
-              <!-- <img src="yourfallback.jpg" /> -->
-            </object>
-              </a>
-            </li>
+          </ng-container>
+
+          <li class="place-self-center">
+            <a routerLink="/">
+              <img src="agora-logo.svg" class="h-12 mt-1" />
+            </a>
+          </li>
+
+          <ng-container *ngIf="visibility()">
             <li class="place-self-end flex">
               <ng-container *ngIf="authState(); else login">
                 <ng-container
@@ -58,9 +62,12 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
                 <button (click)="menuTrigger()">Account</button>
               </ng-container>
             </li>
-          </ul>
-        </nav>
-        <ul class="flex justify-evenly w-full h-4 relative bg-slate-300">
+          </ng-container>
+        </ul>
+      </nav>
+
+      <ng-container *ngIf="visibility() && !reduced()">
+      <ul class="flex justify-evenly w-full h-4 relative bg-slate-300">
           <li><a [routerLink]="['/category', 'politics']">Politics</a></li>
           <li><a [routerLink]="['/category', 'economy']">Economy</a></li>
           <li><a [routerLink]="['/category', 'sports']">Sports</a></li>
@@ -69,23 +76,14 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
             <a [routerLink]="['/category', 'entertainment']">Entertainment</a>
           </li>
         </ul>
+      </ng-container>
 
-        <ng-template #login>
-          <a [routerLink]="['/subscription']">SUBSCRIBE FOR $0</a>
-          <a [routerLink]="['/login']">Login</a>
-        </ng-template>
-      </header>
-    } @else {
-      <header class="h-[7rem] w-full  flex-col justify-between flex">
-        <nav class="flex justify-center w-full bg-red-500 place">
-          <a routerLink="/">
-            <object data="agora-logo.svg" type="image/svg+xml"  class="h-14">
-              <!-- <img src="yourfallback.jpg" /> -->
-            </object>
-          </a>
-        </nav>
-      </header>
-    }
+
+      <ng-template #login>
+        <a [routerLink]="['/subscription']">SUBSCRIBE FOR $0</a>
+        <a [routerLink]="['/login']">Login</a>
+      </ng-template>
+    </header>
   `,
   styles: ``,
 })
@@ -104,6 +102,7 @@ export class HeaderComponent {
 
   menu = model<boolean>();
   visibility = model<boolean>(true);
+  reduced = model<boolean>(false);
 
   constructor() {
     this.authState$.subscribe((res: any) => console.log(res));
@@ -111,6 +110,7 @@ export class HeaderComponent {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
+        console.log(event.url.split('/')[1]);
         if (
           event.url === '/login' ||
           event.url === '/register' ||
@@ -119,6 +119,12 @@ export class HeaderComponent {
           this.visibility.set(false);
         } else {
           this.visibility.set(true);
+        } 
+        if(event.url.split('/')[1] === 'article'){
+          this.reduced.set(true);
+        }
+        else{ 
+          this.reduced.set(false);
         }
       });
   }
