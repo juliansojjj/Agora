@@ -102,6 +102,8 @@ checkSubscription(uid:string){
       }
     }))
 }
+
+
   checkUsername() {
     
     const ref = collection(this.firestoreService, 'users');

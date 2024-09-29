@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import ArticlesService from '../../../../core/services/articles.service';
 import { Article } from '../../../../shared/interfaces/article.interface';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { catchError, EMPTY, map, Observable } from 'rxjs';

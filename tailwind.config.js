@@ -1,19 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{html,ts}"
-  ],
+  content: ["./src/**/*.{html,ts}"],
   theme: {
-    screen:{
-      "xxsm":"320px",
-      "xsm":"425px"
-
-    },
-
     extend: {
-
+      screen: {
+        xxsm: "320px",
+        xsm: "425px",
+      },
+      colors: {
+        brandRed: "#FD7E7E",
+      },
     },
   },
   plugins: [],
-}
-
+};

@@ -1,8 +1,11 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export interface Comment {
   commentID?: number;
-  userID: number;
+  uid: number;
   username: string;
+
   content: string;
-  date: Date;
-  userDelete: boolean;
+  date: Timestamp;
+  deletedByUser: boolean;
 }

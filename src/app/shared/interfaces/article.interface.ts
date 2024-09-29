@@ -11,6 +11,7 @@ export interface Article {
 
   category: string;
   content: contentItems[];
+  contentPreview?: contentItems[];
   date: Timestamp;
 
   frontImage: string;
