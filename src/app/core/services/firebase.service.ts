@@ -14,9 +14,11 @@ import {
   FirestoreCollectionUser,
 } from '../../shared/interfaces/firebase.interfaces';
 import {
+  
+} from 'firebase/firestore';
+import {
   addDoc,
   collection,
-  collectionData,
   Firestore,
   doc,
   getDoc,
@@ -24,10 +26,13 @@ import {
   where,
   DocumentData,
   setDoc,
-  updateDoc
+  updateDoc,
+  collectionData,
+  serverTimestamp
 } from '@angular/fire/firestore';
 import { AbstractControl } from '@angular/forms';
 import { Article } from '../../shared/interfaces/article.interface';
+import { app } from '../../../../server';
 
 @Injectable({
   providedIn: 'root',
@@ -71,7 +76,7 @@ export class FirebaseService {
   }
   getArticleComments(id:string){
     const ref = collection(this.firestoreService, 'articles',id,'comments');
-    const result = collectionData(ref,{ idField: 'id' });
+    const result = collectionData(ref,{ idField: 'commentId' });
 
     return from(result)
   }
@@ -132,6 +137,29 @@ checkSubscription(uid:string){
       email: email,
       subscription: false,
     } )
+  }
+  addComment(username: string, uid: string, articleId:string, content:string) {
+    const ref = collection(this.firestoreService, 'articles',articleId,'comments');
+
+    const res = setDoc(doc(ref),
+    { 
+      username: username,
+      uid:uid,
+      content:content,
+      date:serverTimestamp(),
+      deletedByUser:false
+    } )
+
+    return from(res)
+
+  }
+  deleteComment(articleId:string,commentId:string){
+    const ref = collection(this.firestoreService, 'articles',articleId,'comments');
+    const res = updateDoc(doc(ref, commentId),
+    { 
+      deletedByUser: true
+    } )
+    return from(res)
   }
 
   // ----------------------- AUTH

@@ -105,12 +105,11 @@ export class HeaderComponent {
   reduced = model<boolean>(false);
 
   constructor() {
-    this.authState$.subscribe((res: any) => console.log(res));
+    // this.authState$.subscribe((res: any) => console.log(res));
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
-        console.log(event.url.split('/')[1]);
         if (
           event.url === '/login' ||
           event.url === '/register' ||

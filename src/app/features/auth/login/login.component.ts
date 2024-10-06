@@ -42,7 +42,7 @@ import { catchError } from 'rxjs';
 
 
         
-        <button type="submit">Enviar</button>
+        <button type="submit" [disabled]="form.invalid" >Enviar</button>
       </form>
 
         {{error()}}

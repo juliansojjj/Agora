@@ -36,7 +36,7 @@ import { NgIf } from '@angular/common';
           @if (form.controls.username.errors?.['usernameTaken']) {
             <span>That username has been already taken</span>
           }
-          @if (form.controls.username.errors?.['required']) {
+          @if (form.controls.username.errors?.['required'] || form.controls.username.errors?.['blankText']) {
             <span>Username is a required field</span>
           }
           @if (form.controls.username.errors?.['minlength']) {
@@ -65,7 +65,7 @@ import { NgIf } from '@angular/common';
           form.controls.password.invalid &&
           (form.controls.password.touched || form.controls.password.dirty)
         ) {
-          @if (form.controls.password.errors?.['required']) {
+          @if (form.controls.password.errors?.['required'] ) {
             <span>Password is a required field</span>
           }
           @if (form.controls.password.errors?.['minlength']) {
@@ -104,6 +104,7 @@ export class SignupComponent {
         Validators.required,
         Validators.maxLength(25),
         Validators.minLength(3),
+        this.trimValidator
       ],
       asyncValidators: [this.firebaseService.checkUsername()],
     }),
@@ -151,6 +152,10 @@ export class SignupComponent {
   // getPass2(){
   //   return this.form.get('password') as FormControl
   // }
+  trimValidator(control:AbstractControl){
+    return control.value.trim().length >= 3 ? null : {blankText:true}
+  }
+
 }
 /* 
 https://firebase.google.com/docs/reference/js/auth#autherrorcodes
@@ -162,3 +167,5 @@ auth/internal-error
 auth/wrong-password
 
 */
+
+//TODO valid characters username
