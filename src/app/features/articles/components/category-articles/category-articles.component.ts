@@ -17,15 +17,15 @@ import { FirebaseService } from '../../../../core/services/firebase.service';
   imports: [NgFor, NgIf, RouterLink, AsyncPipe],
   template: `
     @if(data$ | async; as data){
-      <div
+      <!-- <div
       class="grid grid-cols-4 gap-y-6 w-full place-items-center pt-4 text-black"
     >
       <ng-template [ngIf]="errorMessage">
         <span class="whitespace-pre-line text-left">{{ errorMessage }}</span>
       </ng-template>
       <ng-container *ngFor="let item of data; trackBy: trackByFn">
-        <a class="bg-slate-200" [routerLink]="['/article', item.articleID]">
-          <h4>{{ item.heading }}</h4>
+        <a class="bg-slate-200" [routerLink]="['/article', item.articleId]">
+          <h4>{{ item.heading }} {{item.articleId}}asd</h4>
           <img
             [src]="item.frontImage"
             alt="front image of {{ item.heading }}"
@@ -33,7 +33,7 @@ import { FirebaseService } from '../../../../core/services/firebase.service';
           />
         </a>
       </ng-container>
-    </div>
+    </div> -->
     } @else{
       <span>Loading...</span>
     }
@@ -51,7 +51,7 @@ export class CategoryArticlesComponent {
   errorMessage!: string;
 
   trackByFn(index: number, item: Article) {
-    return item.id;
+    return item.articleId;
   }
 
 

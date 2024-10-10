@@ -33,7 +33,7 @@ export class SubscriptionComponent implements OnInit {
   authState$ = this.firebaseService.authState$
   subscriptionState$: Observable<FirestoreCollectionUser> = this.authState$.pipe(
     switchMap((auth:any)=>{
-      return this.firebaseService.checkSubscription(auth.uid)
+      return this.firebaseService.getUserInfo(auth.uid)
     })
   )
 

@@ -18,7 +18,7 @@ export const checkoutGuard: CanActivateFn = (route, state) => {
       else return auth;
     }),
     switchMap((auth: FirebaseAuthUser) => {
-      return firebaseService.checkSubscription(auth.uid).pipe(
+      return firebaseService.getUserInfo(auth.uid).pipe(
         map((res: FirestoreCollectionUser) => {
           if (res.subscription) return false;
           else return true;

@@ -30,4 +30,5 @@ export interface FirestoreCollectionUser {
     username:string
     email:string
     subscription:boolean
+    favorites?:string[];
 }

@@ -28,7 +28,11 @@ import {
   setDoc,
   updateDoc,
   collectionData,
-  serverTimestamp
+  serverTimestamp,
+  FieldValue,
+  arrayUnion,
+  arrayRemove,
+  docData
 } from '@angular/fire/firestore';
 import { AbstractControl } from '@angular/forms';
 import { Article } from '../../shared/interfaces/article.interface';
@@ -50,13 +54,13 @@ export class FirebaseService {
 // ----------------------- ARTICLES
   getLandingArticles() {
     const ref = collection(this.firestoreService, 'articles');
-    const result = collectionData(ref, { idField: 'id' });
+    const result = collectionData(ref, { idField: 'articleId' });
     return from(result);
   }
 
   getCategoryArticles(category:string) {
     const ref = collection(this.firestoreService, 'articles')
-    const result = collectionData(query(ref,where('category','==',category)))
+    const result = collectionData(query(ref,where('category','==',category)), { idField: 'articleId' })
 
     return from(result);
     
@@ -64,16 +68,11 @@ export class FirebaseService {
   }
   getSingleArticle(id:string) {
     const ref = doc(this.firestoreService, 'articles', id);
-    const result = getDoc(ref)
+    const result = docData(ref)
 
-    return from(result.then(docSnapshot => {
-      if (docSnapshot.exists()) {
-        return docSnapshot.data() as Article;
-      } else {
-        throw new Error('No such document!');
-      }
-    }))
+    return from(result)
   }
+  
   getArticleComments(id:string){
     const ref = collection(this.firestoreService, 'articles',id,'comments');
     const result = collectionData(ref,{ idField: 'commentId' });
@@ -93,21 +92,20 @@ export class FirebaseService {
     return from(res)
   }
   
+  handleFavorite(uid:string,operation:boolean, articleId:string){
+    const ref = doc(this.firestoreService, 'users', uid);
 
+    return operation 
+    ? from(updateDoc(ref,{favorites:arrayUnion(articleId)})) 
+    : from(updateDoc(ref,{favorites:arrayRemove(articleId)})) 
+  }
 
-checkSubscription(uid:string){
+getUserInfo(uid:string){
   const ref = doc(this.firestoreService, 'users', uid);
-    const result = getDoc(ref)
+  const result = docData(ref)
 
-    return from(result.then(docSnapshot => {
-      if (docSnapshot.exists()) {
-        return docSnapshot.data() as FirestoreCollectionUser;
-      } else {
-        throw new Error('No such document!');
-      }
-    }))
+  return from(result)
 }
-
 
   checkUsername() {
     
@@ -137,7 +135,10 @@ checkSubscription(uid:string){
       email: email,
       subscription: false,
     } )
+
+    return from(res)
   }
+
   addComment(username: string, uid: string, articleId:string, content:string) {
     const ref = collection(this.firestoreService, 'articles',articleId,'comments');
 

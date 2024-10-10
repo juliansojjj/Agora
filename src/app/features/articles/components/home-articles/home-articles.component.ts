@@ -17,7 +17,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
           class="grid grid-cols-4 gap-y-6 w-full place-items-center pt-4 text-black"
         >
           <ng-container *ngFor="let item of articles(); trackBy: trackByFn">
-            <a class="bg-slate-200" [routerLink]="['/article', urlFormat(item.id, item.heading)]">
+            <a class="bg-slate-200" [routerLink]="['/article', urlFormat(item.articleId!, item.heading)]">
               <h4>{{ item.heading }}</h4>
               <img
                 [src]="item.frontImage"
@@ -49,7 +49,7 @@ export class HomeArticlesComponent {
   errorMessage!: string;
 
   trackByFn(index: number, item: Article) {
-    return item.id;
+    return item.articleId;
   }
 
   urlFormat(id:string,title:string) {

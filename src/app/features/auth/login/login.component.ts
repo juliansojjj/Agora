@@ -47,8 +47,8 @@ import { catchError } from 'rxjs';
 
         {{error()}}
 
-        @if(subscriptionRedirect()){
-      <a [routerLink]="['/register']" [queryParams]="{subscriptionRedirect:true}">Don't have an account? Create one</a>
+        @if(redirect()){
+      <a [routerLink]="['/register']" [queryParams]="{redirect:redirect()}">Don't have an account? Create one</a>
       }@else {
         <a [routerLink]="['/register']">Don't have an account? Create one</a>
       }
@@ -62,7 +62,7 @@ export class LoginComponent {
 
   error = model<string>('')
 
-  subscriptionRedirect  = input<boolean>();
+  redirect  = input<string>();
 
 
   form = this.formBuilder.group({
@@ -91,11 +91,13 @@ export class LoginComponent {
         throw new Error(err.message);
       }),
     )
-    .subscribe(res=>{
-      if(this.subscriptionRedirect()){
-        this.router.navigate(['/subscription/checkout'])
-      } else this.router.navigate(['/'])
-    })
+    .subscribe((res) => {
+      if(!this.redirect()){
+        this.router.navigate(['/'])
+      } 
+      if(this.redirect() == 'subscription') this.router.navigate(['/subscription/checkout'])
+      else if(this.redirect()?.split('-')[0] == 'article') this.router.navigate([`/article/${this.redirect()?.split('-')[1]}`])
+    });
 
   }
 

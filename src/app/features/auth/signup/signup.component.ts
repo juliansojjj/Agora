@@ -78,8 +78,8 @@ import { NgIf } from '@angular/common';
         {{ error() }}
       </form>
 
-      @if(subscriptionRedirect()){
-      <a [routerLink]="['/login']" [queryParams]="{subscriptionRedirect:true}">Already hace an account? Login</a>
+      @if(redirect()){
+      <a [routerLink]="['/login']" [queryParams]="{redirect:redirect()}">Already hace an account? Login</a>
       }@else {
         <a [routerLink]="['/login']">Already hace an account? Login</a>
       }
@@ -92,7 +92,7 @@ export class SignupComponent {
   router = inject(Router);
   formBuilder = inject(NonNullableFormBuilder);
 
-  subscriptionRedirect  = input<boolean>();
+  redirect  = input<string>();
 
 
   errorMessage = '';
@@ -139,9 +139,11 @@ export class SignupComponent {
         }),
       )
       .subscribe((res) => {
-        if(this.subscriptionRedirect()){
-          this.router.navigate(['/subscription/checkout'])
-        } else this.router.navigate(['/'])
+        if(!this.redirect()){
+          this.router.navigate(['/'])
+        } 
+        if(this.redirect() == 'subscription') this.router.navigate(['/subscription/checkout'])
+        else if(this.redirect()?.split('-')[0] == 'article') this.router.navigate([`/article/${this.redirect()?.split('-')[1]}`])
       });
   }
 

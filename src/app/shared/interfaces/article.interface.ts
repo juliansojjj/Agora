@@ -1,7 +1,7 @@
 import { Timestamp } from "@angular/fire/firestore";
 
 export interface Article {
-  id: string;
+  articleId?: string;
 
   authorID: number;
   authorName: string;

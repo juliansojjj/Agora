@@ -39,6 +39,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TextAreaResizeDirective } from '../../directives/text-area-resize.directive';
+import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
 
 @Component({
   selector: 'app-single-article',
@@ -53,6 +54,8 @@ import { TextAreaResizeDirective } from '../../directives/text-area-resize.direc
     RouterLink,
     ReactiveFormsModule,
     TextAreaResizeDirective,
+    CommentsLengthPipe,
+    RouterLink
   ],
   template: `
     @if (data$ | async; as data) {
@@ -76,11 +79,39 @@ import { TextAreaResizeDirective } from '../../directives/text-area-resize.direc
               <span class="lg:w-1/2 self-start lg:self-center mb-2">{{
                 data.frontImageAlt
               }}</span>
-              <h1
-                class=" font-bold font text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] lg:w-1/2 p-2 lg:p-0 text-left lg:my-4"
+
+              <div
+                class="lg:w-1/2 p-2 lg:p-0 lg:my-4 flex justify-between items-start"
               >
-                {{ data.heading }}
-              </h1>
+                <h1
+                  class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left "
+                >
+                  {{ data.heading }}
+                </h1>
+
+                @if((userInfo$ | async)?.favorites?.includes(id().split('-')[0])){
+                  <button (click)="favoriteHandle(false)">
+                  <svg viewBox="0 0 28 28" class=" h-8 mt-2 fill-black" >
+                    <g>
+                      <path
+                        d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
+                      ></path>
+                    </g>
+                  </svg>
+                </button>
+                }@else{
+                  <button (click)="favoriteHandle(true)">
+                  <svg viewBox="0 0 28 28" class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none">
+                    <g>
+                      <path
+                        d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
+                      ></path>
+                    </g>
+                  </svg>
+                </button>
+                }
+                
+              </div>
             }
           </section>
 
@@ -127,12 +158,15 @@ import { TextAreaResizeDirective } from '../../directives/text-area-resize.direc
           >
             @if (comments$ | async | orderByDate; as comments) {
               <span class="text-[1.3rem] font-bold"
-                >{{ comments.length > 0 ? comments.length : '' }} Comments</span
+                >{{ comments | commentsLength }} Comments</span
               >
 
               @if (!(userInfo$ | async)) {
-                <div class="w-full text-center bg-slate-100 mt-4">
-                  Login to comment
+                <div class="flex flex-col mt-2 w-full ">
+                <a [routerLink]="['/login']" [queryParams]="{redirect:'article-'+id().split('-')[0]}"
+                    class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip text-gray-400 hover:cursor-text"
+                  >
+                  Write your comment here...</a>
                 </div>
               } @else {
                 <form
@@ -147,24 +181,27 @@ import { TextAreaResizeDirective } from '../../directives/text-area-resize.direc
                     placeholder="Write your comment here..."
                   ></textarea>
 
-                  @if (
-                    form.controls.text.invalid &&
-                    (form.controls.text.touched || form.controls.text.dirty)
-                  ) {
-                    @if (form.controls.text.errors?.['maxLength']) {
-                      <span class="text-red-300 mt-2"
-                        >The max amount of characters is 280</span
-                      >
-                    }
+                  @if (form.controls.text.errors?.['maxlength']) {
+                    <span class="text-red-300 mt-2"
+                      >The max amount of characters is 280</span
+                    >
                   }
                   @if (form.controls.text.touched || form.controls.text.dirty) {
-                    <button
-                      type="submit"
-                      [disabled]="form.invalid"
-                      class="w-fit p-[.35rem] px-3 border-2 text-slate-500 border-slate-100 active:bg-slate-100 active:scale-95 rounded-lg mt-4 font-medium self-end"
-                    >
-                      Comment
-                    </button>
+                    <div class="flex self-end ">
+                      <button
+                        (click)="form.reset()"
+                        class="w-fit p-[.35rem] px-3 border-2 text-slate-500 border-slate-100 active:bg-slate-100 active:scale-95 rounded-lg mt-4 font-medium self-end mr-4"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        [disabled]="form.invalid"
+                        class="w-fit p-[.35rem] px-3  bg-brandRed text-white active:bg-red-900 active:scale-95 rounded-lg mt-4 font-medium"
+                      >
+                        Comment
+                      </button>
+                    </div>
                   }
                 </form>
               }
@@ -181,9 +218,10 @@ import { TextAreaResizeDirective } from '../../directives/text-area-resize.direc
                       </div>
                       @if (item.uid === uid()) {
                         <button (click)="onCommentDelete(item.commentId!)">
-                          
-
-                          <svg viewBox="0 0 24 24" class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandRed active:scale-75">
+                          <svg
+                            viewBox="0 0 24 24"
+                            class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandRed active:scale-75"
+                          >
                             <g>
                               <path
                                 d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6"
@@ -349,9 +387,10 @@ export class SingleArticleComponent implements OnInit {
     }),
     switchMap((auth: FirebaseAuthUser) => {
       this.uid.set(auth.uid);
-      console.log(auth);
-      return this.firebaseService.checkSubscription(auth.uid).pipe(
+
+      return this.firebaseService.getUserInfo(auth.uid).pipe(
         map((res: FirestoreCollectionUser) => {
+          console.log(res);
           this.userInfo.set(res);
           return res;
         }),
@@ -388,14 +427,20 @@ export class SingleArticleComponent implements OnInit {
 
     if (this.userInfo() && this.uid()) {
       const articleId = this.id().split('-');
-      console.log(this.userInfo());
-      console.log(this.uid());
-      this.firebaseService.addComment(
-        this.userInfo()?.username!,
-        this.uid()!,
-        articleId[0],
-        formValues.text,
-      );
+
+      this.firebaseService
+        .addComment(
+          this.userInfo()?.username!,
+          this.uid()!,
+          articleId[0],
+          formValues.text,
+        )
+        .subscribe({
+          next: (res) => {
+            this.form.reset();
+          },
+          error: (err) => console.error(err), // Maneja posibles errores
+        });
     }
   }
 
@@ -406,6 +451,13 @@ export class SingleArticleComponent implements OnInit {
       this.firebaseService.deleteComment(articleId[0], commentId);
     }
   }
+
+  favoriteHandle(operation:boolean){
+    const articleId = this.id().split('-');
+
+    this.firebaseService.handleFavorite(this.uid()!,operation,articleId[0]) 
+  }
+
   trimValidator(control: AbstractControl) {
     return control.value.trim() ? null : { blankText: true };
   }
