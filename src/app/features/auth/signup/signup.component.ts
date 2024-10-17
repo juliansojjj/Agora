@@ -36,6 +36,9 @@ import { NgIf } from '@angular/common';
           @if (form.controls.username.errors?.['usernameTaken']) {
             <span>That username has been already taken</span>
           }
+          @if (form.controls.username.errors?.['pattern']) {
+            <span>Please enter the username in a valid format</span>
+          }
           @if (form.controls.username.errors?.['required'] || form.controls.username.errors?.['blankText']) {
             <span>Username is a required field</span>
           }
@@ -102,7 +105,8 @@ export class SignupComponent {
     username: this.formBuilder.control('', {
       validators: [
         Validators.required,
-        Validators.maxLength(25),
+        Validators.pattern("^(?!.*([._'¨]{3}))[a-zA-Z0-9@._'¨]*(?:[._'¨]{0,2}[a-zA-Z0-9]*)*$"),
+        Validators.maxLength(32),
         Validators.minLength(3),
         this.trimValidator
       ],

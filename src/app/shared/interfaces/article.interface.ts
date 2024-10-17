@@ -13,6 +13,7 @@ export interface Article {
   content: contentItems[];
   contentPreview?: contentItems[];
   date: Timestamp;
+  priority:'high'|'medium'|'low';
 
   frontImage: string;
   frontImageAlt?: string;

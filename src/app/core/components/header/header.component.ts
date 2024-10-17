@@ -34,7 +34,7 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
   imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
     <header
-      class="w-full  flex-col justify-between flex p-2 sticky top-0 left-0 z-10 bg-white" [ngClass]="reduced() ? 'h-[4.5rem]' : 'h-28' "
+      class="w-full  flex-col justify-between flex p-2 sticky top-0 left-0 z-10 bg-red-100" [ngClass]="reduced() ? 'h-[4.5rem]' : 'h-[12rem]' "
     >
       <nav>
         <ul class=" w-full relative" [ngClass]="visibility() ? 'grid grid-cols-[1fr_1fr_1fr]' : 'flex justify-center' ">
@@ -45,7 +45,7 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
 
           <li class="place-self-center">
             <a routerLink="/">
-              <img src="agora-logo.svg" class="h-12 mt-1" />
+              <img src="agora-logo.svg" class="h-[4.5rem] mt-4" />
             </a>
           </li>
 
@@ -65,6 +65,8 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
           </ng-container>
         </ul>
       </nav>
+
+      <hr>
 
       <ng-container *ngIf="visibility() && !reduced()">
       <ul class="flex justify-evenly w-full h-4 relative bg-slate-300">
