@@ -14,6 +14,7 @@ export interface Article {
   contentPreview?: contentItems[];
   date: Timestamp;
   priority:'high'|'medium'|'low';
+  topics:string[];
 
   frontImage: string;
   frontImageAlt?: string;
@@ -24,13 +25,19 @@ export interface Article {
 
 
 
- export type contentItems = quote | paragraph | image | title | subtitle;
+ export type contentItems = quote | paragraph | htmlParagraph | htmlContent | image | title | subtitle;
 
  export type quote = {
   quote:string
 }
 export type paragraph = {
   paragraph:string
+}
+export type htmlParagraph = {
+  htmlParagraph:string
+}
+export type htmlContent = {
+  htmlContent:string
 }
 export type image = {
   imageAlt:string

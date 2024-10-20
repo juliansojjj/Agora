@@ -1,6 +1,9 @@
 import {
+  AfterContentInit,
+  AfterViewInit,
   Component,
   effect,
+  ElementRef,
   HostListener,
   inject,
   input,
@@ -8,8 +11,12 @@ import {
   ModelSignal,
   OnDestroy,
   OnInit,
+  QueryList,
+  Renderer2,
   Signal,
   signal,
+  ViewChildren,
+  ViewEncapsulation,
   WritableSignal,
 } from '@angular/core';
 import {
@@ -55,7 +62,7 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
     ReactiveFormsModule,
     TextAreaResizeDirective,
     CommentsLengthPipe,
-    RouterLink
+    RouterLink,
   ],
   template: `
     @if (data$ | async; as data) {
@@ -83,34 +90,66 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
               <div
                 class="lg:w-1/2 p-2 lg:p-0 lg:my-4 flex justify-between items-start"
               >
-                <h1
-                  class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left "
-                >
-                  {{ data.heading }}
-                </h1>
+                <div>
+                  <h1
+                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left mb-4"
+                  >
+                    {{ data.heading }}
+                  </h1>
+                  <span
+                    >Original source
+                    <a
+                      [href]="data.source"
+                      class="font-medium underline text-red-900 hover:text-brandRed"
+                      >here</a
+                    ></span
+                  >
+                </div>
 
-                @if((userInfo$ | async)?.favorites?.includes(id().split('-')[0])){
+                @if (
+                  (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
+                ) {
                   <button (click)="favoriteHandle(false)">
-                  <svg viewBox="0 0 28 28" class=" h-8 mt-2 fill-black" >
-                    <g>
-                      <path
-                        d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
-                      ></path>
-                    </g>
-                  </svg>
-                </button>
-                }@else{
+                    <svg viewBox="0 0 28 28" class=" h-8 mt-2 fill-black">
+                      <g>
+                        <path
+                          d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
+                        ></path>
+                      </g>
+                    </svg>
+                  </button>
+                } @else if (userInfo$ | async) {
                   <button (click)="favoriteHandle(true)">
-                  <svg viewBox="0 0 28 28" class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none">
-                    <g>
-                      <path
-                        d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
-                      ></path>
-                    </g>
-                  </svg>
-                </button>
+                    <svg
+                      viewBox="0 0 28 28"
+                      class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none"
+                    >
+                      <g>
+                        <path
+                          d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
+                        ></path>
+                      </g>
+                    </svg>
+                  </button>
+                } @else {
+                  <a
+                    [routerLink]="['/login']"
+                    [queryParams]="{
+                      redirect: 'article-' + id().split('-')[0],
+                    }"
+                  >
+                    <svg
+                      viewBox="0 0 28 28"
+                      class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none"
+                    >
+                      <g>
+                        <path
+                          d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
+                        ></path>
+                      </g>
+                    </svg>
+                  </a>
                 }
-                
               </div>
             }
           </section>
@@ -122,6 +161,16 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 <p class="m-7 mx-0 text-[1.2rem]">
                   {{ $any(item).paragraph }}
                 </p>
+              }
+              @if ((item | typeof) == 'htmlParagraph') {
+                <p class="m-7 mx-0 text-[1.2rem]" #htmlContent>
+                  {{ $any(item).htmlParagraph }}
+                </p>
+              }
+              @if ((item | typeof) == 'htmlContent') {
+                <div #htmlContent>
+                  {{ $any(item).htmlContent }}
+              </div>
               }
               @if ((item | typeof) == 'quote') {
                 <blockquote class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] ">
@@ -163,10 +212,15 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
 
               @if (!(userInfo$ | async)) {
                 <div class="flex flex-col mt-2 w-full ">
-                <a [routerLink]="['/login']" [queryParams]="{redirect:'article-'+id().split('-')[0]}"
-                    class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip text-gray-400 hover:cursor-text"
+                  <a
+                    [routerLink]="['/login']"
+                    [queryParams]="{
+                      redirect: 'article-' + id().split('-')[0],
+                    }"
+                    class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip hover:text-gray-400 text-gray-400 hover:cursor-text no-underline"
                   >
-                  Write your comment here...</a>
+                    Write your comment here...</a
+                  >
                 </div>
               } @else {
                 <form
@@ -246,8 +300,6 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
           class="w-full  min-h-screen relative flex flex-col items-center  "
         >
           <section class=" w-full flex  flex-col items-center ">
-            <!-- <h1 class="absolute text-white font-bold font text-[3rem] left-[50%] -translate-x-1/2 text-center bg-black">{{ data.heading }}</h1> -->
-
             @if (data.frontImageBanner) {
               <img
                 src="{{ data.frontImage }}"
@@ -260,22 +312,38 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 alt="{{ data.frontImageAlt }}"
                 class="relative w-full lg:w-1/2 object-cover"
               />
-              <span class="lg:w-1/2 self-start lg:self-center mb-2">{{
-                data.frontImageAlt
-              }}</span>
+              <span
+                class="lg:w-1/2 self-start lg:self-center mb-2 p-2 lg:p-0"
+                >{{ data.frontImageAlt }}</span
+              >
               <h1
                 class=" font-bold font text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] lg:w-1/2 p-2 lg:p-0 text-left lg:my-4"
               >
                 {{ data.heading }}
               </h1>
+              <span class="lg:w-1/2 w-full text-start mb-4 p-2 lg:p-0"
+                >Original source
+                <a
+                  [href]="data.source"
+                  class="font-medium underline text-red-900 hover:text-brandRed"
+                  >here</a
+                ></span
+              >
             }
+            <hr />
           </section>
 
           <section class="w-full lg:w-1/2 lg:p-0 p-3">
+            <hr />
             @for (item of data.contentPreview; track $index) {
               @if ((item | typeof) == 'paragraph') {
                 <p class="m-7 mx-0 text-[1.2rem]">
                   {{ $any(item).paragraph }}
+                </p>
+              }
+              @if ((item | typeof) == 'htmlParagraph') {
+                <p class="m-7 mx-0 text-[1.2rem]" #htmlContent>
+                  {{ $any(item).htmlParagraph }}
                 </p>
               }
               @if ((item | typeof) == 'quote') {
@@ -335,23 +403,6 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
               class="bg-gradient-to-t w-full h-96 from-black absolute bottom-0 lg:mb-0 mb-24"
             ></div>
 
-            <!-- <div
-              class="lg:w-1/3 w-full lg:h-52 h-60 absolute z-10 bg-white left-[50%] -translate-x-1/2 bottom-0 mb-12 flex flex-col  items-center py-6  lg:rounded-xl rounded-none "
-            >
-
-              <img src="agora-logo.svg" class="h-12 mt-1" />
-              <span class="text-[1.1rem] mt-3 text-center">This content is exclusive for subscribers</span>
-
-              <div class="flex items-end flex-grow">
-                <a routerLink="/subscription" class="bg-brandRed w-fit p-3 h-12 rounded-lg text-[1.1rem] font-medium ">Subscribe for <b>$0</b> </a>
-              </div>
-
-              </div>
-
-
-            <div
-              class="bg-gradient-to-t w-full h-96 from-black absolute bottom-0"
-            ></div> -->
           </section>
         </article>
       }
@@ -359,11 +410,44 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
       <p>Loading...</p>
     }
   `,
+  styles: [`
+    a {
+      font-weight: 500;
+      text-decoration: underline;
+      color: #7f1d1d; 
+    }
+    a:hover {
+      color: #FD7E7E; 
+    }
+`],
+  encapsulation: ViewEncapsulation.None
 })
-export class SingleArticleComponent implements OnInit {
+export class SingleArticleComponent implements AfterViewInit {
   firebaseService = inject(FirebaseService);
   id = input.required<string>();
   title = inject(Title);
+
+  renderer = inject(Renderer2);
+  @ViewChildren('htmlContent') htmlElements?: QueryList<
+    ElementRef<HTMLParagraphElement>|ElementRef<HTMLElement>
+  >;
+
+  ngAfterViewInit(): void {
+    this.htmlElements?.changes.subscribe(
+      (query: QueryList<ElementRef<HTMLParagraphElement>|ElementRef<HTMLElement>>) => {
+        query.forEach((item) => {
+          const unparsedString = item.nativeElement.innerText;
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(unparsedString, 'text/html');
+
+          this.renderer.setProperty(item.nativeElement, 'innerHTML',doc.body.innerHTML);
+          console.log(item)
+          console.log(doc.body)
+        });
+      },
+    );
+  }
 
   authUser$ = this.firebaseService.authState$;
 
@@ -452,32 +536,13 @@ export class SingleArticleComponent implements OnInit {
     }
   }
 
-  favoriteHandle(operation:boolean){
+  favoriteHandle(operation: boolean) {
     const articleId = this.id().split('-');
 
-    this.firebaseService.handleFavorite(this.uid()!,operation,articleId[0]) 
+    this.firebaseService.handleFavorite(this.uid()!, operation, articleId[0]);
   }
 
   trimValidator(control: AbstractControl) {
     return control.value.trim() ? null : { blankText: true };
   }
-
-  // -------------------- vuelve a calcularse en cualquier deteccion de cambios
-  // typeCheck(item : contentItems){
-  //   if('paragraph' in item) return 'paragraph'
-  //   if('quote' in item) return 'quote'
-  //   if('imageUrl' in item) return 'image'
-  //   if('title' in item) return 'title'
-  //   if('subtitle' in item) return 'subtitle'
-  //   return false
-  // }
-
-  ngOnInit(): void {
-    // this.data$.subscribe(res=>{
-    //   this.title.setTitle(res.heading)
-    // })
-  }
 }
-
-
-//TODO like link login cuando no esta logueado

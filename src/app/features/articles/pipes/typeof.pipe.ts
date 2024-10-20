@@ -9,6 +9,8 @@ export class TypeofPipe implements PipeTransform {
 
   transform(value: contentItems, ...args: unknown[]): unknown {
     if('paragraph' in value) return 'paragraph'
+    if('htmlParagraph' in value) return 'htmlParagraph'
+    if('htmlContent' in value) return 'htmlContent'
     if('quote' in value) return 'quote'
     if('imageUrl' in value) return 'image'
     if('title' in value) return 'title'
