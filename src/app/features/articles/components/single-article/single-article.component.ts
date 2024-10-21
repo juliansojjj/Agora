@@ -96,11 +96,11 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                   >
                     {{ data.heading }}
                   </h1>
-                  <span
+                  <span class="text-[1.1rem]"
                     >Original source
                     <a
                       [href]="data.source"
-                      class="font-medium underline text-red-900 hover:text-brandRed"
+                      class="font-bold no-underline text-brandRed hover:bg-brandRed hover:p-[.1rem] hover:text-white"
                       >here</a
                     ></span
                   >
@@ -122,7 +122,7 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                   <button (click)="favoriteHandle(true)">
                     <svg
                       viewBox="0 0 28 28"
-                      class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none"
+                      class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none "
                     >
                       <g>
                         <path
@@ -137,6 +137,7 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                     [queryParams]="{
                       redirect: 'article-' + id().split('-')[0],
                     }"
+                    class="hover:bg-transparent hover:p-0"
                   >
                     <svg
                       viewBox="0 0 28 28"
@@ -173,7 +174,7 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
               </div>
               }
               @if ((item | typeof) == 'quote') {
-                <blockquote class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] ">
+                <blockquote class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] border-l-[2px] rounded-md border-black pl-7">
                   <i> {{ $any(item).quote }} </i>
                 </blockquote>
               }
@@ -189,12 +190,12 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 </ng-container>
               }
               @if ((item | typeof) == 'title') {
-                <h3 class="font-bold">
+                <h3 class="font-bold text-[1.9rem] mt-12">
                   {{ $any(item).title }}
                 </h3>
               }
               @if ((item | typeof) == 'subtitle') {
-                <h4 class="font-medium">
+                <h4 class="font-bold text-[1.5rem] mt-4 -mb-4">
                   {{ $any(item).subtitle }}
                 </h4>
               }
@@ -217,7 +218,7 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                     [queryParams]="{
                       redirect: 'article-' + id().split('-')[0],
                     }"
-                    class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip hover:text-gray-400 text-gray-400 hover:cursor-text no-underline"
+                    class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip hover:text-gray-400 text-gray-400 hover:cursor-text font-normal hover:bg-transparent hover:p-0"
                   >
                     Write your comment here...</a
                   >
@@ -316,16 +317,36 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 class="lg:w-1/2 self-start lg:self-center mb-2 p-2 lg:p-0"
                 >{{ data.frontImageAlt }}</span
               >
+              <div class="lg:w-1/2 p-2 lg:p-0 flex items-start">
               <h1
-                class=" font-bold font text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] lg:w-1/2 p-2 lg:p-0 text-left lg:my-4"
+                class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]  text-left lg:mb-4"
               >
                 {{ data.heading }}
               </h1>
-              <span class="lg:w-1/2 w-full text-start mb-4 p-2 lg:p-0"
+              <a
+                    [routerLink]="['/login']"
+                    [queryParams]="{
+                      redirect: 'article-' + id().split('-')[0],
+                    }"
+                    class="hover:bg-transparent hover:p-0"
+                  >
+                    <svg
+                      viewBox="0 0 28 28"
+                      class=" h-8 mt-4 stroke-black stroke-[2.3] fill-none"
+                    >
+                      <g>
+                        <path
+                          d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
+                        ></path>
+                      </g>
+                    </svg>
+                  </a>
+                  </div>
+              <span class="lg:w-1/2 w-full text-start mb-4 p-2 lg:p-0 text-[1.1rem]"
                 >Original source
                 <a
                   [href]="data.source"
-                  class="font-medium underline text-red-900 hover:text-brandRed"
+                  class="font-bold no-underline text-brandRed hover:bg-brandRed hover:p-[.1rem] hover:text-white "
                   >here</a
                 ></span
               >
@@ -347,7 +368,7 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 </p>
               }
               @if ((item | typeof) == 'quote') {
-                <blockquote class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] ">
+                <blockquote class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] border-l-[2px] rounded-md border-black pl-7">
                   <i> {{ $any(item).quote }} </i>
                 </blockquote>
               }
@@ -363,12 +384,12 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 </ng-container>
               }
               @if ((item | typeof) == 'title') {
-                <h3 class="font-bold">
+                <h3 class="font-bold text-[1.9rem] mt-12">
                   {{ $any(item).title }}
                 </h3>
               }
               @if ((item | typeof) == 'subtitle') {
-                <h4 class="font-medium">
+                <h4 class="font-bold text-[1.5rem] mt-4 -mb-4">
                   {{ $any(item).subtitle }}
                 </h4>
               }
@@ -381,7 +402,7 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
             >
               <div class="flex flex-col h-fit pb-4">
                 <img src="agora-logo.svg" class="h-12 mt-1" />
-                <span class="text-[1.1rem] mt-3 text-center"
+                <span class="text-[1.2rem] mt-3 text-center"
                   >This content is exclusive for subscribers</span
                 >
               </div>
@@ -389,12 +410,13 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
               <div class="relative w-full  flex items-end lg:h-fit h-44 ">
                 <a
                   routerLink="/subscription"
-                  class="bg-brandRed w-44 p-3 h-12 rounded-lg text-[1.1rem] text-center font-medium absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2 z-10 "
+                  class="bg-brandRed text-white hover:p-3 hover:text-black w-44 p-3 h-12 rounded-lg text-[1.1rem] text-center font-medium absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2 z-10  active:scale-[95%]"
                   >Subscribe for <b>$0</b>
                 </a>
                 <img
                   src="sub-banner.jpg"
                   class=" relative object-cover w-full lg:h-20  h-full lg:rounded-b-xl rounded-none grayscale brightness-50"
+                  alt="Photo by Marvin Meyer on Unsplash"
                 />
               </div>
             </div>
@@ -412,12 +434,13 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
   `,
   styles: [`
     a {
-      font-weight: 500;
-      text-decoration: underline;
-      color: #7f1d1d; 
+      font-weight: 700;
+      color: #FD7E7E; 
     }
     a:hover {
-      color: #FD7E7E; 
+      color: #ffffff; 
+      background-color:#FD7E7E;
+      padding: .1rem 0 .1rem 0;
     }
 `],
   encapsulation: ViewEncapsulation.None
