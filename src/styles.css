@@ -8,8 +8,8 @@
     min-height: fit-content;
 }
 
-
 body{
-    min-height: fit-content;
+    min-height: 100vh;
+
     overflow: auto;
 }

@@ -25,8 +25,9 @@ import { MenuComponent } from '../menu/menu.component';
 import { FirebaseService } from '../../services/firebase.service';
 import { authState } from '@angular/fire/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, filter, Observable, switchMap } from 'rxjs';
+import { debounceTime, filter, map, Observable, switchMap } from 'rxjs';
 import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.interfaces';
+import { Category } from '../../../shared/interfaces/category.interface';
 
 @Component({
   selector: 'app-header',
@@ -70,13 +71,9 @@ import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.int
 
       <ng-container *ngIf="visibility() && !reduced()">
       <ul class="flex justify-evenly w-full h-4 relative bg-slate-300">
-          <li><a [routerLink]="['/category', 'politics']">Politics</a></li>
-          <li><a [routerLink]="['/category', 'economy']">Economy</a></li>
-          <li><a [routerLink]="['/category', 'sports']">Sports</a></li>
-          <li><a [routerLink]="['/category', 'tech']">Tech</a></li>
-          <li>
-            <a [routerLink]="['/category', 'entertainment']">Entertainment</a>
-          </li>
+        @for (item of categories(); track $index) {
+          <li><a [routerLink]="['/category', item.url]">{{item.name}}</a></li>
+        }
         </ul>
       </ng-container>
 
@@ -105,6 +102,14 @@ export class HeaderComponent {
   menu = model<boolean>();
   visibility = model<boolean>(true);
   reduced = model<boolean>(false);
+
+  categories = toSignal<Category[]>(
+    this.firebaseService.getCategories().pipe(
+      map((res) => {
+        return res;
+      }),
+    ),
+  );
 
   constructor() {
     // this.authState$.subscribe((res: any) => console.log(res));

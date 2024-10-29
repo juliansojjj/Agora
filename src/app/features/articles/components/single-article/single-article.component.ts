@@ -25,7 +25,7 @@ import {
   paragraph,
 } from '../../../../shared/interfaces/article.interface';
 import { catchError, EMPTY, map, Observable, switchMap, take } from 'rxjs';
-import { NgIf, AsyncPipe, NgClass } from '@angular/common';
+import { NgIf, AsyncPipe, NgClass, DecimalPipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 import { DocumentSnapshot, SnapshotOptions } from '@angular/fire/firestore';
@@ -47,6 +47,7 @@ import {
 } from '@angular/forms';
 import { TextAreaResizeDirective } from '../../directives/text-area-resize.directive';
 import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
+import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
 
 @Component({
   selector: 'app-single-article',
@@ -63,6 +64,8 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
     TextAreaResizeDirective,
     CommentsLengthPipe,
     RouterLink,
+    DecimalPipe,
+    CustomDecimalPipePipe,
   ],
   template: `
     @if (data$ | async; as data) {
@@ -157,7 +160,29 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
 
           <section class="w-full lg:w-1/2 lg:p-0 p-3">
             <hr />
+
             @for (item of data.content; track $index) {
+
+              @if ((item | typeof) !== 'image' && (item | typeof) !== 'quote') {
+
+                @if($index == data.content.length-1){
+
+                  @if(recommendations$ | async; as recommendations){
+                    @for(element of recommendations.slice(0,1); track $index){
+                      <a [routerLink]="[
+                '/article',
+                urlFormat(element.articleId!, element.heading),
+              ]" class=" min-h-fit w-full flex p-4 items-center border-[2px] border-gray-200 rounded-xl text-[1.14rem] hover:bg-slate-50 hover:border-l-4 hover:border-l-brandRed active:scale-[99%] ">
+                        <span class="font-bold mr-2">Read also: </span>
+                        <span>  {{element.heading}}</span>
+                    </a>
+                    }
+            }
+                  
+
+                }
+              }
+
               @if ((item | typeof) == 'paragraph') {
                 <p class="m-7 mx-0 text-[1.2rem]">
                   {{ $any(item).paragraph }}
@@ -171,10 +196,12 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
               @if ((item | typeof) == 'htmlContent') {
                 <div #htmlContent>
                   {{ $any(item).htmlContent }}
-              </div>
+                </div>
               }
               @if ((item | typeof) == 'quote') {
-                <blockquote class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] border-l-[2px] rounded-md border-black pl-7">
+                <blockquote
+                  class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] border-l-[2px]  border-brandRed pl-7"
+                >
                   <i> {{ $any(item).quote }} </i>
                 </blockquote>
               }
@@ -200,7 +227,23 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 </h4>
               }
             }
+            <ul class="flex flex-col sm:flex-row w-full h-fit mb-3">
+              <span class="mr-4 font-bold">Topics</span>
+              @for (item of data.topics; track $index) {
+                <li class="sm:mr-6 mt-1 sm:mt-0">
+                  <a
+                    [routerLink]="['/category/' + item.url]"
+                    class="font-normal articleLink"
+                  >
+                    {{ item.name }}</a
+                  >
+                </li>
+              }
+            </ul>
             <hr />
+            <div>AUTOR</div>
+            <hr />
+
           </section>
 
           <section
@@ -293,9 +336,33 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 </ng-container>
               }
             }
-            <div class="h-10"></div>
+          </section>
+
+          <section class="self-start h-fit lg:self-center lg:w-1/2 w-full mb-6 p-2 lg:p-0">
+            <hr>
+            @if(recommendations$ | async; as recommendations){
+              <span class="text-[1.3rem] font-bold"
+                >More from {{category()}}</span
+              >
+              <div class="grid grid-cols-3 w-full">
+                @for(item of recommendations.slice(1,recommendations.length-1); track $index){
+                  <div>{{item.heading}}</div>
+                }
+              </div>
+            }
           </section>
         </article>
+
+
+
+
+
+
+
+
+
+
+
       } @else if (!(authUser$ | async) || !(userInfo$ | async)?.subscription) {
         <article
           class="w-full  min-h-screen relative flex flex-col items-center  "
@@ -318,35 +385,36 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 >{{ data.frontImageAlt }}</span
               >
               <div class="lg:w-1/2 p-2 lg:p-0 flex items-start">
-              <h1
-                class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]  text-left lg:mb-4"
-              >
-                {{ data.heading }}
-              </h1>
-              <a
-                    [routerLink]="['/login']"
-                    [queryParams]="{
-                      redirect: 'article-' + id().split('-')[0],
-                    }"
-                    class="hover:bg-transparent hover:p-0"
+                <h1
+                  class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]  text-left lg:mb-4"
+                >
+                  {{ data.heading }}
+                </h1>
+                <a
+                  [routerLink]="['/login']"
+                  [queryParams]="{
+                    redirect: 'article-' + id().split('-')[0],
+                  }"
+                  class="hover:bg-transparent hover:p-0"
+                >
+                  <svg
+                    viewBox="0 0 28 28"
+                    class=" h-8 mt-4 stroke-black stroke-[2.3] fill-none"
                   >
-                    <svg
-                      viewBox="0 0 28 28"
-                      class=" h-8 mt-4 stroke-black stroke-[2.3] fill-none"
-                    >
-                      <g>
-                        <path
-                          d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
-                        ></path>
-                      </g>
-                    </svg>
-                  </a>
-                  </div>
-              <span class="lg:w-1/2 w-full text-start mb-4 p-2 lg:p-0 text-[1.1rem]"
+                    <g>
+                      <path
+                        d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
+                      ></path>
+                    </g>
+                  </svg>
+                </a>
+              </div>
+              <span
+                class="lg:w-1/2 w-full text-start mb-4 p-2 lg:p-0 text-[1.1rem]"
                 >Original source
                 <a
                   [href]="data.source"
-                  class="font-bold no-underline text-brandRed hover:bg-brandRed hover:p-[.1rem] hover:text-white "
+                  class="articleLink"
                   >here</a
                 ></span
               >
@@ -368,7 +436,9 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
                 </p>
               }
               @if ((item | typeof) == 'quote') {
-                <blockquote class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] border-l-[2px] rounded-md border-black pl-7">
+                <blockquote
+                  class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] border-l-[2px] rounded-md border-black pl-7"
+                >
                   <i> {{ $any(item).quote }} </i>
                 </blockquote>
               }
@@ -422,9 +492,8 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
             </div>
 
             <div
-              class="bg-gradient-to-t w-full h-96 from-black absolute bottom-0 lg:mb-0 mb-24"
+              class="bg-gradient-to-t w-full h-96 from-white absolute bottom-0 lg:mb-0 mb-24"
             ></div>
-
           </section>
         </article>
       }
@@ -432,18 +501,20 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
       <p>Loading...</p>
     }
   `,
-  styles: [`
-    a {
-      font-weight: 700;
-      color: #FD7E7E; 
-    }
-    a:hover {
-      color: #ffffff; 
-      background-color:#FD7E7E;
-      padding: .1rem 0 .1rem 0;
-    }
-`],
-  encapsulation: ViewEncapsulation.None
+  styles: [
+    `
+      .articleLink {
+        font-weight: 700;
+        color: #fd7e7e;
+      }
+      .articleLink:hover {
+        color: #ffffff;
+        background-color: #fd7e7e;
+        padding: 0.1rem 0 0.1rem 0;
+      }
+    `,
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SingleArticleComponent implements AfterViewInit {
   firebaseService = inject(FirebaseService);
@@ -452,21 +523,29 @@ export class SingleArticleComponent implements AfterViewInit {
 
   renderer = inject(Renderer2);
   @ViewChildren('htmlContent') htmlElements?: QueryList<
-    ElementRef<HTMLParagraphElement>|ElementRef<HTMLElement>
+    ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>
   >;
 
   ngAfterViewInit(): void {
     this.htmlElements?.changes.subscribe(
-      (query: QueryList<ElementRef<HTMLParagraphElement>|ElementRef<HTMLElement>>) => {
+      (
+        query: QueryList<
+          ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>
+        >,
+      ) => {
         query.forEach((item) => {
           const unparsedString = item.nativeElement.innerText;
 
           const parser = new DOMParser();
           const doc = parser.parseFromString(unparsedString, 'text/html');
 
-          this.renderer.setProperty(item.nativeElement, 'innerHTML',doc.body.innerHTML);
-          console.log(item)
-          console.log(doc.body)
+          this.renderer.setProperty(
+            item.nativeElement,
+            'innerHTML',
+            doc.body.innerHTML,
+          );
+          console.log(item);
+          console.log(doc.body);
         });
       },
     );
@@ -510,8 +589,24 @@ export class SingleArticleComponent implements AfterViewInit {
       const id = url.split('-');
       return id[0];
     }),
-    switchMap((id) => this.firebaseService.getSingleArticle(id)),
+    switchMap((id) => this.firebaseService.getSingleArticle(id).pipe(
+      map((res:Article)=>{
+        this.category.set(res.category)
+        return res
+      })
+    )),
   );
+
+  category = model<string>('')
+  recommendations$ = toObservable(this.category).pipe(
+    switchMap(category=> this.firebaseService.getMainCategoryArticles(category).pipe(
+      map((res:Article[])=>{
+        const id = this.id().split('-');
+
+        return res.filter(item=>item.articleId !== id[0])
+      })
+    ))
+  )
 
   heading = toSignal(this.data$);
 
@@ -522,6 +617,7 @@ export class SingleArticleComponent implements AfterViewInit {
     }),
     switchMap((id) => this.firebaseService.getArticleComments(id)),
   );
+
 
   constructor() {
     effect(() => {
@@ -567,5 +663,14 @@ export class SingleArticleComponent implements AfterViewInit {
 
   trimValidator(control: AbstractControl) {
     return control.value.trim() ? null : { blankText: true };
+  }
+
+  urlFormat(id: string, title: string) {
+    const formatTitle = title
+      .split(' ')
+      .join('-')
+      .replace(/[^A-Za-z0-9-._~:/?#\[\]@!$&'()*+]+/g, '')
+      .toLowerCase(); //valid url characters
+    return `${id}-${formatTitle}`;
   }
 }

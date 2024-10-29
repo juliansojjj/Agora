@@ -58,9 +58,29 @@ export class FirebaseService {
     return from(result);
   }
 
-  getCategoryArticles(category:string) {
+  getCategories() {
+    const ref = collection(this.firestoreService, 'categories')
+    const result = collectionData(query(ref,where('main','==',true)))
+
+    return from(result);
+  }
+  getMainCategoryArticles(category:string) {
+    const categoryArray = category.split(' ')
+    const name = categoryArray.join('-').toLowerCase()
+    
     const ref = collection(this.firestoreService, 'articles')
-    const result = collectionData(query(ref,where('category','==',category)), { idField: 'articleId' })
+    const result = collectionData(query(ref,where('category','==', name)), { idField: 'articleId' })
+
+    return from(result) ;
+    
+
+  }
+  getCategoryArticles(category:string) {
+    const categoryArray = category.split(' ')
+    const name = categoryArray.join('-').toLowerCase()
+    
+    const ref = collection(this.firestoreService, 'articles')
+    const result = collectionData(query(ref,where('urlTopics','array-contains', name)), { idField: 'articleId' })
 
     return from(result);
     

@@ -6,21 +6,25 @@ export interface Article {
   authorID: number;
   authorName: string;
 
+  priority:'high'|'medium'|'low';
   available: boolean;
   subscription: boolean;
 
-  category: string;
   content: contentItems[];
   contentPreview?: contentItems[];
   date: Timestamp;
-  priority:'high'|'medium'|'low';
-  topics:string[];
+  source:string;
+
+  category:string;
+  urlTopics:string[];
+  topics:{name:string,url:string}[];
 
   frontImage: string;
   frontImageAlt?: string;
   frontImageBanner?: boolean;
+
   heading: string;
-  subheading: string;
+  subheading?: string;
 }
 
 
