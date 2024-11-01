@@ -1,4 +1,6 @@
 import {
+  AfterViewChecked,
+  AfterViewInit,
   Component,
   effect,
   inject,
@@ -28,6 +30,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, filter, map, Observable, switchMap } from 'rxjs';
 import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.interfaces';
 import { Category } from '../../../shared/interfaces/category.interface';
+import { TitleStrategyService } from '../../services/title-strategy.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
@@ -35,13 +39,24 @@ import { Category } from '../../../shared/interfaces/category.interface';
   imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
     <header
-      class="w-full  flex-col justify-between flex p-2 sticky top-0 left-0 z-10 bg-red-100" [ngClass]="reduced() ? 'h-[4.5rem]' : 'h-[12rem]' "
+      class="w-full  flex-col justify-between flex p-2 sticky top-0 left-0 z-10 bg-red-100"
+      [ngClass]="reduced() ? 'h-[4.5rem]' : 'h-[12rem]'"
     >
       <nav>
-        <ul class=" w-full relative" [ngClass]="visibility() ? 'grid grid-cols-[1fr_1fr_1fr]' : 'flex justify-center' ">
-
+        <ul
+          class=" w-full relative"
+          [ngClass]="
+            visibility()
+              ? 'grid grid-cols-[1fr_1fr_1fr]'
+              : 'flex justify-center'
+          "
+        >
           <ng-container *ngIf="visibility()">
-            <li class="place-self-start">dsa</li>
+            <li class="place-self-start">
+              @if(articleRoute()){
+                {{ routeTitle() == 'Agora' ? '' : routeTitle() }}
+              }
+            </li>
           </ng-container>
 
           <li class="place-self-center">
@@ -67,16 +82,17 @@ import { Category } from '../../../shared/interfaces/category.interface';
         </ul>
       </nav>
 
-      <hr>
+      <hr />
 
       <ng-container *ngIf="visibility() && !reduced()">
-      <ul class="flex justify-evenly w-full h-4 relative bg-slate-300">
-        @for (item of categories(); track $index) {
-          <li><a [routerLink]="['/category', item.url]">{{item.name}}</a></li>
-        }
+        <ul class="flex justify-evenly w-full h-4 relative bg-slate-300">
+          @for (item of categories(); track $index) {
+            <li>
+              <a [routerLink]="['/category', item.url]">{{ item.name }}</a>
+            </li>
+          }
         </ul>
       </ng-container>
-
 
       <ng-template #login>
         <a [routerLink]="['/subscription']">SUBSCRIBE FOR $0</a>
@@ -86,9 +102,14 @@ import { Category } from '../../../shared/interfaces/category.interface';
   `,
   styles: ``,
 })
-export class HeaderComponent {
+export class HeaderComponent implements AfterViewChecked {
   firebaseService = inject(FirebaseService);
   router = inject(Router);
+  asd = inject(TitleStrategyService);
+  title = inject(Title);
+
+  routeTitle = model<string>('');
+  articleRoute = model<boolean>(false);
 
   authState$ = this.firebaseService.authState$;
   authState = toSignal(this.authState$);
@@ -111,12 +132,19 @@ export class HeaderComponent {
     ),
   );
 
+  ngAfterViewChecked(): void {
+    this.routeTitle.set(this.title.getTitle());
+
+  }
+
   constructor() {
-    // this.authState$.subscribe((res: any) => console.log(res));
+    // this.routeTitle.set(this.title.getTitle())
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
+        this.routeTitle.set('');
+        this.articleRoute.set(false)
         if (
           event.url === '/login' ||
           event.url === '/register' ||
@@ -125,11 +153,11 @@ export class HeaderComponent {
           this.visibility.set(false);
         } else {
           this.visibility.set(true);
-        } 
-        if(event.url.split('/')[1] === 'article'){
-          this.reduced.set(true);
         }
-        else{ 
+        if (event.url.split('/')[1] === 'article') {
+          this.articleRoute.set(true)
+          this.reduced.set(true);
+        } else {
           this.reduced.set(false);
         }
       });

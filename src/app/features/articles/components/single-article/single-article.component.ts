@@ -544,8 +544,6 @@ export class SingleArticleComponent implements AfterViewInit {
             'innerHTML',
             doc.body.innerHTML,
           );
-          console.log(item);
-          console.log(doc.body);
         });
       },
     );
@@ -576,7 +574,6 @@ export class SingleArticleComponent implements AfterViewInit {
 
       return this.firebaseService.getUserInfo(auth.uid).pipe(
         map((res: FirestoreCollectionUser) => {
-          console.log(res);
           this.userInfo.set(res);
           return res;
         }),

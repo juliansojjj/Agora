@@ -64,6 +64,15 @@ export class FirebaseService {
 
     return from(result);
   }
+  getCategory(url:string) {
+    const ref = collection(this.firestoreService, 'categories')
+    const result = collectionData(query(ref,where('url','==',url)))
+
+    return from(result);
+  }
+
+
+
   getMainCategoryArticles(category:string) {
     const categoryArray = category.split(' ')
     const name = categoryArray.join('-').toLowerCase()
@@ -72,8 +81,6 @@ export class FirebaseService {
     const result = collectionData(query(ref,where('category','==', name)), { idField: 'articleId' })
 
     return from(result) ;
-    
-
   }
   getCategoryArticles(category:string) {
     const categoryArray = category.split(' ')
@@ -83,9 +90,9 @@ export class FirebaseService {
     const result = collectionData(query(ref,where('urlTopics','array-contains', name)), { idField: 'articleId' })
 
     return from(result);
-    
-
   }
+
+
   getSingleArticle(id:string) {
     const ref = doc(this.firestoreService, 'articles', id);
     const result = docData(ref)
