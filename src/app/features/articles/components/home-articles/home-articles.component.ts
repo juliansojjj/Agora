@@ -36,9 +36,9 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
   template: `
     @if (articles()) {
       <main class="flex flex-col items-center min-h-screen relative w-full">
-        <button (click)="docUpload()">SUBIR DOC</button>
+        <!-- <button (click)="docUpload()">SUBIR DOC</button> -->
 
-        <section class="grid grid-cols-3 grid-rows-1 gap-5 lg:w-1/2 place-items-center pt-4 bg-red-700 h-[65vh]">
+        <section class="grid grid-cols-3 grid-rows-1 gap-5 lg:w-3/5 place-items-center pt-4 bg-red-700 h-[65vh]">
           
           <div class="grid grid-cols-1 grid-rows-2 gap-2">
           @for(item of (mediumPriorArticles() | orderArticlesByDate).slice(0,2); track $index; let i = $index){
@@ -103,7 +103,7 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
 
 
 
-        <section class="bg-green-200  lg:w-1/2 ">
+        <section class="bg-green-200  lg:w-3/5 w-full ">
         @for(item of articles(); track $index; let i = $index){
           <a
               class="bg-slate-200"
