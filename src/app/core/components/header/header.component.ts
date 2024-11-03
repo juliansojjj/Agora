@@ -56,17 +56,17 @@ import { Title } from '@angular/platform-browser';
           </ul>
         }@else {
           <ul
-          class=" w-full lg:w-3/5 relative grid grid-cols-[1fr_1fr_1fr]  my-auto" [ngClass]="reduced() ? 'h-[5rem]' : 'h-[8.5rem]'"
+          class=" w-full lg:w-3/5 relative grid grid-cols-[1fr_1fr_1fr] pt-6" [ngClass]="reduced() ? 'h-[5rem]' : 'h-[8.5rem]'"
           
         >
-            <li class="place-self-start flex h-full items-center">
+            <li class="place-self-start flex ">
               <span>busqueda</span>
               @if (articleRoute()) {
                 <span>{{ routeTitle() == 'Agora' ? '' : routeTitle() }}</span>
               }
             </li>
 
-          <li class="place-self-center">
+          <li class="mx-auto">
             <a routerLink="/">
               <img
                 src="agora-logo.svg"
@@ -75,40 +75,18 @@ import { Title } from '@angular/platform-browser';
             </a>
           </li>
 
-            <li class=" place-content-end flex items-center">
+            <li class=" place-content-end flex items-start">
               @if(!authState()){
-                <a [routerLink]="['/subscription']" class="bg-brandRed text-white w-fit font-medium h-7 pt-1 px-3 rounded-lg hover:text-orange-900 active:scale-95 ">Subscribe for $0</a>
-                <a [routerLink]="['/login']" class="bg-white text-gray-300 font-medium w-fit h-7 pt-[.05rem] px-3 rounded-lg border-2 border-gray-200 hover:bg-slate-50 active:scale-95 ml-3">Login</a>
+                <a [routerLink]="['/subscription']" class=" min-w-fit font-medium h-7 flex items-center px-3 bg-brandRed text-white hover:text-brandRed hover:bg-white hover:border-2 hover:border-brandRed active:scale-95 ">Subscribe for $0</a>
+                <a [routerLink]="['/login']" class=" font-medium min-w-fit h-7  flex items-center px-3  bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandRed active:scale-95 ml-3">Login</a>
               }
               @else if(!(subscriptionState$ | async)?.subscription) {
-                <a [routerLink]="['/subscription']">Subscribe for $0</a>
+                <a [routerLink]="['/subscription']" class=" min-w-fit font-medium h-7 flex items-center px-3 bg-brandRed text-white hover:text-brandRed hover:bg-white hover:border-2 hover:border-brandRed active:scale-95 ">Subscribe for $0</a>
               }
               @else {
               <button (click)="menuTrigger()">Account</button>
               }
-              
-
-
-
-              <!-- <ng-container *ngIf="authState(); else login">
-                <ng-container *ngIf="subscriptionState$ | async as subscription">
-                  <ng-container *ngIf="!subscription.subscription">
-                    <a [routerLink]="['/subscription']">SUBSCRIBE FOR $0</a>
-                  </ng-container>
-                </ng-container>
-
-                <button (click)="menuTrigger()">Account</button>
-              </ng-container> -->
-<!-- 
-  si esta logueado 
-    si hay data suscripcion
-      si no esta suscrito   
-              button
-    button   
-  else 
-    botton
-    botton
--->
+            
 
             </li>
         </ul>
@@ -124,18 +102,11 @@ import { Title } from '@angular/platform-browser';
         @if(visibility() && !reduced()){
           <ul class="flex justify-between items-center lg:w-3/5 w-full flex-grow relative ">
           @for (item of categories(); track $index) {
-            <li>
-              <a [routerLink]="['/category', item.url]">{{ item.name }}</a>
-            </li>
+              <a [routerLink]="['/category', item.url]" class="hover:bg-black flex-grow text-center hover:text-white">{{ item.name }}</a>
           }
         </ul>
         }
-        
-
-      <!-- <ng-template #login>
-        <a [routerLink]="['/subscription']">SUBSCRIBE FOR $0</a>
-        <a [routerLink]="['/login']">Login</a>
-      </ng-template> -->
+     
     </header>
   `,
   styles: ``,

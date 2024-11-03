@@ -74,24 +74,9 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
           class="w-full  min-h-screen relative flex flex-col items-center  "
         >
           <section class=" w-full flex  flex-col items-center ">
-            @if (data.frontImageBanner) {
-              <img
-                src="{{ data.frontImage }}"
-                alt="{{ data.frontImageAlt }}"
-                class="relative w-full object-cover"
-              />
-            } @else {
-              <img
-                src="{{ data.frontImage }}"
-                alt="{{ data.frontImageAlt }}"
-                class="relative w-full lg:w-1/2 object-cover"
-              />
-              <span class="lg:w-1/2 self-start lg:self-center mb-2">{{
-                data.frontImageAlt
-              }}</span>
-
+            @if (!data.frontImageBanner) {
               <div
-                class="lg:w-1/2 p-2 lg:p-0 lg:my-4 flex justify-between items-start"
+                class=" w-full  lg:w-1/2 p-2 lg:p-0 mt-14 flex justify-between items-start"
               >
                 <div>
                   <h1
@@ -155,11 +140,27 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
                   </a>
                 }
               </div>
+              <img
+                src="{{ data.frontImage }}"
+                alt="{{ data.frontImageAlt }}"
+                class="relative w-full  lg:w-1/2 object-cover mt-8"
+              />
+              <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4">{{
+                data.frontImageAlt
+              }}</span>
+
+              
+              
+            } @else {
+              <img
+                src="{{ data.frontImage }}"
+                alt="{{ data.frontImageAlt }}"
+                class="relative w-full object-cover"
+              />
             }
           </section>
 
-          <section class="w-full lg:w-1/2 lg:p-0 p-3">
-            <hr />
+          <section class="w-full  lg:w-1/3 2xl:w-1/4 lg:p-0 p-3">
 
             @for (item of data.content; track $index) {
 
@@ -172,7 +173,7 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
                       <a [routerLink]="[
                 '/article',
                 urlFormat(element.articleId!, element.heading),
-              ]" class=" min-h-fit w-full flex p-4 items-center border-[2px] border-gray-200 rounded-xl text-[1.14rem] hover:bg-slate-50 hover:border-l-4 hover:border-l-brandRed active:scale-[99%] ">
+              ]" class=" min-h-fit w-full flex flex-col p-4 justify-center border-[2px] border-gray-200 text-[1.14rem] hover:bg-gray-50 hover:border-l-4 hover:border-l-brandRed active:scale-[99%] ">
                         <span class="font-bold mr-2">Read also: </span>
                         <span>  {{element.heading}}</span>
                     </a>
@@ -200,7 +201,7 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
               }
               @if ((item | typeof) == 'quote') {
                 <blockquote
-                  class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] border-l-[2px]  border-brandRed pl-7"
+                  class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandRed pl-7"
                 >
                   <i> {{ $any(item).quote }} </i>
                 </blockquote>
@@ -247,7 +248,7 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
           </section>
 
           <section
-            class="self-start h-fit lg:self-center lg:w-1/2 w-full mt-6 mb-6 p-2 lg:p-0"
+            class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mt-6 mb-6 p-2 lg:p-0"
           >
             @if (comments$ | async | orderByDate; as comments) {
               <span class="text-[1.3rem] font-bold"
@@ -287,15 +288,16 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
                   @if (form.controls.text.touched || form.controls.text.dirty) {
                     <div class="flex self-end ">
                       <button
+                        type="reset"
                         (click)="form.reset()"
-                        class="w-fit p-[.35rem] px-3 border-2 text-slate-500 border-slate-100 active:bg-slate-100 active:scale-95 rounded-lg mt-4 font-medium self-end mr-4"
+                        class="h-7 min-w-fit p-auto px-3 bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandRed active:scale-95  mt-4 font-medium self-end mr-4"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
                         [disabled]="form.invalid"
-                        class="w-fit p-[.35rem] px-3  bg-brandRed text-white active:bg-red-900 active:scale-95 rounded-lg mt-4 font-medium"
+                        class="h-7 min-w-fit py-auto px-3 bg-brandRed text-white border-2 border-transparent hover:border-brandRed hover:text-brandRed hover:bg-white active:scale-95  mt-4 font-medium box-border"
                       >
                         Comment
                       </button>
@@ -338,7 +340,7 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
             }
           </section>
 
-          <section class="self-start h-fit lg:self-center lg:w-1/2 w-full mb-6 p-2 lg:p-0">
+          <section class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mb-6 p-2 lg:p-0">
             <hr>
             @if(recommendations$ | async; as recommendations){
               <span class="text-[1.3rem] font-bold"
@@ -378,13 +380,13 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
               <img
                 src="{{ data.frontImage }}"
                 alt="{{ data.frontImageAlt }}"
-                class="relative w-full lg:w-1/2 object-cover"
+                class="relative w-full  lg:w-1/3 2xl:w-1/4 object-cover"
               />
               <span
-                class="lg:w-1/2 self-start lg:self-center mb-2 p-2 lg:p-0"
+                class=" lg:w-1/3 2xl:w-1/4 self-start lg:self-center mb-2 p-2 lg:p-0"
                 >{{ data.frontImageAlt }}</span
               >
-              <div class="lg:w-1/2 p-2 lg:p-0 flex items-start">
+              <div class=" lg:w-1/3 2xl:w-1/4 p-2 lg:p-0 flex items-start">
                 <h1
                   class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]  text-left lg:mb-4"
                 >
@@ -410,7 +412,7 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
                 </a>
               </div>
               <span
-                class="lg:w-1/2 w-full text-start mb-4 p-2 lg:p-0 text-[1.1rem]"
+                class=" lg:w-1/3 2xl:w-1/4 w-full text-start mb-4 p-2 lg:p-0 text-[1.1rem]"
                 >Original source
                 <a
                   [href]="data.source"
@@ -422,7 +424,7 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
             <hr />
           </section>
 
-          <section class="w-full lg:w-1/2 lg:p-0 p-3">
+          <section class="w-full  lg:w-1/3 2xl:w-1/4 lg:p-0 p-3">
             <hr />
             @for (item of data.contentPreview; track $index) {
               @if ((item | typeof) == 'paragraph') {
@@ -435,9 +437,14 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
                   {{ $any(item).htmlParagraph }}
                 </p>
               }
+              @if ((item | typeof) == 'htmlContent') {
+                <div #htmlContent>
+                  {{ $any(item).htmlContent }}
+                </div>
+              }
               @if ((item | typeof) == 'quote') {
                 <blockquote
-                  class="m-12 mx-0 w-5/6 sm:w-2/3 text-[1.3rem] border-l-[2px] rounded-md border-black pl-7"
+                  class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandRed pl-7"
                 >
                   <i> {{ $any(item).quote }} </i>
                 </blockquote>
@@ -463,6 +470,9 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
                   {{ $any(item).subtitle }}
                 </h4>
               }
+
+
+              
             }
           </section>
 
@@ -480,7 +490,7 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
               <div class="relative w-full  flex items-end lg:h-fit h-44 ">
                 <a
                   routerLink="/subscription"
-                  class="bg-brandRed text-white hover:p-3 hover:text-black w-44 p-3 h-12 rounded-lg text-[1.1rem] text-center font-medium absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2 z-10  active:scale-[95%]"
+                  class="bg-brandRed text-white hover:p-3 hover:bg-orange-900 w-44 p-3 h-12 rounded-lg text-[1.1rem] text-center font-medium absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2 z-10  active:scale-[95%]"
                   >Subscribe for <b>$0</b>
                 </a>
                 <img

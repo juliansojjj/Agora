@@ -9,6 +9,7 @@ module.exports = {
       },
       colors: {
         brandRed: "#FD7E7E",
+        darkBrandRed: "#523434",
       },
     },
   },
