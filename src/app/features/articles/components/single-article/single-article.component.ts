@@ -48,6 +48,7 @@ import {
 import { TextAreaResizeDirective } from '../../directives/text-area-resize.directive';
 import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
 import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
+import { ArticleHeaderComponent } from '../article-header/article-header.component';
 
 @Component({
   selector: 'app-single-article',
@@ -66,10 +67,14 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
     RouterLink,
     DecimalPipe,
     CustomDecimalPipePipe,
+    ArticleHeaderComponent
   ],
   template: `
     @if (data$ | async; as data) {
+      <app-article-header [banner]="data.frontImageBanner"/>
+
       @if (!data.subscription || (userInfo$ | async)?.subscription) {
+        
         <article
           class="w-full  min-h-screen relative flex flex-col items-center  "
         >
@@ -84,6 +89,7 @@ import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
                   >
                     {{ data.heading }}
                   </h1>
+                  <h2>{{ data.subheading }}</h2>
                   <span class="text-[1.1rem]"
                     >Original source
                     <a
