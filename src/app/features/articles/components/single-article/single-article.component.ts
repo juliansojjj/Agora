@@ -78,14 +78,14 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
         <article
           class="w-full  min-h-screen relative flex flex-col items-center  "
         >
-          <section class=" w-full flex  flex-col items-center ">
+          <section class=" w-full flex  flex-col items-center relative">
             @if (!data.frontImageBanner) {
               <div
                 class=" w-full  lg:w-1/2 p-2 lg:p-0 mt-14 flex justify-between items-start"
               >
                 <div>
                   <h1
-                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left mb-4"
+                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left mb-4 "
                   >
                     {{ data.heading }}
                   </h1>
@@ -158,10 +158,23 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
               
               
             } @else {
+              <div class="w-full absolute z-10 bottom-0 text-white ">
+                <div class="mb-20 pl-16">
+                <h1
+                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[2.8rem] text-left leading-[3.6rem] mb-6 "
+                  >
+                    {{ data.heading }}
+                  </h1>
+                  <h2 class="text-[1rem] md:text-[1rem] lg:text-[1.3rem] xl:text-[1.4rem]">{{ data.subheading }}</h2>
+                </div>
+              
+                  <div class="bg-gradient-to-t w-full h-96 from-black absolute bottom-0 -z-10"></div>
+              </div>
+              
               <img
                 src="{{ data.frontImage }}"
                 alt="{{ data.frontImageAlt }}"
-                class="relative w-full object-cover"
+                class="relative w-full h-screen object-cover"
               />
             }
           </section>
@@ -527,6 +540,11 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
         color: #ffffff;
         background-color: #fd7e7e;
         padding: 0.1rem 0 0.1rem 0;
+      }
+
+      .bannerTitle{
+        color:white;
+        text-shadow: 5px 0px 0px black;
       }
     `,
   ],
