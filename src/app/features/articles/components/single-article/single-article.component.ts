@@ -15,6 +15,7 @@ import {
   Renderer2,
   Signal,
   signal,
+  ViewChild,
   ViewChildren,
   ViewEncapsulation,
   WritableSignal,
@@ -26,13 +27,13 @@ import {
 } from '../../../../shared/interfaces/article.interface';
 import { catchError, EMPTY, map, Observable, switchMap, take } from 'rxjs';
 import { NgIf, AsyncPipe, NgClass, DecimalPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 import { DocumentSnapshot, SnapshotOptions } from '@angular/fire/firestore';
 import { DataSnapshot } from '@angular/fire/database';
 import { Title } from '@angular/platform-browser';
 import { TypeofPipe } from '../../pipes/typeof.pipe';
-import { TimestampConvertPipe } from '../../pipes/timestamp-convert.pipe';
 import { OrderByDatePipe } from '../../pipes/order-by-date.pipe';
 import {
   FirebaseAuthUser,
@@ -57,6 +58,7 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
     NgIf,
     AsyncPipe,
     TypeofPipe,
+    DatePipe,
     NgClass,
     TimestampConvertPipe,
     OrderByDatePipe,
@@ -71,7 +73,7 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
   ],
   template: `
     @if (data$ | async; as data) {
-      <app-article-header [banner]="data.frontImageBanner"/>
+      <app-article-header [banner]="data.frontImageBanner" [headingInfo]="headingInfo()" />
 
       @if (!data.subscription || (userInfo$ | async)?.subscription) {
         
@@ -81,23 +83,26 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
           <section class=" w-full flex  flex-col items-center relative">
             @if (!data.frontImageBanner) {
               <div
-                class=" w-full  lg:w-1/2 p-2 lg:p-0 mt-14 flex justify-between items-start"
+                class=" w-full  lg:w-1/2 p-2 lg:p-0 mt-4 flex justify-between items-start"
               >
-                <div>
+                <div #domHeading>
                   <h1
-                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left mb-4 "
+                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left mb-4 "  
                   >
                     {{ data.heading }}
                   </h1>
-                  <h2>{{ data.subheading }}</h2>
+                  <h2 >{{ data.subheading }}</h2>
                   <span class="text-[1.1rem]"
                     >Original source
                     <a
                       [href]="data.source"
                       class="font-bold no-underline text-brandRed hover:bg-brandRed hover:p-[.1rem] hover:text-white"
                       >here</a
-                    ></span
-                  >
+                    ></span>
+                  <div class="text-[1.25rem] mt-5">
+                    <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
+                    <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
+                  </div>
                 </div>
 
                 @if (
@@ -114,6 +119,11 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
                   </button>
                 } @else if (userInfo$ | async) {
                   <button (click)="favoriteHandle(true)">
+                  <svg viewBox="0 0 12 10"
+                  class="h-8  stroke-black stroke-[1.5] fill-none "
+                  >
+                    <polygon points="1.5,0 1.5,12 6,9.8181763 10.5,12 10.5,0 "/>
+                </svg>
                     <svg
                       viewBox="0 0 28 28"
                       class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none "
@@ -158,8 +168,8 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
               
               
             } @else {
-              <div class="w-full absolute z-10 bottom-0 text-white ">
-                <div class="mb-20 pl-16">
+              <div class="w-full absolute z-10 bottom-0 text-white  " >
+                <div class="mb-20 pl-16" #domHeading>
                 <h1
                     class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[2.8rem] text-left leading-[3.6rem] mb-6 "
                   >
@@ -180,7 +190,20 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
           </section>
 
           <section class="w-full  lg:w-1/3 2xl:w-1/4 lg:p-0 p-3">
-
+            @if(data.frontImageBanner){
+              
+              <div class="text-[1.25rem] mt-5 mb-3">
+                    <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
+                    <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
+                  </div>
+                  <span class="text-[1.1rem]"
+                    >Original source
+                    <a
+                      [href]="data.source"
+                      class="font-bold no-underline text-brandRed hover:bg-brandRed hover:p-[.1rem] hover:text-white"
+                      >here</a
+                    ></span>
+            }
             @for (item of data.content; track $index) {
 
               @if ((item | typeof) !== 'image' && (item | typeof) !== 'quote') {
@@ -333,7 +356,7 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
                         <span class="font-medium text-[1.2rem]"
                           >{{ item.username }}
                         </span>
-                        <span> {{ item.date | timestampConvert }} </span>
+                        <span>{{ item.date.toDate() | date: 'MM/dd/yyyy' }}</span> 
                       </div>
                       @if (item.uid === uid()) {
                         <button (click)="onCommentDelete(item.commentId!)">
@@ -550,7 +573,7 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class SingleArticleComponent implements AfterViewInit {
+export class SingleArticleComponent implements AfterViewInit, OnInit {
   firebaseService = inject(FirebaseService);
   id = input.required<string>();
   title = inject(Title);
@@ -559,6 +582,26 @@ export class SingleArticleComponent implements AfterViewInit {
   @ViewChildren('htmlContent') htmlElements?: QueryList<
     ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>
   >;
+  
+  @ViewChild('domHeading') domHeading?:ElementRef;
+  ngOnInit(): void {
+    document.addEventListener('scroll', () => {
+      this.headingCheck()
+    })  
+  }
+  headingInfo = model('')
+  headingCheck(){
+    const top = this.domHeading?.nativeElement.getBoundingClientRect().top
+    const height = this.domHeading?.nativeElement.getBoundingClientRect().height
+
+    if(top <= -height*.45){
+      this.headingInfo.set(this.heading()?.heading!)
+    } else{
+      this.headingInfo.set('')
+
+    }
+
+  }
 
   ngAfterViewInit(): void {
     this.htmlElements?.changes.subscribe(

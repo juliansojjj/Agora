@@ -8,6 +8,10 @@ import {
   model,
   OnInit,
   output,
+  QueryList,
+  Renderer2,
+  ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import {
   AsyncPipe,
@@ -32,6 +36,7 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
 import { Category } from '../../../../shared/interfaces/category.interface';
 import { TitleStrategyService } from '../../../../core/services/title-strategy.service';
 import { Title } from '@angular/platform-browser';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-article-header',
@@ -40,7 +45,7 @@ import { Title } from '@angular/platform-browser';
   template: `
     <header
       class="w-full flex top-0 left-0 z-20 h-[7.5rem]  "
-      [ngClass]="banner() ? 'fixed bannerHeader' : 'sticky bg-white'"
+      [ngClass]="banner() ? 'fixed bannerHeader' : 'sticky bg-white'" 
     >
       <nav class="w-full flex  " [ngClass]="banner() ? 'bannerNav' : 'justify-between'">
 
@@ -48,6 +53,8 @@ import { Title } from '@angular/platform-browser';
           <a routerLink="/" class="h-fit self-center ">
             <img src="agora-logo.svg" class="h-[4rem]" [ngClass]="banner() ? 'bannerLogo' : 'ml-12'"/>
           </a>
+
+          <span>{{headingInfo()}}</span>
 
           <div class=" w-fit h-full relative  grid-rows-2" [ngClass]="banner() ? 'bannerNavElements' : 'grid'">
             <div class="flex justify-end pr-7">
@@ -176,10 +183,10 @@ import { Title } from '@angular/platform-browser';
 export class ArticleHeaderComponent implements AfterViewChecked {
   firebaseService = inject(FirebaseService);
   router = inject(Router);
-  asd = inject(TitleStrategyService);
   title = inject(Title);
 
   banner = input()
+  headingInfo = input()
 
   routeTitle = model<string>('');
   articleRoute = model<boolean>(false);
@@ -197,6 +204,8 @@ export class ArticleHeaderComponent implements AfterViewChecked {
   menu = model<boolean>();
   visibility = model<boolean>(true);
   reduced = model<boolean>(false);
+  
+
 
   categories = toSignal<Category[]>(
     this.firebaseService.getCategories().pipe(
