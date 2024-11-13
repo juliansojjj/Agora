@@ -15,11 +15,11 @@ import { TitleStrategyService } from './core/services/title-strategy.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideExperimentalZonelessChangeDetection(), 
+    // provideExperimentalZonelessChangeDetection(), 
     provideRouter(routes,withComponentInputBinding()), 
     provideClientHydration(), 
-    // provideHttpClient(withInterceptors([errorHandlerInterceptor])),
-    provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),
+    provideHttpClient(withInterceptors([errorHandlerInterceptor])),
+    // provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),
     provideFirebaseApp(()=>initializeApp(environment.firebase)),
     provideAuth(()=>getAuth()),
     provideFirestore(()=>getFirestore()),

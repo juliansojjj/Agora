@@ -51,10 +51,10 @@ import { ElementRef } from '@angular/core';
 
 
           <a routerLink="/" class="h-fit self-center ">
-            <img src="agora-logo.svg" class="h-[4rem]" [ngClass]="banner() ? 'bannerLogo' : 'ml-12'"/>
+            <img src="agora-logo.svg" class="h-[4rem]" [ngClass]="banner() ? 'bannerLogo' : '2xl:pl-12 pl-4'"/>
           </a>
 
-          <span>{{headingInfo()}}</span>
+          <span class="h-fit self-center hidden lg:block  text-[1.3rem] font-medium pl-4">{{headingInfo()}}</span>
 
           <div class=" w-fit h-full relative  grid-rows-2" [ngClass]="banner() ? 'bannerNavElements' : 'grid'">
             <div class="flex justify-end pr-7">

@@ -1,13 +1,13 @@
 import { Component, inject, input, model, OnInit, output, Signal } from '@angular/core';
-import { FirebaseService } from '../../services/firebase.service';
+import { FirebaseService } from '../../../../core/services/firebase.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FirebaseAuthUser, FirestoreCollectionUser } from '../../../shared/interfaces/firebase.interfaces';
+import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.interfaces'; 
 import { Observable, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'app-article-menu',
   standalone: true,
   imports: [AsyncPipe, RouterLink],
   template: `
@@ -57,7 +57,7 @@ import { RouterLink } from '@angular/router';
   `,
   styles: ``,
 })
-export class MenuComponent{
+export class ArticleMenuComponent{
   firebaseService = inject(FirebaseService);
   menu = model<boolean>();
   firebaseAuth = inject(FirebaseService)

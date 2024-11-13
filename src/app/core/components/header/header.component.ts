@@ -70,7 +70,7 @@ import { Title } from '@angular/platform-browser';
                 </svg>
               </button>
               @if (authState()) {
-                <button (click)="menuTrigger()" class="ml-7">
+                <button (click)="menuTrigger()" class="ml-7 active:scale-[85%]">
                   <svg viewBox="0 0 44 36" class="h-[1.55rem]">
                     <path
                       d="M0 18H44M0 3H44M0 33H44"

@@ -50,6 +50,7 @@ import { TextAreaResizeDirective } from '../../directives/text-area-resize.direc
 import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
 import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
 import { ArticleHeaderComponent } from '../article-header/article-header.component';
+import { ArticleMenuComponent } from '../article-menu/article-menu.component';
 
 @Component({
   selector: 'app-single-article',
@@ -60,7 +61,6 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
     TypeofPipe,
     DatePipe,
     NgClass,
-    TimestampConvertPipe,
     OrderByDatePipe,
     RouterLink,
     ReactiveFormsModule,
@@ -69,11 +69,13 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
     RouterLink,
     DecimalPipe,
     CustomDecimalPipePipe,
-    ArticleHeaderComponent
+    ArticleHeaderComponent,
+    ArticleMenuComponent
   ],
   template: `
     @if (data$ | async; as data) {
-      <app-article-header [banner]="data.frontImageBanner" [headingInfo]="headingInfo()" />
+      <app-article-header [banner]="data.frontImageBanner" [headingInfo]="headingInfo()" [(menu)]="menu"/>
+      <app-article-menu  [(menu)]="menu"/>
 
       @if (!data.subscription || (userInfo$ | async)?.subscription) {
         
@@ -91,7 +93,7 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
                   >
                     {{ data.heading }}
                   </h1>
-                  <h2 >{{ data.subheading }}</h2>
+                  <h2 class="lg:text-[1.5rem] mb-9">{{ data.subheading }}</h2>
                   <span class="text-[1.1rem]"
                     >Original source
                     <a
@@ -99,40 +101,23 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
                       class="font-bold no-underline text-brandRed hover:bg-brandRed hover:p-[.1rem] hover:text-white"
                       >here</a
                     ></span>
-                  <div class="text-[1.25rem] mt-5">
-                    <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
-                    <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
-                  </div>
-                </div>
-
-                @if (
+                  <div class="text-[1.25rem] mt-5 flex justify-between">
+                    <div>
+                      <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
+                      <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
+                    </div>
+                    @if (
                   (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
                 ) {
                   <button (click)="favoriteHandle(false)">
-                    <svg viewBox="0 0 28 28" class=" h-8 mt-2 fill-black">
-                      <g>
-                        <path
-                          d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
-                        ></path>
-                      </g>
+                  <svg class="h-8 fill-black" viewBox="0 0 166 232">
+                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
                     </svg>
                   </button>
                 } @else if (userInfo$ | async) {
                   <button (click)="favoriteHandle(true)">
-                  <svg viewBox="0 0 12 10"
-                  class="h-8  stroke-black stroke-[1.5] fill-none "
-                  >
-                    <polygon points="1.5,0 1.5,12 6,9.8181763 10.5,12 10.5,0 "/>
-                </svg>
-                    <svg
-                      viewBox="0 0 28 28"
-                      class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none "
-                    >
-                      <g>
-                        <path
-                          d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
-                        ></path>
-                      </g>
+                    <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
+                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
                     </svg>
                   </button>
                 } @else {
@@ -143,18 +128,15 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
                     }"
                     class="hover:bg-transparent hover:p-0"
                   >
-                    <svg
-                      viewBox="0 0 28 28"
-                      class=" h-8 mt-2 stroke-black stroke-[2.3] fill-none"
-                    >
-                      <g>
-                        <path
-                          d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
-                        ></path>
-                      </g>
+                  <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
+                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
                     </svg>
                   </a>
                 }
+                  </div>
+                </div>
+
+                
               </div>
               <img
                 src="{{ data.frontImage }}"
@@ -192,10 +174,43 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
           <section class="w-full  lg:w-1/3 2xl:w-1/4 lg:p-0 p-3">
             @if(data.frontImageBanner){
               
-              <div class="text-[1.25rem] mt-5 mb-3">
-                    <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
-                    <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
-                  </div>
+              <div class="text-[1.25rem] mt-5 mb-3 flex justify-between">
+                <div>
+                <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
+                <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
+                </div>
+                    
+
+                    @if (
+                  (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
+                ) {
+                  <button (click)="favoriteHandle(false)">
+                  <svg class="h-8 fill-black" viewBox="0 0 166 232">
+                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                    </svg>
+                  </button>
+                } @else if (userInfo$ | async) {
+                  <button (click)="favoriteHandle(true)">
+                    <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
+                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                    </svg>
+                  </button>
+                } @else {
+                  <a
+                    [routerLink]="['/login']"
+                    [queryParams]="{
+                      redirect: 'article-' + id().split('-')[0],
+                    }"
+                    class="hover:bg-transparent hover:p-0"
+                  >
+                  <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
+                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                    </svg>
+                  </a>
+                }
+              </div>
+
+
                   <span class="text-[1.1rem]"
                     >Original source
                     <a
@@ -625,6 +640,9 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
       },
     );
   }
+
+  menu:boolean = false;
+
 
   authUser$ = this.firebaseService.authState$;
 
