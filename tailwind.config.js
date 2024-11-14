@@ -8,6 +8,7 @@ module.exports = {
         xsm: "425px",
       },
       colors: {
+        brandGrey:"#F8F8F8",
         brandRed: "#FD7E7E",
         darkBrandRed: "#523434",
       },
