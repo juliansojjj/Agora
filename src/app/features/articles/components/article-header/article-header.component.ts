@@ -44,7 +44,7 @@ import { ElementRef } from '@angular/core';
   imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
     <header
-      class="w-full flex top-0 left-0 z-20 h-[7.5rem]  "
+      class="w-full flex top-0 left-0 z-50 h-[7.5rem]  "
       [ngClass]="banner() ? 'fixed bannerHeader' : 'sticky bg-white'" 
     >
       <nav class="w-full flex  " [ngClass]="banner() ? 'bannerNav' : 'justify-between'">

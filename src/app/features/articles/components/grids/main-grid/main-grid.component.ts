@@ -28,15 +28,15 @@ import { NgClass } from '@angular/common';
 </a>
 
 
-    <a class="h-[40rem] relative w-fit overflow-hidden" [routerLink]="['/article',urlFormat(highArticle()![0].articleId!, highArticle()![0].heading)]" (mouseover)="cellHoverCheck('main')" (mouseout)="cellHoverCheck('main')">
-      <div class="absolute bottom-0    text-black  flex flex-col items-center z-10">
+    <a class="h-[40rem] relative w-full overflow-hidden" [routerLink]="['/article',urlFormat(highArticle()![0].articleId!, highArticle()![0].heading)]" (mouseover)="cellHoverCheck('main')" (mouseout)="cellHoverCheck('main')">
+      <div class="absolute bottom-0  w-full  text-black  flex flex-col items-center z-10">
       
         <div class="w-full h-8 bg-brandRed flex justify-center">
         @if(highArticle()![0].subscription){
           <img src="agora-isotype-fill.svg" class="h-full  p-[.35rem]" [ngClass]="mainCellHover() ? 'brightness-0' : 'brightness-200'"/>
         }
         </div>
-        <div class="p-8 bg-brandGrey">
+        <div class="p-8 bg-brandGrey w-full">
           <span class="font-semibold text-[1.85rem] leading-[2.5rem]" [ngClass]="mainCellHover() ? 'text-brandRed' : ''">{{highArticle()![0].heading}}</span> 
         </div>
       </div>
