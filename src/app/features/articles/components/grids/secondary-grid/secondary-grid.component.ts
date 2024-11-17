@@ -8,67 +8,101 @@ import { NgClass } from '@angular/common';
   standalone: true,
   imports: [RouterLink, NgClass],
   template: `
-    <div class="relative w-full h-full">
-      <div class="grid grid-rows-2 h-full w-full place-items-end gap-y-[4.22vw] z-10 relative">
+  <div class="relative">
+    <div class=" w-full h-full grid grid-rows-[20rem_20rem] gap-y-[3.5rem] z-10 relative">
         
-        <div class=" grid grid-cols-[2.6fr_4.22vw_1.6fr] w-full  ">
-          <a class="flex">
-            <div class="bg-brandGrey w-full h-full p-3">
+        <div class=" grid grid-cols-[60%_5%_35%] w-full h-full ">
+
+
+          <a class="h-full grid grid-cols-[20%_80%] overflow-hidden" [routerLink]="['/article',urlFormat(highArticle()![0].articleId!, highArticle()![0].heading)]"
+          (mouseover)="cellHoverCheck('high',0)" (mouseout)="cellHoverCheck('high',0)">
+            <div class="bg-brandGrey w-full h-full p-3 " [ngClass]="highCellHover() == '0' ? 'text-brandRed' : ''"> 
               <span class="font-semibold text-[1.2rem] leading-[1.55rem]">{{highArticle()![0].heading}}</span>
             </div>
-            <img [src]="highArticle()![0].frontImage" [alt]="highArticle()![0].frontImageAlt" class=" min-h-full w-fit aspect-[2/1] object-cover overflow-hidden">
-            
+            <div class="w-full h-full bg-black overflow-hidden">   
+              <img [src]="highArticle()![0].frontImage" [alt]="highArticle()![0].frontImageAlt" class="  w-full object-cover " [ngClass]="highCellHover() == '0' ? 'scale-105' : ''">
+            </div>
           </a>
+
           <div class="w-full"></div>
-          <a class="flex w-full">
-              <img [src]="mediumArticles()![0].frontImage" [alt]="mediumArticles()![0].frontImageAlt" class="h-full object-cover min-w-full aspect-square overflow-hidden">
-            
-            <div class="bg-brandGrey w-full  h-full p-3">
-              <span class="font-semibold text-[1.2rem] leading-[1.55rem]">{{mediumArticles()![0].heading}}</span>
+
+          <a class="h-full grid grid-cols-[65.77%_34.23%] overflow-hidden" 
+          [routerLink]="['/article',urlFormat(mediumArticles()![0].articleId!, mediumArticles()![0].heading)]"
+          (mouseover)="cellHoverCheck('medium',0)" (mouseout)="cellHoverCheck('medium',0)">
+          <div class="w-full h-full bg-black overflow-hidden">   
+            <img [src]="mediumArticles()![0].frontImage" [alt]="mediumArticles()![0].frontImageAlt" class="h-full object-cover w-full "  [ngClass]="mediumCellHover() == '0' ? 'scale-105' : ''">
+          </div> 
+            <div class="bg-brandGrey w-full  h-full p-2" [ngClass]="mediumCellHover() == '0' ? 'text-brandRed' : ''">
+              <span class="font-semibold text-[1.15rem] leading-[1.55rem] whitespace-normal hyphens-auto">{{mediumArticles()![0].heading}}</span>
             </div>
           </a>
         </div>
 
 
-        <div class=" grid grid-cols-[2.6fr_4.22vw_1.6fr]   w-full h-full relative">
-          <div class="grid grid-cols-[1fr_2fr] w-full justify-end">
-            <div class="flex justify-end items-end h-full w-full">
-            <div class=" w-[1.7vw] h-[4vw] bg-brandRed"></div>
-
-            </div>
-          <div class="h-full min-w-[29.4vw] w-full flex justify-between relative items-end" >
-            
-            <a class="h-full min-w-[8.63vw] bg-brandGrey">
-
-            </a>
-            <div class=" w-full h-[4vw] bg-black"></div>
-            <a class="h-full min-w-[8.63vw] bg-brandGrey"></a>
-            <div class=" w-full h-[4vw] bg-brandRed"></div>
-            <a class="h-full min-w-[8.63vw] bg-brandGrey"></a>
+        <div class=" grid grid-cols-[12%_48%_5%_35%]   w-full h-full relative ">
+          <div class="w-full h-full flex justify-end items-end">
+            <div class="h-[5.5rem] w-[3.5rem] bg-brandRed "></div>
 
           </div>
+          <div class="grid grid-cols-[1fr_3.5rem_1fr_3.5rem_1fr] w-full place-items-end">
+            <a class="bg-brandGrey h-full w-full p-3"
+            [ngClass]="lowCellHover() == '0' ? 'bg-darkBrandRed text-white' : 'bg-brandGrey'" 
+            [routerLink]="['/article',urlFormat(lowArticles()![0].articleId!, lowArticles()![0].heading)]"
+            (mouseover)="cellHoverCheck('low',0)" (mouseout)="cellHoverCheck('low',0)">
+              <span class="font-medium text-[1.15rem] leading-[1.65rem]" >{{lowArticles()![0].heading}}</span>
+            </a>
+            <div class="h-[5.5rem] bg-black w-full"></div>
+
+            <a class=" h-full w-full p-3"  [ngClass]="lowCellHover() == '1' ? 'bg-darkBrandRed text-white' : 'bg-brandGrey'"
+            [routerLink]="['/article',urlFormat(lowArticles()![1].articleId!, lowArticles()![1].heading)]"
+            (mouseover)="cellHoverCheck('low',1)" (mouseout)="cellHoverCheck('low',1)">
+              <span class="font-medium text-[1.15rem] leading-[1.65rem]">{{lowArticles()![1].heading}}</span>
+            </a>
+
+            <div class="h-[5.5rem] bg-brandRed w-full"></div>
+
+            <a class="bg-brandGrey h-full w-full p-3" [ngClass]="lowCellHover() == '2' ? 'bg-darkBrandRed text-white' : 'bg-brandGrey'"
+            [routerLink]="['/article',urlFormat(lowArticles()![2].articleId!, lowArticles()![2].heading)]"
+            (mouseover)="cellHoverCheck('low',2)" (mouseout)="cellHoverCheck('low',2)">
+              <span class="font-medium text-[1.15rem] leading-[1.65rem]" >{{lowArticles()![2].heading}}</span>  
+            </a>
           </div>
           
           <div class="w-full"></div>
 
 
-          <a class="flex w-full">
-            <div class="bg-blue-100 h-full aspect-square "></div>
-            <div class="bg-brandGrey w-full h-full"></div>
+          <a class="w-full h-full grid grid-cols-[65.77%_34.23%]" [routerLink]="['/article',urlFormat(mediumArticles()![1].articleId!, mediumArticles()![1].heading)]"
+          (mouseover)="cellHoverCheck('medium',1)" (mouseout)="cellHoverCheck('medium',1)">
+            <div class="w-full h-full bg-black overflow-hidden">
+              <img [src]="mediumArticles()![1].frontImage" [alt]="mediumArticles()![1].frontImageAlt" class="w-full h-full object-cover " [ngClass]="mediumCellHover() == '1' ? 'scale-105' : ''">
+            </div>
+            <div class="bg-brandGrey w-full h-full p-2 " [ngClass]="mediumCellHover() == '1' ? 'text-brandRed' : ''">
+              <span class="font-semibold text-[1.15rem] leading-[1.55rem] whitespace-normal hyphens-auto">{{mediumArticles()![1].heading}}</span>
+            </div>
           </a>
         </div>
       </div>
 
-      <div class="absolute  w-full h-full top-0">
-        <div class="bg-brandRed h-[18.807vw] w-[18.807vw]  right-[16.3vw]  top-0 bottom-0 my-auto absolute"></div>
+      <div class="w-full h-full grid grid-cols-[48.5%_28%_11.5%_12%] absolute top-0 left-0">
+        <div class="grid grid-cols-[3.5rem_3.5rem_3.5rem] grid-rows-[3.5rem_3.5rem] -ml-[10.5rem]">
+          <div class="bg-black h-[3.5rem] col-span-2 w-full"></div>
+          <div></div>
+          <div class="col-span-2"></div>
+          <div class="bg-brandRed h-[3.5rem] aspect-square"></div>
+        </div>
 
-        <div class="absolute top-0 right-0 flex flex-col -mt-[4.22vw]">
-          <div class="bg-black h-[4.22vw] aspect-[17/8.1]"></div>
-          <div class="bg-black h-[4.22vw] aspect-[17/8.1] mt-[14.7vw]"></div>
+        <div class="w-full h-full flex items-center">
+          <div class="w-full aspect-square bg-brandRed "></div>
+        </div>
+        
+        <div></div>
+        <div class="flex flex-col w-full h-full -mt-[3.5rem]">
+          <div class="w-full h-[3.5rem] bg-black mb-[20rem]"></div>
+          <div class="w-full h-[3.5rem] bg-black "></div>
         </div>
       </div>
 
-    </div>
+      </div>
 
   `,
   styles: ``,
@@ -78,17 +112,25 @@ export class SecondaryGridComponent {
   mediumArticles = input<Article[]>();
   lowArticles = input<Article[]>();
 
-  mainCellHover = model<boolean>(false);
+  highCellHover = model<string>('');
+  mediumCellHover = model<string>('');
+  lowCellHover = model<string>('');
 
-  leftCellHover = model<boolean>(false);
-  rightCellHover = model<boolean>(false);
+  cellHoverCheck(status: string,index:number) {
+    if (status === 'low'){
+      if(!this.lowCellHover()) this.lowCellHover.set(index.toString())
+      else this.lowCellHover.set('')
+      }
 
-  cellHoverCheck(cellPos: string) {
-    if (cellPos === 'left') this.leftCellHover.update((value) => !value);
+    if (status === 'medium') {
+      if(!this.mediumCellHover()) this.mediumCellHover.set(index.toString())
+        else this.mediumCellHover.set('')
+    }
 
-    if (cellPos === 'right') this.rightCellHover.update((value) => !value);
-
-    if (cellPos === 'main') this.mainCellHover.update((value) => !value);
+    if (status === 'high') {
+      if(!this.highCellHover()) this.highCellHover.set(index.toString())
+        else this.highCellHover.set('')
+    }
   }
 
   urlFormat(id: string, title: string) {
