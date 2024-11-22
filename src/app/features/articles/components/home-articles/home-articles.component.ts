@@ -42,7 +42,7 @@ import { StandardGridComponent } from '../grids/standard-grid/standard-grid.comp
         <!-- <button (click)="docUpload()">SUBIR DOC</button> -->
 
 
-        <section class=" lg:w-2/3 h-fit pt-6">
+        <section class="h-fit w-full">
           <app-main-grid [highArticle]="(highPriorArticles()| orderArticlesByDate).slice(0,1)" 
           [mediumArticles]="(mediumPriorArticles() | orderArticlesByDate).slice(0,2)"/>
         </section>

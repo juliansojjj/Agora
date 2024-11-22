@@ -108,9 +108,9 @@ import { NgClass } from '@angular/common';
   styles: ``,
 })
 export class SecondaryGridComponent {
-  highArticle = input<Article[]>();
-  mediumArticles = input<Article[]>();
-  lowArticles = input<Article[]>();
+  highArticle = input.required<Article[]>();
+  mediumArticles = input.required<Article[]>();
+  lowArticles = input.required<Article[]>();
 
   highCellHover = model<string>('');
   mediumCellHover = model<string>('');

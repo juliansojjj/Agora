@@ -8,72 +8,78 @@ import { NgClass } from '@angular/common';
   standalone: true,
   imports: [RouterLink, NgClass],
   template:`
-  <div class="h-fit w-full grid grid-cols-[1fr_2fr_1fr] gap-x-8 place-items-center">
+  <div class="w-full h-[50rem] relative  overflow-hidden">
 
-
-    <a class="grid grid-rows-[2fr_1fr] w-fit h-full bg-brandRed" [routerLink]="['/article',urlFormat(mediumArticles()![0].articleId!, mediumArticles()![0].heading)]" (mouseover)="cellHoverCheck('left')" (mouseout)="cellHoverCheck('left')">
-
-      <div class="upperLeftArticle"  >
-      @if(mediumArticles()![0].subscription){
-          <img src="agora-isotype-fill.svg" class="h-[2rem] absolute top-0 left-0 ml-4 mt-3 z-10"/>
-        }
-          <img [src]="mediumArticles()![0].frontImage" [alt]="mediumArticles()![0].frontImageAlt" class="h-full object-cover" [ngClass]="leftCellHover() ? 'scale-105' : ''">
-      </div>
-
-      <div class="lowerLeftArticle" >
-        <span class="font-semibold text-[1.55rem] leading-[2rem] text-right" [ngClass]="leftCellHover() ? 'text-brandRed' : ''">{{mediumArticles()![0].heading}}</span>
-        
-      </div>
-
-</a>
-
-
-    <a class="h-[40rem] relative w-full overflow-hidden" [routerLink]="['/article',urlFormat(highArticle()![0].articleId!, highArticle()![0].heading)]" (mouseover)="cellHoverCheck('main')" (mouseout)="cellHoverCheck('main')">
-      <div class="absolute bottom-0  w-full  text-black  flex flex-col items-center z-10">
-      
-        <div class="w-full h-8 bg-brandRed flex justify-center">
-        @if(highArticle()![0].subscription){
-          <img src="agora-isotype-fill.svg" class="h-full  p-[.35rem]" [ngClass]="mainCellHover() ? 'brightness-0' : 'brightness-200'"/>
-        }
-        </div>
-        <div class="p-8 bg-brandGrey w-full">
-          <span class="font-semibold text-[1.85rem] leading-[2.5rem]" [ngClass]="mainCellHover() ? 'text-brandRed' : ''">{{highArticle()![0].heading}}</span> 
-        </div>
-      </div>
-      <img [src]="highArticle()![0].frontImage" [alt]="highArticle()![0].frontImageAlt" class="h-full object-cover" [ngClass]="mainCellHover() ? 'scale-105' : ''">
-    </a>
-
-
-
-    <a class="grid grid-rows-[2fr_1fr] w-fit h-full bg-brandRed" [routerLink]="['/article',urlFormat(mediumArticles()![1].articleId!, mediumArticles()![1].heading)]" (mouseover)="cellHoverCheck('right')" (mouseout)="cellHoverCheck('right')">
-      
-    <div class="upperRightArticle" >
-    @if(mediumArticles()![1].subscription){
-          <img src="agora-isotype-fill.svg" class="h-[2rem] absolute top-0 right-0 mr-4 mt-3 z-10"/>
-        }
-          <img [src]="mediumArticles()![1].frontImage" [alt]="mediumArticles()![1].frontImageAlt" class="h-full object-cover" [ngClass]="rightCellHover() ? 'scale-105' : ''">
+    <div class="absolute w-full h-[1.5rem] grid grid-cols-[9%_70%_6.6rem_1fr] top-0 z-10">
+      <div></div>
+      <div class="w-full h-[.75rem] bg-darkBrandRed col-span-2"></div>
+      <div class="w-full h-[.75rem] mt-[.75rem] bg-black"></div>
     </div>
 
-      <div class="lowerRightArticle" >
-        <span class="font-semibold text-[1.55rem] leading-[2rem]" [ngClass]="rightCellHover() ? 'text-brandRed' : ''">{{mediumArticles()![1].heading}}</span>
-        
+    <div class="h-full  w-full grid grid-cols-[9%_70%_6.6rem_1fr] relative">
+
+      <div class="h-full w-full grid grid-cols-[1fr_3.3rem] relative">
+        <div class="h-full w-full flex flex-col justify-end items-end pb-[1.5rem]">
+          <div class="bg-black w-full h-[3.8rem] mb-[1.5rem]"></div>
+          <div class="w-1/2 aspect-square"></div>
+          <div class="w-1/2 bg-darkBrandRed aspect-square rounded-full"></div>
+        </div>
+
+        <div class="h-full  w-full grid grid-rows-[3.3rem_3.3rem]">
+          <div></div>
+          <div class="h-full aspect-square bg-black"></div>
+        </div>
       </div>
 
-    </a>
+
+      <a class="w-full h-full overflow-hidden relative" [routerLink]="['/article',urlFormat(highArticle()![0].articleId!, highArticle()![0].heading)]">
+        <div class="absolute w-full h-[6.6rem] bottom-0 grid grid-cols-[3.3rem_1fr_3.3rem] mb-[1.5rem]">
+          <div></div>
+          <div class="max-w-[90%] w-fit p-3 px-5 h-full max-h-[6.6rem] bg-white ">
+            <span class="text-[2rem] font-semibold leading-[2.5rem]">{{highArticle()![0].heading}}</span>
+          </div>
+          <div class="bg-white h-[3.3rem] mt-[3.3rem] aspect-square"></div>
+        </div>
+        <img [src]="highArticle()![0].frontImage" [alt]="highArticle()![0].frontImageAlt" class="w-full h-full  object-cover">
+      </a>
+
+
+      <div></div>
+
+      <div class="w-full h-full  py-[1.5rem]">
+        <div class=" h-full w-full grid grid-cols-[6.6rem] grid-rows-[1fr_3.8rem_1.5rem_6.6rem]">
+          <div class="w-full h-full bg-darkBrandRed"></div>
+          <div class="w-full h-full bg-black"></div>
+          <div></div>
+          <div class="w-full h-full relative flex justify-end ">
+            <div class="w-[3.43rem] h-[3.43rem] rounded-full bg-darkBrandRed"></div>
+            <div class="absolute top-0 left-0 w-[3.43rem] aspect-square rounded-full bg-black z-10"></div>
+            <div class="absolute bottom-0 left-0 w-[3.43rem] aspect-square rounded-full bg-darkBrandRed z-20"></div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
   </div>
+  
   `,
   styles:`
   .upperLeftArticle{
     background-color:black;
     clip-path: polygon(0% 0%,100% 0%,100% 82%,0% 100%);
-    max-width:20rem;
+   
     position:relative;
   }
   .lowerLeftArticle{
     margin-top:-3rem;
     background-color:#F8F8F8;
     clip-path: polygon(0% 31%,100% 1%,100% 100%,0% 100%);
-    max-width:20rem;
+   
     position:relative;
 
     display:flex;
@@ -87,14 +93,14 @@ import { NgClass } from '@angular/common';
   .upperRightArticle{
     background-color:black;
     clip-path: polygon(0% 0%,100% 0%,100% 100%,0% 82%);
-    max-width:20rem;
+  
     position:relative;
   }
   .lowerRightArticle{
     margin-top:-3rem;
     background-color:#F8F8F8;
     clip-path: polygon(0% 1%,100% 31%,100% 100%,0% 100%);
-    max-width:20rem;
+  
     position:relative;
 
     display:flex;
