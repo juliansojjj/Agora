@@ -31,11 +31,12 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
 import { MainGridComponent } from '../grids/main-grid/main-grid.component';
 import { SecondaryGridComponent } from '../grids/secondary-grid/secondary-grid.component';
 import { StandardGridComponent } from '../grids/standard-grid/standard-grid.component';
+import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-grid.component";
 
 @Component({
   selector: 'app-home-articles',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, AsyncPipe, OrderArticlesByDatePipe, NgClass, MainGridComponent, SecondaryGridComponent, StandardGridComponent],
+  imports: [NgFor, NgIf, RouterLink, AsyncPipe, OrderArticlesByDatePipe, NgClass, MainGridComponent, SecondaryGridComponent, StandardGridComponent, Secondary2GridComponent],
   template: `
     @if (articles()) {
       <main class="flex flex-col items-center min-h-screen relative w-full">
@@ -51,6 +52,11 @@ import { StandardGridComponent } from '../grids/standard-grid/standard-grid.comp
           <app-secondary-grid [highArticle]="(highPriorArticles()| orderArticlesByDate).slice(0,1)" 
           [mediumArticles]="(mediumPriorArticles() | orderArticlesByDate).slice(2,4)"
           [lowArticles]="(lowPriorArticles() | orderArticlesByDate).slice(0,3)"/>
+
+        </section>
+
+        <section class=" w-[85%] h-fit pt-32">
+          <app-secondary2-grid [height]=20 [articles]="(lowPriorArticles() | orderArticlesByDate).slice(0,8)!"/>
 
         </section>
 
