@@ -14,7 +14,7 @@ import { NgClass } from '@angular/common';
         (mouseover)="cellHoverCheck($index)" (mouseout)="cellHoverCheck($index)"
         class="h-full aspect-square overflow-hidden relative" [style.height]="height()+'rem'">
         <img [src]="item.frontImage" [alt]="item.frontImageAlt" class="w-full h-full object-cover" [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
-        <div class="absolute bottom-0 w-full bg-brandGre z-10 bg-brandGrey p-3" [style.height]="height()/3+'rem'" [ngClass]="cellHover() == $index.toString() ? 'text-brandRed' : ''"> 
+        <div class="absolute bottom-0 w-full z-10 p-3" [style.height]="height()/3+'rem'" [ngClass]="cellHover() == $index.toString() ? ' bg-brandGrey' : 'bg-white'"> 
           <span class="text-[1.2rem] font-semibold">{{item.heading}}</span>
         </div>
       </a>

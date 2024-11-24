@@ -16,8 +16,8 @@ import { NgClass } from '@angular/common';
 
           <a class="h-full grid grid-cols-[20%_80%] overflow-hidden" [routerLink]="['/article',urlFormat(highArticle()![0].articleId!, highArticle()![0].heading)]"
           (mouseover)="cellHoverCheck('high',0)" (mouseout)="cellHoverCheck('high',0)">
-            <div class="bg-brandGrey w-full h-full p-3 " [ngClass]="highCellHover() == '0' ? 'text-brandRed' : ''"> 
-              <span class="font-semibold text-[1.2rem] leading-[1.55rem]">{{highArticle()![0].heading}}</span>
+            <div class=" w-full h-full p-3 " [ngClass]="highCellHover() == '0' ? 'text-white bg-brandViolet' : 'bg-white'"> 
+              <span class="font-semibold text-[1.4rem] leading-[1.55rem]">{{highArticle()![0].heading}}</span>
             </div>
             <div class="w-full h-full bg-black overflow-hidden">   
               <img [src]="highArticle()![0].frontImage" [alt]="highArticle()![0].frontImageAlt" class="  w-full object-cover " [ngClass]="highCellHover() == '0' ? 'scale-105' : ''">
@@ -32,7 +32,7 @@ import { NgClass } from '@angular/common';
           <div class="w-full h-full bg-black overflow-hidden">   
             <img [src]="mediumArticles()![0].frontImage" [alt]="mediumArticles()![0].frontImageAlt" class="h-full object-cover w-full "  [ngClass]="mediumCellHover() == '0' ? 'scale-105' : ''">
           </div> 
-            <div class="bg-brandGrey w-full  h-full p-2" [ngClass]="mediumCellHover() == '0' ? 'text-brandRed' : ''">
+            <div class=" w-full  h-full p-2" [ngClass]="mediumCellHover() == '0' ? 'text-white bg-black' : 'bg-white'">
               <span class="font-semibold text-[1.15rem] leading-[1.55rem] whitespace-normal hyphens-auto">{{mediumArticles()![0].heading}}</span>
             </div>
           </a>
@@ -41,27 +41,27 @@ import { NgClass } from '@angular/common';
 
         <div class=" grid grid-cols-[12%_48%_5%_35%]   w-full h-full relative ">
           <div class="w-full h-full flex justify-end items-end">
-            <div class="h-[5.5rem] w-[3.5rem] bg-brandRed "></div>
+            <div class="h-[5.5rem] w-[3.5rem] bg-brandViolet "></div>
 
           </div>
           <div class="grid grid-cols-[1fr_3.5rem_1fr_3.5rem_1fr] w-full place-items-end">
             <a class="bg-brandGrey h-full w-full p-3"
-            [ngClass]="lowCellHover() == '0' ? 'bg-darkBrandRed text-white' : 'bg-brandGrey'" 
+            [ngClass]="lowCellHover() == '0' ? 'bg-brandGrey' : 'bg-white'" 
             [routerLink]="['/article',urlFormat(lowArticles()![0].articleId!, lowArticles()![0].heading)]"
             (mouseover)="cellHoverCheck('low',0)" (mouseout)="cellHoverCheck('low',0)">
               <span class="font-medium text-[1.15rem] leading-[1.65rem]" >{{lowArticles()![0].heading}}</span>
             </a>
             <div class="h-[5.5rem] bg-black w-full"></div>
 
-            <a class=" h-full w-full p-3"  [ngClass]="lowCellHover() == '1' ? 'bg-darkBrandRed text-white' : 'bg-brandGrey'"
+            <a class=" h-full w-full p-3"  [ngClass]="lowCellHover() == '1' ? 'bg-brandGrey ' : 'bg-white'"
             [routerLink]="['/article',urlFormat(lowArticles()![1].articleId!, lowArticles()![1].heading)]"
             (mouseover)="cellHoverCheck('low',1)" (mouseout)="cellHoverCheck('low',1)">
               <span class="font-medium text-[1.15rem] leading-[1.65rem]">{{lowArticles()![1].heading}}</span>
             </a>
 
-            <div class="h-[5.5rem] bg-brandRed w-full"></div>
+            <div class="h-[5.5rem] bg-brandViolet w-full"></div>
 
-            <a class="bg-brandGrey h-full w-full p-3" [ngClass]="lowCellHover() == '2' ? 'bg-darkBrandRed text-white' : 'bg-brandGrey'"
+            <a class="bg-brandGrey h-full w-full p-3" [ngClass]="lowCellHover() == '2' ? 'bg-brandGrey ' : 'bg-white'"
             [routerLink]="['/article',urlFormat(lowArticles()![2].articleId!, lowArticles()![2].heading)]"
             (mouseover)="cellHoverCheck('low',2)" (mouseout)="cellHoverCheck('low',2)">
               <span class="font-medium text-[1.15rem] leading-[1.65rem]" >{{lowArticles()![2].heading}}</span>  
@@ -76,7 +76,7 @@ import { NgClass } from '@angular/common';
             <div class="w-full h-full bg-black overflow-hidden">
               <img [src]="mediumArticles()![1].frontImage" [alt]="mediumArticles()![1].frontImageAlt" class="w-full h-full object-cover " [ngClass]="mediumCellHover() == '1' ? 'scale-105' : ''">
             </div>
-            <div class="bg-brandGrey w-full h-full p-2 " [ngClass]="mediumCellHover() == '1' ? 'text-brandRed' : ''">
+            <div class=" w-full h-full p-2 " [ngClass]="mediumCellHover() == '1' ? 'text-white bg-black' : 'bg-white'">
               <span class="font-semibold text-[1.15rem] leading-[1.55rem] whitespace-normal hyphens-auto">{{mediumArticles()![1].heading}}</span>
             </div>
           </a>
@@ -88,18 +88,16 @@ import { NgClass } from '@angular/common';
           <div class="bg-black h-[3.5rem] col-span-2 w-full"></div>
           <div></div>
           <div class="col-span-2"></div>
-          <div class="bg-brandRed h-[3.5rem] aspect-square"></div>
+          <div class="bg-brandViolet h-[3.5rem] aspect-square"></div>
         </div>
 
         <div class="w-full h-full flex items-center">
-          <div class="w-full aspect-square bg-brandRed "></div>
+          <div class="w-full aspect-square bg-brandViolet "></div>
         </div>
         
         <div></div>
-        <div class="flex flex-col w-full h-full -mt-[3.5rem]">
-          <div class="w-full h-[3.5rem] bg-black mb-[20rem]"></div>
-          <div class="w-full h-[3.5rem] bg-black "></div>
-        </div>
+          <div class="w-[7rem] h-[3.5rem] bg-black mt-[20rem] -mr-[3.5rem] justify-self-end"></div>
+        
       </div>
 
       </div>

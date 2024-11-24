@@ -31,7 +31,7 @@ import { RouterLink } from '@angular/router';
           @if (!(subscriptionState$ | async)?.subscription) {
                 <a
                   [routerLink]="['/subscription']"
-                  class=" w-full h-fit font-medium flex justify-center items-center py-4 bg-brandRed hover:text-brandRed hover:bg-white  active:scale-95 mb-10" (click)="menuTrigger()"
+                  class=" w-full h-fit font-medium flex justify-center items-center py-4 bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 mb-10" (click)="menuTrigger()"
                   >Subscribe for $0</a
                 >
           }

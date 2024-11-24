@@ -98,7 +98,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                     >Original source
                     <a
                       [href]="data.source"
-                      class="font-bold no-underline text-brandRed hover:bg-brandRed hover:p-[.1rem] hover:text-white"
+                      class="font-bold no-underline text-brandViolet hover:bg-brandViolet hover:p-[.1rem] hover:text-white"
                       >here</a
                     ></span>
                   <div class="text-[1.25rem] mt-5 flex justify-between">
@@ -215,7 +215,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                     >Original source
                     <a
                       [href]="data.source"
-                      class="font-bold no-underline text-brandRed hover:bg-brandRed hover:p-[.1rem] hover:text-white"
+                      class="font-bold no-underline text-brandViolet hover:bg-brandViolet hover:p-[.1rem] hover:text-white"
                       >here</a
                     ></span>
             }
@@ -230,7 +230,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                       <a [routerLink]="[
                 '/article',
                 urlFormat(element.articleId!, element.heading),
-              ]" class=" min-h-fit w-full flex flex-col p-4 justify-center border-[2px] border-gray-200 text-[1.14rem] hover:bg-gray-50 hover:border-l-4 hover:border-l-brandRed active:scale-[99%] ">
+              ]" class=" min-h-fit w-full flex flex-col p-4 justify-center border-[2px] border-gray-200 text-[1.14rem] hover:bg-gray-50 hover:border-l-4 hover:border-l-brandViolet active:scale-[99%] ">
                         <span class="font-bold mr-2">Read also: </span>
                         <span>  {{element.heading}}</span>
                     </a>
@@ -258,7 +258,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               }
               @if ((item | typeof) == 'quote') {
                 <blockquote
-                  class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandRed pl-7"
+                  class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandViolet pl-7"
                 >
                   <i> {{ $any(item).quote }} </i>
                 </blockquote>
@@ -347,14 +347,14 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                       <button
                         type="reset"
                         (click)="form.reset()"
-                        class="h-7 min-w-fit p-auto px-3 bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandRed active:scale-95  mt-4 font-medium self-end mr-4"
+                        class="h-7 min-w-fit p-auto px-3 bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandViolet active:scale-95  mt-4 font-medium self-end mr-4"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
                         [disabled]="form.invalid"
-                        class="h-7 min-w-fit py-auto px-3 bg-brandRed text-white border-2 border-transparent hover:border-brandRed hover:text-brandRed hover:bg-white active:scale-95  mt-4 font-medium box-border"
+                        class="h-7 min-w-fit py-auto px-3 bg-brandViolet text-white border-2 border-transparent hover:border-brandViolet hover:text-brandViolet hover:bg-white active:scale-95  mt-4 font-medium box-border"
                       >
                         Comment
                       </button>
@@ -377,7 +377,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                         <button (click)="onCommentDelete(item.commentId!)">
                           <svg
                             viewBox="0 0 24 24"
-                            class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandRed active:scale-75"
+                            class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandViolet active:scale-75"
                           >
                             <g>
                               <path
@@ -501,7 +501,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               }
               @if ((item | typeof) == 'quote') {
                 <blockquote
-                  class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandRed pl-7"
+                  class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandViolet pl-7"
                 >
                   <i> {{ $any(item).quote }} </i>
                 </blockquote>
@@ -547,7 +547,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               <div class="relative w-full  flex items-end lg:h-fit h-44 ">
                 <a
                   routerLink="/subscription"
-                  class="bg-brandRed text-white hover:p-3 hover:bg-orange-900 w-44 p-3 h-12 rounded-lg text-[1.1rem] text-center font-medium absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2 z-10  active:scale-[95%]"
+                  class="bg-brandViolet text-white hover:p-3 hover:bg-orange-900 w-44 p-3 h-12 rounded-lg text-[1.1rem] text-center font-medium absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2 z-10  active:scale-[95%]"
                   >Subscribe for <b>$0</b>
                 </a>
                 <img

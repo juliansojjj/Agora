@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   imports: [AsyncPipe, RouterLink],
   template: `
     @if (menu() ) {
-      <div class="fixed right-0 top-0 w-full z-50 flex justify-end">
+      <div class="fixed right-0 top-0 w-full z-[100] flex justify-end">
         
         <div class="w-[16rem] h-screen  bg-white flex flex-col items-center pt-[1.25rem] text-[1.1rem]">
 
@@ -31,7 +31,7 @@ import { RouterLink } from '@angular/router';
           @if (!(subscriptionState$ | async)?.subscription) {
                 <a
                   [routerLink]="['/subscription']"
-                  class=" w-full h-fit font-medium flex justify-center items-center py-4 bg-brandRed hover:text-brandRed hover:bg-white  active:scale-95 mb-10" (click)="menuTrigger()"
+                  class=" w-full h-fit font-medium flex justify-center items-center py-4 bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 mb-10" (click)="menuTrigger()"
                   >Subscribe for $0</a
                 >
           }

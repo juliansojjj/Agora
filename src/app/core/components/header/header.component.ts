@@ -97,7 +97,7 @@ import { Title } from '@angular/platform-browser';
               @if (!authState()) {
                 <a
                   [routerLink]="['/subscription']"
-                  class=" w-44 h-full font-medium flex justify-center items-center bg-brandRed hover:text-brandRed hover:bg-white  active:scale-95 "
+                  class=" w-44 h-full text-white font-medium flex justify-center items-center bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 "
                   >Subscribe for $0</a
                 >
                 <a
@@ -108,7 +108,7 @@ import { Title } from '@angular/platform-browser';
               } @else if (!(subscriptionState$ | async)?.subscription) {
                 <a
                   [routerLink]="['/subscription']"
-                  class=" w-44 h-full font-medium flex justify-center items-center bg-brandRed hover:text-brandRed hover:bg-white  active:scale-95 "
+                  class=" w-44 h-full text-white font-medium flex justify-center items-center bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 "
                   >Subscribe for $0</a
                 >
               }

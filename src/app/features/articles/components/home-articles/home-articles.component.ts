@@ -44,10 +44,10 @@ import { StandardGridComponent } from '../grids/standard-grid/standard-grid.comp
 
         <section class="h-fit w-full">
           <app-main-grid [highArticle]="(highPriorArticles()| orderArticlesByDate).slice(0,1)" 
-          [mediumArticles]="(mediumPriorArticles() | orderArticlesByDate).slice(0,2)"/>
+          [mediumArticles]="(mediumPriorArticles() | orderArticlesByDate).slice(0,3)"/>
         </section>
 
-        <section class=" lg:w-2/3 h-fit pt-20">
+        <section class=" lg:w-3/4 h-fit pt-32">
           <app-secondary-grid [highArticle]="(highPriorArticles()| orderArticlesByDate).slice(0,1)" 
           [mediumArticles]="(mediumPriorArticles() | orderArticlesByDate).slice(2,4)"
           [lowArticles]="(lowPriorArticles() | orderArticlesByDate).slice(0,3)"/>
