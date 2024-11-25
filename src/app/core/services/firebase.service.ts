@@ -13,9 +13,7 @@ import {
   FirebaseAuthUser,
   FirestoreCollectionUser,
 } from '../../shared/interfaces/firebase.interfaces';
-import {
-  
-} from 'firebase/firestore';
+import { documentId } from 'firebase/firestore';
 import {
   addDoc,
   collection,
@@ -36,11 +34,11 @@ import {
 } from '@angular/fire/firestore';
 import { AbstractControl } from '@angular/forms';
 import { Article } from '../../shared/interfaces/article.interface';
-import { app } from '../../../../server';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class FirebaseService {
   authService = inject(Auth);
   firestoreService = inject(Firestore);
@@ -51,6 +49,8 @@ export class FirebaseService {
   user$: Observable<FirebaseAuthUser> = user(this.authService);
 
   constructor() {}
+
+
 // ----------------------- ARTICLES
   getLandingArticles() {
     const ref = collection(this.firestoreService, 'articles');
@@ -71,7 +71,13 @@ export class FirebaseService {
     return from(result);
   }
 
-
+  getFavoriteArticles(ids:string[]){
+    const ref = collection(this.firestoreService, 'articles')
+    
+    const result = collectionData(query(ref,where(documentId(),'in',ids)), { idField: 'articleId' })
+      
+    return from(result)
+  }
 
   getMainCategoryArticles(category:string) {
     const categoryArray = category.split(' ')
@@ -191,9 +197,6 @@ getUserInfo(uid:string){
   }
 
   // ----------------------- AUTH
-
-
-
   signup(username: string, email: string, password: string): Observable<any> {
     let uid:string
     const createUser = createUserWithEmailAndPassword(

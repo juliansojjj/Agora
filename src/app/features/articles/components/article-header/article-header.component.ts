@@ -83,15 +83,24 @@ import { ElementRef } from '@angular/core';
             </div>
 
             <div class="flex items-end">
-              <ul class="flex h-full">
-                @for (item of categories(); track $index) {
+            <ul class="flex h-full">
                   <a
-                    [routerLink]="['/category', item.url]"
+                    [routerLink]="['/category/tech' ]"
                     class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-24 h-full"
-                  >
-                    <li>{{ item.name }}</li></a
-                  >
-                }
+                  ><li>Tech</li></a>
+                  <a
+                    [routerLink]="['/category/culture']"
+                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-24 h-full"
+                  ><li>Culture</li></a>
+                  <a
+                    [routerLink]="['/category/science' ]"
+                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-24 h-full"
+                  ><li>Science</li></a>
+                  <a
+                    [routerLink]="['/category/media']"
+                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-24 h-full"
+                  ><li>Media</li></a>
+                
               </ul>
 
               @if (!authState()) {

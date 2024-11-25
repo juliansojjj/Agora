@@ -40,9 +40,7 @@ import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-gri
   template: `
     @if (articles()) {
       <main class="flex flex-col items-center min-h-screen relative w-full">
-        <!-- <button (click)="docUpload()">SUBIR DOC</button> -->
-
-
+        
         <section class="h-fit w-full">
           <app-main-grid [highArticle]="(highPriorArticles()| orderArticlesByDate).slice(0,1)" 
           [mediumArticles]="(mediumPriorArticles() | orderArticlesByDate).slice(0,3)"/>
@@ -83,6 +81,7 @@ import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-gri
             </a>
         }
         </section>
+        
       </main>
     } @else {
       <ng-template [ngIf]="errorMessage">
@@ -125,7 +124,7 @@ export class HomeArticlesComponent {
 
   docUpload() {
     const ref = collection(this.firebaseService.firestoreService, 'articles');
-    const res = setDoc(doc(ref,'culture5'), {});
+    const res = setDoc(doc(ref,'media3'), {});
   }
 
   urlFormat(id: string, title: string) {
