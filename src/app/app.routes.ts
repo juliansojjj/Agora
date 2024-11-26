@@ -20,7 +20,21 @@ export const routes: Routes = [
       ).then((c) => c.HomeArticlesComponent),
   },
 
-  { path: 'article/:id', component: SingleArticleComponent},
+  {
+    path: 'article/:id',
+    loadComponent: () =>
+      import(
+        './features/articles/components/single-article/single-article.component'
+      ).then((c) => c.SingleArticleComponent),
+  },
+
+  {
+    path: 'author/:id',
+    loadComponent: () =>
+      import(
+        './features/articles/components/author/author.component'
+      ).then((c) => c.AuthorComponent),
+  },
 
   {
     path: 'category/:title',

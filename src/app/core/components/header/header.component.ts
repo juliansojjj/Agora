@@ -151,14 +151,6 @@ export class HeaderComponent implements AfterViewChecked {
   reduced = model<boolean>(true);
   visibility = model<boolean>(false);
 
-  categories = toSignal<Category[]>(
-    this.firebaseService.getCategories().pipe(
-      map((res) => {
-        return res;
-      }),
-    ),
-  );
-
   ngAfterViewChecked(): void {
     this.routeTitle.set(this.title.getTitle());
   }

@@ -58,15 +58,9 @@ export class FirebaseService {
     return from(result);
   }
 
-  getCategories() {
-    const ref = collection(this.firestoreService, 'categories')
-    const result = collectionData(query(ref,where('main','==',true)))
-
-    return from(result);
-  }
-  getCategory(url:string) {
-    const ref = collection(this.firestoreService, 'categories')
-    const result = collectionData(query(ref,where('url','==',url)))
+  getAuthorArticles(authorID:string){
+    const ref = collection(this.firestoreService, 'articles')
+    const result = collectionData(query(ref,where('authorID','==',authorID)))
 
     return from(result);
   }
@@ -115,6 +109,21 @@ export class FirebaseService {
 
 
   // ----------------------- FIRESTORE
+
+  
+  getCategory(url:string) {
+    const ref = collection(this.firestoreService, 'categories')
+    const result = collectionData(query(ref,where('url','==',url)))
+
+    return from(result);
+  }
+  
+  getAuthor(id:string) {
+    const ref = doc(this.firestoreService, 'authors', id);
+    const result = docData(ref)
+
+    return from(result);
+  }
 
   handleSubscription(uid:string,operation:boolean){
     const ref = collection(this.firestoreService, 'users');

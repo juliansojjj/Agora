@@ -213,16 +213,7 @@ export class ArticleHeaderComponent implements AfterViewChecked {
   menu = model<boolean>();
   visibility = model<boolean>(true);
   reduced = model<boolean>(false);
-  
 
-
-  categories = toSignal<Category[]>(
-    this.firebaseService.getCategories().pipe(
-      map((res) => {
-        return res;
-      }),
-    ),
-  );
 
   ngAfterViewChecked(): void {
     this.routeTitle.set(this.title.getTitle());
