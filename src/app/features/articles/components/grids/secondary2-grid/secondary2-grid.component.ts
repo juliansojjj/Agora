@@ -13,7 +13,7 @@ import { NgClass } from '@angular/common';
 
     <div class="w-full relative h-full grid grid-cols-4 gap-[3.5rem] place-items-center">
         @for (item of articles().slice(0,4); track $index) {
-          <a [routerLink]="['/article',urlFormat(item.articleId!, item.heading)]" 
+          <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
           (mouseover)="cellHoverCheck($index)" (mouseout)="cellHoverCheck($index)"
           class="h-full aspect-square overflow-hidden relative flex" [style.height]="height()+'rem'" [ngClass]="$index % 2 == 0 ? 'evenCell' : 'oddCell items-end'">
 
@@ -34,7 +34,7 @@ import { NgClass } from '@angular/common';
 
       <div class="w-full relative h-full grid grid-cols-4 gap-[3.5rem] place-items-center">
         @for (item of articles().slice(4,8); track $index) {
-          <a [routerLink]="['/article',urlFormat(item.articleId!, item.heading)]" 
+          <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
           (mouseover)="cellHoverCheck($index+5)" (mouseout)="cellHoverCheck($index+5)"
           class="h-full aspect-square overflow-hidden relative flex" [style.height]="height()+'rem'" [ngClass]="($index+5) % 2 == 0 ? 'evenCell' : 'oddCell items-end'">
 

@@ -8,7 +8,7 @@ import {
   authState,
   user,
 } from '@angular/fire/auth';
-import { debounceTime, filter, from, map, Observable, ObservableInput, of, take } from 'rxjs';
+import { debounceTime, filter, forkJoin, from, map, Observable, ObservableInput, of, take } from 'rxjs';
 import {
   FirebaseAuthUser,
   FirestoreCollectionUser,
@@ -54,7 +54,7 @@ export class FirebaseService {
 // ----------------------- ARTICLES
   getLandingArticles() {
     const ref = collection(this.firestoreService, 'articles');
-    const result = collectionData(ref, { idField: 'articleId' });
+    const result = collectionData(ref, { idField: 'articleID' });
     return from(result);
   }
 
@@ -67,10 +67,27 @@ export class FirebaseService {
 
   getFavoriteArticles(ids:string[]){
     const ref = collection(this.firestoreService, 'articles')
-    
-    const result = collectionData(query(ref,where(documentId(),'in',ids)), { idField: 'articleId' })
-      
-    return from(result)
+
+    if(ids.length <= 30){
+      const result = collectionData(query(ref,where(documentId(),'in',ids)), { idField: 'articleID' })
+      return from(result)
+    }
+    else{
+      const chunkedArrays:string[][] = []
+      for (let i = 0; i < ids.length; i += 30) {
+        chunkedArrays.push(ids.slice(i,i+30))
+      }
+
+      const observables = chunkedArrays.map((chunk) => {
+        return from(
+          collectionData(query(ref, where(documentId(), 'in', chunk)), { idField: 'articleID' })
+        ).pipe(take(1))
+      })
+
+      return forkJoin(observables).pipe(
+        map(results=>results.flat())
+      )
+    }
   }
 
   getMainCategoryArticles(category:string) {
@@ -78,7 +95,7 @@ export class FirebaseService {
     const name = categoryArray.join('-').toLowerCase()
     
     const ref = collection(this.firestoreService, 'articles')
-    const result = collectionData(query(ref,where('category','==', name)), { idField: 'articleId' })
+    const result = collectionData(query(ref,where('category','==', name)), { idField: 'articleID' })
 
     return from(result) ;
   }
@@ -87,7 +104,7 @@ export class FirebaseService {
     const name = categoryArray.join('-').toLowerCase()
     
     const ref = collection(this.firestoreService, 'articles')
-    const result = collectionData(query(ref,where('urlTopics','array-contains', name)), { idField: 'articleId' })
+    const result = collectionData(query(ref,where('urlTopics','array-contains', name)), { idField: 'articleID' })
 
     return from(result);
   }
@@ -134,12 +151,12 @@ export class FirebaseService {
     return from(res)
   }
   
-  handleFavorite(uid:string,operation:boolean, articleId:string){
+  handleFavorite(uid:string,operation:boolean, articleID:string){
     const ref = doc(this.firestoreService, 'users', uid);
 
     return operation 
-    ? from(updateDoc(ref,{favorites:arrayUnion(articleId)})) 
-    : from(updateDoc(ref,{favorites:arrayRemove(articleId)})) 
+    ? from(updateDoc(ref,{favorites:arrayUnion(articleID)})) 
+    : from(updateDoc(ref,{favorites:arrayRemove(articleID)})) 
   }
 
 getUserInfo(uid:string){
@@ -181,8 +198,8 @@ getUserInfo(uid:string){
     return from(res)
   }
 
-  addComment(username: string, uid: string, articleId:string, content:string) {
-    const ref = collection(this.firestoreService, 'articles',articleId,'comments');
+  addComment(username: string, uid: string, articleID:string, content:string) {
+    const ref = collection(this.firestoreService, 'articles',articleID,'comments');
 
     const res = setDoc(doc(ref),
     { 
@@ -196,8 +213,8 @@ getUserInfo(uid:string){
     return from(res)
 
   }
-  deleteComment(articleId:string,commentId:string){
-    const ref = collection(this.firestoreService, 'articles',articleId,'comments');
+  deleteComment(articleID:string,commentId:string){
+    const ref = collection(this.firestoreService, 'articles',articleID,'comments');
     const res = updateDoc(doc(ref, commentId),
     { 
       deletedByUser: true

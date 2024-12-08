@@ -229,7 +229,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                     @for(element of recommendations.slice(0,1); track $index){
                       <a [routerLink]="[
                 '/article',
-                urlFormat(element.articleId!, element.heading),
+                urlFormat(element.articleID!, element.heading),
               ]" class=" min-h-fit w-full flex flex-col p-4 justify-center border-[2px] border-gray-200 text-[1.14rem] hover:bg-gray-50 hover:border-l-4 hover:border-l-brandViolet active:scale-[99%] ">
                         <span class="font-bold mr-2">Read also: </span>
                         <span>  {{element.heading}}</span>
@@ -630,7 +630,6 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
 
           const parser = new DOMParser();
           const doc = parser.parseFromString(unparsedString, 'text/html');
-
           this.renderer.setProperty(
             item.nativeElement,
             'innerHTML',
@@ -695,7 +694,7 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
       map((res:Article[])=>{
         const id = this.id().split('-');
 
-        return res.filter(item=>item.articleId !== id[0])
+        return res.filter(item=>item.articleID !== id[0])
       })
     ))
   )
@@ -721,13 +720,13 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     const formValues = this.form.getRawValue();
 
     if (this.userInfo() && this.uid()) {
-      const articleId = this.id().split('-');
+      const articleID = this.id().split('-');
 
       this.firebaseService
         .addComment(
           this.userInfo()?.username!,
           this.uid()!,
-          articleId[0],
+          articleID[0],
           formValues.text,
         )
         .subscribe({
@@ -740,17 +739,17 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
   }
 
   onCommentDelete(commentId: string) {
-    const articleId = this.id().split('-');
+    const articleID = this.id().split('-');
 
     if (commentId) {
-      this.firebaseService.deleteComment(articleId[0], commentId);
+      this.firebaseService.deleteComment(articleID[0], commentId);
     }
   }
 
   favoriteHandle(operation: boolean) {
-    const articleId = this.id().split('-');
+    const articleID = this.id().split('-');
 
-    this.firebaseService.handleFavorite(this.uid()!, operation, articleId[0]);
+    this.firebaseService.handleFavorite(this.uid()!, operation, articleID[0]);
   }
 
   trimValidator(control: AbstractControl) {

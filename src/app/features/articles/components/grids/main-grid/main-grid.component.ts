@@ -14,7 +14,7 @@ import { NgClass } from '@angular/common';
       <div class="w-fit h-full flex flex-col mt-[1.5rem] relative">
         @for (item of mediumArticles(); track $index) {
           <a class="w-[19.8rem]  h-[11.4rem] mb-[.75rem] -ml-[3.3rem] px-6 p-2 relative flex items-center"
-          [routerLink]="['/article',urlFormat(item.articleId!, item.heading)]"
+          [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]"
           (mouseover)="cellHoverCheck('medium',$index)" (mouseout)="cellHoverCheck('medium',$index)"
           [ngClass]="mediumCellHover() == $index.toString() ? 'bg-black' : 'bg-white'">
             <div class="absolute w-2 h-3/5 right-0 bottom-0 top-0 my-auto " [ngClass]="mediumCellHover() == $index.toString() ? 'bg-white' : 'bg-black'"></div>
@@ -49,7 +49,7 @@ import { NgClass } from '@angular/common';
       </div>
 
 
-      <a class="w-full h-full overflow-hidden relative" [routerLink]="['/article',urlFormat(highArticle()![0].articleId!, highArticle()![0].heading)]" (mouseover)="cellHoverCheck('high',0)" (mouseout)="cellHoverCheck('high',0)">
+      <a class="w-full h-full overflow-hidden relative" [routerLink]="['/article',urlFormat(highArticle()![0].articleID!, highArticle()![0].heading)]" (mouseover)="cellHoverCheck('high',0)" (mouseout)="cellHoverCheck('high',0)">
         <div class="absolute w-full h-[6.6rem] bottom-0 grid grid-cols-[3.3rem_1fr_3.3rem] mb-[1.5rem] z-10">
           <div></div>
           <div class="max-w-[90%] w-fit p-3 px-5 h-full max-h-[6.6rem] " [ngClass]="highCellHover() == '0' ? 'bg-brandViolet text-white' : 'bg-white'">

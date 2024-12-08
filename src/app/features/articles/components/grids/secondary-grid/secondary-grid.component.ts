@@ -14,7 +14,7 @@ import { NgClass } from '@angular/common';
         <div class=" grid grid-cols-[60%_5%_35%] w-full h-full ">
 
 
-          <a class="h-full grid grid-cols-[20%_80%] overflow-hidden" [routerLink]="['/article',urlFormat(highArticle()![0].articleId!, highArticle()![0].heading)]"
+          <a class="h-full grid grid-cols-[20%_80%] overflow-hidden" [routerLink]="['/article',urlFormat(highArticle()![0].articleID!, highArticle()![0].heading)]"
           (mouseover)="cellHoverCheck('high',0)" (mouseout)="cellHoverCheck('high',0)">
             <div class=" w-full h-full p-3 " [ngClass]="highCellHover() == '0' ? 'text-white bg-brandViolet' : 'bg-white'"> 
               <span class="font-semibold text-[1.4rem] leading-[1.55rem]">{{highArticle()![0].heading}}</span>
@@ -27,7 +27,7 @@ import { NgClass } from '@angular/common';
           <div class="w-full"></div>
 
           <a class="h-full grid grid-cols-[65.77%_34.23%] overflow-hidden" 
-          [routerLink]="['/article',urlFormat(mediumArticles()![0].articleId!, mediumArticles()![0].heading)]"
+          [routerLink]="['/article',urlFormat(mediumArticles()![0].articleID!, mediumArticles()![0].heading)]"
           (mouseover)="cellHoverCheck('medium',0)" (mouseout)="cellHoverCheck('medium',0)">
           <div class="w-full h-full bg-black overflow-hidden">   
             <img [src]="mediumArticles()![0].frontImage" [alt]="mediumArticles()![0].frontImageAlt" class="h-full object-cover w-full "  [ngClass]="mediumCellHover() == '0' ? 'scale-105' : ''">
@@ -47,14 +47,14 @@ import { NgClass } from '@angular/common';
           <div class="grid grid-cols-[1fr_3.5rem_1fr_3.5rem_1fr] w-full place-items-end">
             <a class="bg-brandGrey h-full w-full p-3"
             [ngClass]="lowCellHover() == '0' ? 'bg-brandGrey' : 'bg-white'" 
-            [routerLink]="['/article',urlFormat(lowArticles()![0].articleId!, lowArticles()![0].heading)]"
+            [routerLink]="['/article',urlFormat(lowArticles()![0].articleID!, lowArticles()![0].heading)]"
             (mouseover)="cellHoverCheck('low',0)" (mouseout)="cellHoverCheck('low',0)">
               <span class="font-medium text-[1.15rem] leading-[1.65rem]" >{{lowArticles()![0].heading}}</span>
             </a>
             <div class="h-[5.5rem] bg-black w-full"></div>
 
             <a class=" h-full w-full p-3"  [ngClass]="lowCellHover() == '1' ? 'bg-brandGrey ' : 'bg-white'"
-            [routerLink]="['/article',urlFormat(lowArticles()![1].articleId!, lowArticles()![1].heading)]"
+            [routerLink]="['/article',urlFormat(lowArticles()![1].articleID!, lowArticles()![1].heading)]"
             (mouseover)="cellHoverCheck('low',1)" (mouseout)="cellHoverCheck('low',1)">
               <span class="font-medium text-[1.15rem] leading-[1.65rem]">{{lowArticles()![1].heading}}</span>
             </a>
@@ -62,7 +62,7 @@ import { NgClass } from '@angular/common';
             <div class="h-[5.5rem] bg-brandViolet w-full"></div>
 
             <a class="bg-brandGrey h-full w-full p-3" [ngClass]="lowCellHover() == '2' ? 'bg-brandGrey ' : 'bg-white'"
-            [routerLink]="['/article',urlFormat(lowArticles()![2].articleId!, lowArticles()![2].heading)]"
+            [routerLink]="['/article',urlFormat(lowArticles()![2].articleID!, lowArticles()![2].heading)]"
             (mouseover)="cellHoverCheck('low',2)" (mouseout)="cellHoverCheck('low',2)">
               <span class="font-medium text-[1.15rem] leading-[1.65rem]" >{{lowArticles()![2].heading}}</span>  
             </a>
@@ -71,7 +71,7 @@ import { NgClass } from '@angular/common';
           <div class="w-full"></div>
 
 
-          <a class="w-full h-full grid grid-cols-[65.77%_34.23%]" [routerLink]="['/article',urlFormat(mediumArticles()![1].articleId!, mediumArticles()![1].heading)]"
+          <a class="w-full h-full grid grid-cols-[65.77%_34.23%]" [routerLink]="['/article',urlFormat(mediumArticles()![1].articleID!, mediumArticles()![1].heading)]"
           (mouseover)="cellHoverCheck('medium',1)" (mouseout)="cellHoverCheck('medium',1)">
             <div class="w-full h-full bg-black overflow-hidden">
               <img [src]="mediumArticles()![1].frontImage" [alt]="mediumArticles()![1].frontImageAlt" class="w-full h-full object-cover " [ngClass]="mediumCellHover() == '1' ? 'scale-105' : ''">

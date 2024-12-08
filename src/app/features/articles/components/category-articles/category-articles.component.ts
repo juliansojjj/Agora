@@ -32,7 +32,7 @@ import { Category } from '../../../../shared/interfaces/category.interface';
               class="bg-slate-200"
               [routerLink]="[
                 '/article',
-                urlFormat(item.articleId!, item.heading),
+                urlFormat(item.articleID!, item.heading),
               ]"
             >
               <h4 [ngClass]="item.subscription ? 'text-red-400' : ''">{{ item.heading }}</h4>

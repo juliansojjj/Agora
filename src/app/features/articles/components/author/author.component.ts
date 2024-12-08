@@ -20,7 +20,7 @@ import { Author } from '../../../../shared/interfaces/author.interface';
           {{authorData.authorName}}
           {{authorData.authorDesignation}}
           <a [href]="authorData.source">Check author here</a>
-          <img src="https://thispersondoesnotexist.com/" alt="fake image of author" class="w-[10rem]">
+          <img src="https://thispersondoesnotexist.com/" alt="fake image of author" class="w-[10rem] ">
           {{authorData.authorDescription}}
 
         </section>

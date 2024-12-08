@@ -10,7 +10,7 @@ import { NgClass, NgStyle } from '@angular/common';
   template:`
     <div class="w-full relative h-full grid  gap-[3.5rem] place-items-center" [ngStyle]="{'grid-template-columns': 'repeat(3, ' + height() + 'rem)'}">
       @for (item of articles(); track $index) {
-        <a [routerLink]="['/article',urlFormat(item.articleId!, item.heading)]" 
+        <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
         (mouseover)="cellHoverCheck($index)" (mouseout)="cellHoverCheck($index)"
         class="h-full aspect-square overflow-hidden relative flex" [style.height]="height()+'rem'">
         <img [src]="item.frontImage" [alt]="item.frontImageAlt" class="w-full h-full object-cover" [style.height]="height()/3*2+'rem'" [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">

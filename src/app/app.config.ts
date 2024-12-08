@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideExperimentalZonelessChangeDetection, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, TitleStrategy, withComponentInputBinding } from '@angular/router';
+import { provideRouter, TitleStrategy, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -13,10 +13,11 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { errorHandlerInterceptor } from './core/interceptors/error-handler.interceptor';
 import { TitleStrategyService } from './core/services/title-strategy.service';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     // provideExperimentalZonelessChangeDetection(), 
-    provideRouter(routes,withComponentInputBinding()), 
+    provideRouter(routes,withComponentInputBinding(), withInMemoryScrolling({scrollPositionRestoration: 'enabled',})),
     provideClientHydration(), 
     provideHttpClient(withInterceptors([errorHandlerInterceptor])),
     // provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),

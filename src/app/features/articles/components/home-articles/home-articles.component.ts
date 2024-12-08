@@ -42,24 +42,24 @@ import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-gri
       <main class="flex flex-col items-center min-h-screen relative w-full">
         
         <section class="h-fit w-full">
-          <app-main-grid [highArticle]="(highPriorArticles()| orderArticlesByDate).slice(0,1)" 
-          [mediumArticles]="(mediumPriorArticles() | orderArticlesByDate).slice(0,3)"/>
+          <app-main-grid [highArticle]="(articles()!| orderArticlesByDate).slice(0,1)" 
+          [mediumArticles]="(articles()! | orderArticlesByDate).slice(0,3)"/>
         </section>
 
         <section class=" lg:w-3/4 h-fit pt-32">
-          <app-secondary-grid [highArticle]="(highPriorArticles()| orderArticlesByDate).slice(0,1)" 
-          [mediumArticles]="(mediumPriorArticles() | orderArticlesByDate).slice(2,4)"
-          [lowArticles]="(lowPriorArticles() | orderArticlesByDate).slice(0,3)"/>
+          <app-secondary-grid [highArticle]="(articles()!| orderArticlesByDate).slice(1,2)" 
+          [mediumArticles]="(articles()! | orderArticlesByDate).slice(2,4)"
+          [lowArticles]="(articles()! | orderArticlesByDate).slice(0,3)"/>
 
         </section>
 
         <section class=" w-[85%] h-fit pt-32">
-          <app-secondary2-grid [height]=20 [articles]="(lowPriorArticles() | orderArticlesByDate).slice(0,8)!"/>
+          <app-secondary2-grid [height]=20 [articles]="(articles()! | orderArticlesByDate).slice(0,8)!"/>
 
         </section>
 
         <section class=" lg:w-2/3 h-fit pt-20">
-          <app-standard-grid [height]=20 [articles]="(lowPriorArticles() | orderArticlesByDate).slice(4,13)!"/>
+          <app-standard-grid [height]=20 [articles]="(articles()! | orderArticlesByDate).slice(4,13)!"/>
 
         </section>
 
@@ -69,7 +69,7 @@ import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-gri
               class="bg-slate-200"
               [routerLink]="[
                 '/article',
-                urlFormat(item.articleId!, item.heading),
+                urlFormat(item.articleID!, item.heading),
               ]"
             >
               <h4 [ngClass]="item.subscription ? 'text-red-400' : ''">{{ item.heading }}</h4>
