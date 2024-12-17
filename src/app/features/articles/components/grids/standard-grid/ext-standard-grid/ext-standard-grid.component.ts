@@ -1,34 +1,36 @@
 import { Component, input, model } from '@angular/core';
-import { Article } from '../../../../../shared/interfaces/article.interface';
+import { Article } from '../../../../../../shared/interfaces/article.interface';
 import { RouterLink } from '@angular/router';
 import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
-  selector: 'app-standard-grid',
+  selector: 'app-ext-standard-grid',
   standalone: true,
   imports: [RouterLink, NgClass, NgStyle],
   template:`
-    <div class="w-full relative h-full grid  gap-[3.5rem] place-items-center justify-center" 
-    [ngStyle]="{'grid-template-columns': 'repeat(3, ' + height() + 'rem)'}">
+    <div class="w-full relative h-full place-items-center justify-center grid  gap-[1rem]
+    2xl:grid-cols-4
+    xl:grid-cols-3
+    sm:grid-cols-2
+    grid-cols-1
+    ">
 
       @for (item of articles(); track $index) {
 
         <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
         (mouseover)="cellHoverCheck($index)" 
         (mouseout)="cellHoverCheck($index)"
-        class="h-full aspect-square overflow-hidden relative flex" 
-        [style.height]="height()+'rem'">
+        class="w-full h-full sm:aspect-square aspect-[3/1]  overflow-hidden relative flex">
 
         <img [src]="item.frontImage" 
         [alt]="item.frontImageAlt" class="w-full h-full object-cover" 
-        [style.height]="height()/12*7+'rem'" 
         [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
 
-        <div class="absolute bottom-0 w-full z-10 p-3" 
-        [style.height]="height()/12*5+'rem'" 
+        <div class="sm:absolute bottom-0 sm:h-2/5 h-full relative w-full z-10 p-0 px-1 xsm:p-3 " 
+  
         [ngClass]="cellHover() == $index.toString() ? ' bg-brandGrey' : 'bg-white'"> 
 
-          <span class="text-[1.2rem] font-semibold">{{item.heading}}</span>
+          <span class="text-[.65rem] xsm:text-[1rem] sm:text-[1rem] md:text-[1.3rem] xl:text-[1.3rem] 2xl:text-[1.2rem] 3xl:text-[1.48rem] 4xl:text-[2rem] font-semibold">{{item.heading}}</span>
 
         </div>
       </a>
@@ -37,9 +39,8 @@ import { NgClass, NgStyle } from '@angular/common';
   `,
   styles:''
 })
-export class StandardGridComponent {
+export class ExtStandardGridComponent {
   articles = input.required<Article[]>();
-  height = input.required<number>();
 
   cellHover = model<string>()
 

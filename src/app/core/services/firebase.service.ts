@@ -60,7 +60,7 @@ export class FirebaseService {
 
   getAuthorArticles(authorID:string){
     const ref = collection(this.firestoreService, 'articles')
-    const result = collectionData(query(ref,where('authorID','==',authorID)))
+    const result = collectionData(query(ref,where('authorID','==',authorID)), { idField: 'articleID' })
 
     return from(result);
   }
