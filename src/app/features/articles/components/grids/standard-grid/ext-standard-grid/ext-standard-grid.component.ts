@@ -8,7 +8,7 @@ import { NgClass, NgStyle } from '@angular/common';
   standalone: true,
   imports: [RouterLink, NgClass, NgStyle],
   template:`
-    <div class="w-full relative h-full place-items-center justify-center grid  gap-[1rem]
+    <div class="w-full relative h-full place-items-center justify-center grid  sm:gap-[1rem]
     2xl:grid-cols-4
     xl:grid-cols-3
     sm:grid-cols-2

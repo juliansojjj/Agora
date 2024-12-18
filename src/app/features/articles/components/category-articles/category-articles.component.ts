@@ -11,41 +11,33 @@ import {
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 import { Category } from '../../../../shared/interfaces/category.interface';
+import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-grid/ext-standard-grid.component';
+import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
 
 @Component({
   selector: 'app-category-articles',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, AsyncPipe, NgClass],
+  imports: [NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe],
   template: `
-  @if(category()){
-    <section class="flex flex-col w-full items-center">
-      <span>{{category()?.name}}</span>
-      <p>{{category()?.main ? category()?.description : ''}}</p>
-  </section>
-      
-    }
-    @if(data$ | async; as data){
-    
-      {{data.length}}
-      @for (item of data; track $index) {
-        <a
-              class="bg-slate-200"
-              [routerLink]="[
-                '/article',
-                urlFormat(item.articleID!, item.heading),
-              ]"
-            >
-              <h4 [ngClass]="item.subscription ? 'text-red-400' : ''">{{ item.heading }}</h4>
-              <img
-                [src]="item.frontImage"
-                alt="front image of {{ item.heading }}"
-                class="w-[10rem] aspect-[3/2] object-cover"
-              />
-            </a>
-      }
-    } @else{
-      <span>Loading...</span>
-    }
+    <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col items-center pt-6 xl:px-0 sm:px-6 px-0">
+          <div></div>
+            <section class="w-full flex flex-col">
+              @if(category()){
+              <section class="lg:grid lg:grid-cols-[4%_57%_35%_4%] flex flex-col w-full items-center">
+                <div></div>
+                <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] text-[2.3rem] text-brandViolet">{{category()?.name}}</h1>
+                <p class="mt-40 sm:px-0 xsm:px-4 px-2 xsm:text-[1.4rem] text-[1rem] text-right">{{category()?.main ? category()?.description : ''}}</p>
+                <div></div>
+              </section>
+              }
+            @if(data$ | async; as data){
+              <section class=" w-full h-fit pt-20">
+                  <app-ext-standard-grid [articles]="(data | orderArticlesByDate)"/>
+              </section>
+            }
+            </section>
+          <div></div>
+        </div>
   `,
 })
 export class CategoryArticlesComponent {

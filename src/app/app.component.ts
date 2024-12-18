@@ -7,6 +7,7 @@ import { AsyncPipe, isPlatformBrowser, JsonPipe, NgIf } from '@angular/common';
 import { toSignal, ToSignalOptions } from '@angular/core/rxjs-interop';
 
 import '@fontsource-variable/montserrat';
+import { FooterComponent } from './core/components/footer/footer.component';
 
 
 
@@ -16,7 +17,7 @@ import '@fontsource-variable/montserrat';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, MenuComponent, AsyncPipe, NgIf],
+  imports: [RouterOutlet, HeaderComponent, MenuComponent,FooterComponent, AsyncPipe, NgIf],
   template: ` 
   <ng-container class="flex flex-col min-h-fit" >
 
@@ -26,8 +27,7 @@ import '@fontsource-variable/montserrat';
 
 
   <router-outlet />
-
-
+  <app-footer />
   </ng-container>`,
 })
 
