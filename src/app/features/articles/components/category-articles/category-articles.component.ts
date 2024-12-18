@@ -19,7 +19,20 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
   standalone: true,
   imports: [NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe],
   template: `
-    <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col items-center pt-6 xl:px-0 sm:px-6 px-0">
+      <div class="relative mt-[2rem]">
+        
+        @if(category() && !category()?.main){
+          <div class="absolute w-full h-fit top-0 left-0 xl:grid hidden grid-cols-[9%_82%_9%]">
+            <div class="aspect-square bg-brandShade w-[6rem] triangleShape justify-self-end"></div>
+            <div class="justify-self-end flex w-fit">
+              <div class="aspect-square bg-brandShade w-[6rem] h-[6rem] mt-[6rem]"></div>
+              <div class="aspect-square bg-brandShade w-[6rem] h-[6rem]"></div>
+            </div>
+            <div class="aspect-square bg-brandShade w-[6rem] triangleShape -rotate-90 mt-[12rem]"></div>
+          </div>  
+        }
+
+        <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col items-center pt-6 xl:px-0 sm:px-6 px-0">
           <div></div>
             <section class="w-full flex flex-col">
               @if(category()){
@@ -31,14 +44,23 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
               </section>
               }
             @if(data$ | async; as data){
-              <section class=" w-full h-fit pt-20">
+              <section class=" w-full h-fit pt-32">
                   <app-ext-standard-grid [articles]="(data | orderArticlesByDate)"/>
               </section>
             }
             </section>
           <div></div>
         </div>
+      </div>
   `,
+  styles:`
+    .triangleShape{
+      clip-path: polygon(
+        0% 100%,
+        50% 0%,
+        100% 100%);
+    }
+  `
 })
 export class CategoryArticlesComponent {
   firebaseService = inject(FirebaseService)
