@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './core/components/header/header.component';
 import { Observable } from 'rxjs';
 import { MenuComponent } from './core/components/menu/menu.component';
-import { AsyncPipe, isPlatformBrowser, JsonPipe, NgIf } from '@angular/common';
+import { AsyncPipe, isPlatformBrowser, JsonPipe, NgClass, NgIf } from '@angular/common';
 import { toSignal, ToSignalOptions } from '@angular/core/rxjs-interop';
 
 import '@fontsource-variable/montserrat';
@@ -17,7 +17,7 @@ import { FooterComponent } from './core/components/footer/footer.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, MenuComponent,FooterComponent, AsyncPipe, NgIf],
+  imports: [RouterOutlet, HeaderComponent, MenuComponent,FooterComponent],
   template: ` 
   <ng-container class="flex flex-col min-h-fit" >
 
@@ -26,8 +26,9 @@ import { FooterComponent } from './core/components/footer/footer.component';
     <app-header [(menu)]="menu"  />
 
 
-  <router-outlet />
-  <app-footer />
+    <router-outlet/>
+
+    <app-footer />
   </ng-container>`,
 })
 

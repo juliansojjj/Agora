@@ -26,15 +26,7 @@ import { RouterLink } from '@angular/router';
           </div>
 
 
-          <span class="mt-8 mb-10  font-medium">{{(subscriptionState$ | async)?.username}}</span>
-
-          @if (!(subscriptionState$ | async)?.subscription) {
-                <a
-                  [routerLink]="['/subscription']"
-                  class=" w-full h-fit font-medium flex justify-center items-center py-4 bg-brandViolet text-white hover:text-brandViolet hover:bg-white  active:scale-95 mb-10" (click)="menuTrigger()"
-                  >Subscribe for $0</a
-                >
-          }
+          
 
           <a class="w-full text-start h-16  pl-6 font-medium hover:underline" [routerLink]="['/favorites']" (click)="menuTrigger()"> 
             Favorites
@@ -64,12 +56,6 @@ export class ArticleMenuComponent{
 
   user= toSignal(this.firebaseAuth.user$)
   authState$ = this.firebaseService.authState$;
-  subscriptionState$: Observable<FirestoreCollectionUser> =
-    this.authState$.pipe(
-      switchMap((auth: any) => {
-        return this.firebaseService.getUserInfo(auth.uid);
-      }),
-    );
 
   onLogout (){
     this.firebaseAuth.logout()

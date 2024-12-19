@@ -109,20 +109,9 @@ import { ElementRef } from '@angular/core';
 
               @if (!authState()) {
                 <a
-                  [routerLink]="['/subscription']"
-                  class=" w-44 h-full text-white font-medium flex justify-center items-center bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 "
-                  >Subscribe for $0</a
-                >
-                <a
                   [routerLink]="['/login']"
                   class=" w-44 h-full font-medium flex justify-center items-center bg-white hover:bg-black hover:text-white active:scale-95"
                   >Login</a
-                >
-              } @else if (!(subscriptionState$ | async)?.subscription) {
-                <a
-                  [routerLink]="['/subscription']"
-                  class=" w-44 h-full text-white  font-medium flex justify-center items-center bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 "
-                  >Subscribe for $0</a
                 >
               }
             </div>
@@ -206,12 +195,6 @@ export class ArticleHeaderComponent implements AfterViewChecked {
 
   authState$ = this.firebaseService.authState$;
   authState = toSignal(this.authState$);
-  subscriptionState$: Observable<FirestoreCollectionUser> =
-    this.authState$.pipe(
-      switchMap((auth: any) => {
-        return this.firebaseService.getUserInfo(auth.uid);
-      }),
-    );
 
   search = model<boolean>(false)
   menu = model<boolean>();
@@ -233,8 +216,7 @@ export class ArticleHeaderComponent implements AfterViewChecked {
         this.articleRoute.set(false);
         if (
           event.url === '/login' ||
-          event.url === '/register' ||
-          event.url === '/subscription'
+          event.url === '/register' 
         ) {
           this.visibility.set(false);
         } else {

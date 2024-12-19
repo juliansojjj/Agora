@@ -39,7 +39,7 @@ import { Title } from '@angular/platform-browser';
   imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
     <header
-      class="sticky top-0 left-0 z-50 lg:h-[7.5rem] h-[8.5rem]   bg-white"
+      class="sticky top-0 left-0 z-50 md:h-[7.5rem] h-[8.5rem]   bg-white"
       [ngClass]="visibility() ? 'flex' : 'hidden'"
     >
       <nav class="w-full flex justify-between">
@@ -65,15 +65,7 @@ import { Title } from '@angular/platform-browser';
               
 
               <div class="w-full flex justify-end pr-7">
-              <button  class="ml-7 active:scale-[85%] sm:hidden block">
-                    <svg viewBox="0 0 44 36" class="h-[1.55rem]">
-                      <path
-                        d="M0 18H44M0 3H44M0 33H44"
-                        stroke="black"
-                        stroke-width="5"
-                      />
-                    </svg>
-                  </button>
+              
                 
                 @if(search()){
                   <input type="text" class="w-full h-full border-b-2 border-black focus:outline-none sm:block hidden">
@@ -86,8 +78,17 @@ import { Title } from '@angular/platform-browser';
                     />
                   </svg>
                 </button>
+                  <button (click)="menuTrigger()" class="md:hidden block ml-7 active:scale-[85%]">
+                    <svg viewBox="0 0 44 36" class="h-[1.55rem]">
+                      <path
+                        d="M0 18H44M0 3H44M0 33H44"
+                        stroke="black"
+                        stroke-width="5"
+                      />
+                    </svg>
+                  </button>
                 @if (authState()) {
-                  <button (click)="menuTrigger()" class="ml-7 active:scale-[85%]">
+                  <button (click)="menuTrigger()" class="ml-7 active:scale-[85%] md:block hidden">
                     <svg viewBox="0 0 44 36" class="h-[1.55rem]">
                       <path
                         d="M0 18H44M0 3H44M0 33H44"
@@ -100,21 +101,8 @@ import { Title } from '@angular/platform-browser';
               </div>
             </div>
 
-            <div class="flex items-end lg:flex-row flex-col-reverse justify-self-end">
+            <div class="flex items-end flex-row justify-self-end">
               <ul class="h-full md:flex hidden">
-              @if (!authState()) {
-                  <a
-                    [routerLink]="['/subscription']"
-                    class="lg:hidden md:flex hidden w-44 h-full text-white font-medium justify-center items-center bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 "
-                    >Subscribe for $0</a
-                  >
-              } @else if (!(subscriptionState$ | async)?.subscription) {
-                <a
-                  [routerLink]="['/subscription']"
-                  class="lg:hidden md:flex hidden w-44 h-full text-white font-medium justify-center items-center bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 "
-                  >Subscribe for $0</a
-                >
-              }
                   <a
                     [routerLink]="['/category/tech' ]"
                     class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
@@ -139,24 +127,11 @@ import { Title } from '@angular/platform-browser';
               </ul>
 
               @if (!authState()) {
-                <div class="h-full hidden lg:flex">
-                  <a
-                    [routerLink]="['/subscription']"
-                    class=" w-44 h-full text-white font-medium flex justify-center items-center bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 "
-                    >Subscribe for $0</a
-                  >
                   <a
                     [routerLink]="['/login']"
-                    class=" w-44 h-full font-medium flex justify-center items-center bg-white hover:bg-black hover:text-white active:scale-95"
+                    class=" xl:w-36 w-28 h-full font-medium md:flex hidden justify-center items-center bg-white hover:bg-black hover:text-white active:scale-95"
                     >Login</a
                   >
-                </div>
-              } @else if (!(subscriptionState$ | async)?.subscription) {
-                <a
-                  [routerLink]="['/subscription']"
-                  class="hidden md:flex w-44 h-full text-white font-medium justify-center items-center bg-brandViolet hover:text-brandViolet hover:bg-white  active:scale-95 "
-                  >Subscribe for $0</a
-                >
               }
             </div>
           </div>
@@ -176,12 +151,6 @@ export class HeaderComponent implements AfterViewChecked {
 
   authState$ = this.firebaseService.authState$;
   authState = toSignal(this.authState$);
-  subscriptionState$: Observable<FirestoreCollectionUser> =
-    this.authState$.pipe(
-      switchMap((auth: any) => {
-        return this.firebaseService.getUserInfo(auth.uid);
-      }),
-    );
 
   search = model<boolean>(false)
   menu = model<boolean>();
@@ -200,8 +169,7 @@ export class HeaderComponent implements AfterViewChecked {
         this.articleRoute.set(false);
         if (
           event.url === '/login' ||
-          event.url === '/register' ||
-          event.url === '/subscription'
+          event.url === '/register'
         ) {
           this.reduced.set(true);
         } else {

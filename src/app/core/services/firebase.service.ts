@@ -142,14 +142,6 @@ export class FirebaseService {
     return from(result);
   }
 
-  handleSubscription(uid:string,operation:boolean){
-    const ref = collection(this.firestoreService, 'users');
-    const res = updateDoc(doc(ref, uid),
-    { 
-      subscription: operation
-    } )
-    return from(res)
-  }
   
   handleFavorite(uid:string,operation:boolean, articleID:string){
     const ref = doc(this.firestoreService, 'users', uid);

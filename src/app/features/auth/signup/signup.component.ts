@@ -146,8 +146,7 @@ export class SignupComponent {
         if(!this.redirect()){
           this.router.navigate(['/'])
         } 
-        if(this.redirect() == 'subscription') this.router.navigate(['/subscription/checkout'])
-        else if(this.redirect()?.split('-')[0] == 'article') this.router.navigate([`/article/${this.redirect()?.split('-')[1]}`])
+        if(this.redirect()?.split('-')[0] == 'article') this.router.navigate([`/article/${this.redirect()?.split('-')[1]}`])
       });
   }
 
