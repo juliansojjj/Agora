@@ -43,23 +43,14 @@ import { Title } from '@angular/platform-browser';
       [ngClass]="visibility() ? 'flex' : 'hidden'"
     >
       <nav class="w-full flex justify-between">
-        @if (reduced()) {
-          <ul class=" w-full relative flex justify-center">
-            <li class="place-self-center">
-              <a routerLink="/">
-                <img src="agora-logo.svg" class="h-[5.5rem]" />
-              </a>
-            </li>
-          </ul>
-        } @else {
           <a routerLink="/" class="h-fit xl:block hidden self-center ml-12">
-            <img src="agora-logo.svg" class="h-[4rem]" />
+            <img src="agora-imagotype.svg" class="h-[4rem]" />
           </a>
 
           <div class="xl:w-fit w-full h-full relative md:grid md:grid-rows-2 flex xl:justify-end">
             <div class="w-full flex xl:justify-between justify-end">
               <a routerLink="/" class="h-fit xl:hidden block self-center mx-7 my-0 md:mt-3">
-              <img src="agora-logo.svg" class="md:h-[3.5rem] h-[5rem]" />
+              <img src="agora-imagotype.svg" class="md:h-[3.5rem] h-[5rem]" />
               </a>
 
               
@@ -135,7 +126,7 @@ import { Title } from '@angular/platform-browser';
               }
             </div>
           </div>
-        }
+        
       </nav>
     </header>
   `,
@@ -147,7 +138,6 @@ export class HeaderComponent implements AfterViewChecked {
   title = inject(Title);
 
   routeTitle = model<string>('');
-  articleRoute = model<boolean>(false);
 
   authState$ = this.firebaseService.authState$;
   authState = toSignal(this.authState$);
@@ -166,17 +156,11 @@ export class HeaderComponent implements AfterViewChecked {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
         this.routeTitle.set('');
-        this.articleRoute.set(false);
         if (
           event.url === '/login' ||
-          event.url === '/register'
+          event.url === '/register' ||
+          event.url.split('/')[1] === 'article'
         ) {
-          this.reduced.set(true);
-        } else {
-          this.reduced.set(false);
-        }
-        if (event.url.split('/')[1] === 'article') {
-          this.articleRoute.set(true);
           this.visibility.set(false);
         } else {
           this.visibility.set(true);

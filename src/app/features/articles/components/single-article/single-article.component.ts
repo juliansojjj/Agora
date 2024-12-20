@@ -538,7 +538,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               class="flex flex-col lg:w-1/3 w-full h-fit absolute  bottom-0 lg:mb-20 z-10  left-[50%] -translate-x-1/2 items-center justify-end pt-6  lg:rounded-xl rounded-none bg-white"
             >
               <div class="flex flex-col h-fit pb-4">
-                <img src="agora-logo.svg" class="h-12 mt-1" />
+                <img src="agora-imagotype.svg" class="h-12 mt-1" />
                 <span class="text-[1.2rem] mt-3 text-center"
                   >This content is exclusive for subscribers</span
                 >
