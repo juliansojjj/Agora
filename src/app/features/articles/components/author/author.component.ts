@@ -42,11 +42,11 @@ import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-gr
               <section class="lg:grid lg:grid-cols-[4%_57%_35%_4%] flex flex-col w-full items-center lg:items-start">
                 <img src="https://thispersondoesnotexist.com/" alt="fake image of author" class="lg:hidden block sm:w-1/3 w-1/2 object-cover rounded-full">
                 <div></div>
-                <div class="flex flex-col lg:text-left text-center text-[1.5rem]">
-                  <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] text-[2.3rem] text-brandViolet">{{authorData.authorName}}</h1>
+                <div class="flex flex-col lg:text-left text-center text-[1.4rem]">
+                  <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet">{{authorData.authorName}}</h1>
                   <h2 class=" font-semibold lg:text-[2.6rem] sm:text-[2rem] text-[1.7rem] text-brandShade mb-4">{{authorData.authorDesignation}}</h2>
-                  <p class="mb-4 sm:px-0 xsm:px-4 px-2 text-left xsm:text-[1.4rem] text-[1rem]">{{authorData.authorDescription}}</p>
-                  <a [href]="authorData.source" target="_blank" class="xsm:text-[1.4rem] text-sm sm:px-0 xsm:px-4 px-2 w-fit font-semibold text-brandShade hover:bg-brandShade hover:text-black">Check author here</a>
+                  <p class="text-[1.2rem] xsm:text-[1.4rem] mb-4 sm:px-0 px-4 text-left">{{authorData.authorDescription}}</p>
+                  <a [href]="authorData.source" target="_blank" class="text-[1.4rem] sm:px-0 px-4 w-fit font-semibold text-brandShade hover:bg-brandShade hover:text-black">Check author here</a>
                 </div>
                 <img src="https://thispersondoesnotexist.com/" alt="fake image of author" class="lg:block hidden xl:w-[21rem] object-cover rounded-full justify-self-end">
                 <div></div>

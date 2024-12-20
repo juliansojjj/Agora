@@ -30,7 +30,16 @@ import { NgClass, NgStyle } from '@angular/common';
   
         [ngClass]="cellHover() == $index.toString() ? ' bg-brandGrey' : 'bg-white'"> 
 
-          <span class="text-[.65rem] xsm:text-[1rem] sm:text-[1rem] md:text-[1.3rem] xl:text-[1.3rem] 2xl:text-[1.2rem] 3xl:text-[1.48rem] 4xl:text-[2rem] font-semibold">{{item.heading}}</span>
+          <span class=" block
+          text-[.85rem] leading-[1.2rem] font-medium
+          xsm:text-[1rem] xsm:leading-normal 
+          sm:font-semibold
+          md:text-[1.3rem] 
+          2xl:text-[1.2rem] 
+          3xl:text-[1.48rem] 
+          4xl:text-[2rem] 
+          
+          ">{{item.heading}}</span>
 
         </div>
       </a>

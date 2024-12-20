@@ -58,8 +58,8 @@ import { Title } from '@angular/platform-browser';
 
           <div class="xl:w-fit w-full h-full relative md:grid md:grid-rows-2 flex xl:justify-end">
             <div class="w-full flex xl:justify-between justify-end">
-              <a routerLink="/" class="h-fit xl:hidden block self-center ml-7 mr-7">
-              <img src="agora-logo.svg" class="md:h-[3rem] h-[5rem]" />
+              <a routerLink="/" class="h-fit xl:hidden block self-center mx-7 my-0 md:mt-3">
+              <img src="agora-logo.svg" class="md:h-[3.5rem] h-[5rem]" />
               </a>
 
               
