@@ -18,9 +18,9 @@ import { NgClass } from '@angular/common';
             <img src="agora-shade-isotype.svg" class="h-[5rem]" />
           </a>
 
-        <div class="w-full flex justify-center lg:justify-between lg:pl-6 sm:mt-10">
+        <div class="w-full flex justify-center lg:justify-between lg:pl-6 lg:mt-10">
             <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col items-center lg:items-start w-fit">
-                <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet sm:mt-14 mt-6 md:text-start text-center">Login</h1>
+                <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet lg:mt-10  md:text-start text-center">Login</h1>
                 
                 
                 <div class="flex flex-col-reverse sm:mt-8 mt-3">
@@ -64,16 +64,16 @@ import { NgClass } from '@angular/common';
                 <button type="submit" [disabled]="form.invalid" 
                 class="bg-brandViolet py-2 px-8 font-semibold mt-1 text-[1.6rem] text-white w-fit hover:bg-brandShade hover:text-black active:scale-95">Send</button>
                 
-                <div class="sm:h-[3rem] h-[2rem] mt-2 w-fit self-start pl-6 sm:pl-0">
+                <div class="h-[2rem] mt-4 w-fit self-start pl-6 sm:pl-0">
                   <span class="errorLabel">{{error()}}</span>
                 </div>
 
                 @if(redirect()){
                   <a [routerLink]="['/register']" [queryParams]="{redirect:redirect()}"
-                  class="w-fit font-medium sm:text-[1.2rem] text-[1rem] sm:mt-8 mt-4 px-4 lg:px-0 sm:text-start text-center text-brandViolet hover:underline">Don't have an account? Create one</a>
+                  class="w-fit font-medium sm:text-[1.2rem] text-[1rem] mt-2 px-4 lg:px-0 sm:text-start text-center text-brandViolet hover:underline">Don't have an account? Create one</a>
                 }@else {
                   <a [routerLink]="['/register']"
-                  class="font-medium text-[1.2rem] sm:mt-8 mt-4 px-4 lg:px-0 sm:text-start text-center text-brandViolet hover:underline">Don't have an account? Create one</a>
+                  class="font-medium text-[1.2rem] mt-2 px-4 lg:px-0 sm:text-start text-center text-brandViolet hover:underline">Don't have an account? Create one</a>
                 }
             </form>   
             
@@ -94,12 +94,6 @@ import { NgClass } from '@angular/common';
     </div>
     `,
   styles:`
-  .triangleShape{
-    clip-path: polygon(
-      0% 100%,
-      50% 0%,
-      100% 100%);
-  }
   .errorLabel{
     font-size:1.2rem;
     font-weight:500;

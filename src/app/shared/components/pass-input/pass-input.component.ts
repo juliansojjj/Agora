@@ -13,7 +13,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
       @if(visibility() == 'password'){
         <svg viewBox="0 0 90 90" (click)="triggerPassVisibility()"
-        class="absolute bottom-0 right-0 sm:h-[3rem] h-[2.5rem] mb-[.3rem] sm:-mr-[3.5rem] -mr-[2.7rem] peer-focus:fill-brandViolet fill-brandShade stroke-brandShade peer-focus:stroke-brandViolet">
+        class="absolute bottom-0 right-0 sm:h-[3rem] h-[2.5rem] mb-[.3rem] sm:-mr-[3.5rem] -mr-[2.7rem] 
+        hover:cursor-pointer active:scale-95
+        peer-focus:fill-brandViolet fill-brandShade stroke-brandShade peer-focus:stroke-brandViolet">
             <rect x="62.3164" y="53.5674" width="12.5595" height="12.5595" transform="rotate(45 62.3164 53.5674)"/>
             <rect x="62.6094" y="18.0586" width="12.5595" height="12.5595" transform="rotate(45 62.6094 18.0586)"/>
             <rect x="26.9414" y="53.7285" width="12.5595" height="12.5595" transform="rotate(45 26.9414 53.7285)"/>
@@ -25,7 +27,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
       }@else{
         <svg viewBox="0 0 90 90" (click)="triggerPassVisibility()"
-        class="absolute bottom-0 right-0 sm:h-[3rem] h-[2.5rem] mb-[.3rem] sm:-mr-[3.5rem] -mr-[2.7rem] peer-focus:fill-brandViolet fill-brandShade stroke-brandShade peer-focus:stroke-brandViolet">
+        class="absolute bottom-0 right-0 sm:h-[3rem] h-[2.5rem] mb-[.3rem] sm:-mr-[3.5rem] -mr-[2.7rem] 
+        hover:cursor-pointer active:scale-95
+        peer-focus:fill-brandViolet fill-brandShade stroke-brandShade peer-focus:stroke-brandViolet">
           <rect x="62.3164" y="53.5674" width="12.5595" height="12.5595" transform="rotate(45 62.3164 53.5674)" fill="none" stroke-width="4"/>
           <rect x="62.6094" y="18.0586" width="12.5595" height="12.5595" transform="rotate(45 62.6094 18.0586)" fill="none" stroke-width="4"/>
           <rect x="26.9414" y="53.7285" width="12.5595" height="12.5595" transform="rotate(45 26.9414 53.7285)" fill="none" stroke-width="4"/>
