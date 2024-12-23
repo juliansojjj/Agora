@@ -8,51 +8,80 @@ import { NgClass } from '@angular/common';
   standalone: true,
   imports: [RouterLink, NgClass],
   template:`
-  <div class="w-full relative h-full grid grid-rows-2 gap-[3.5rem]">
+  <div class="w-full relative h-full grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-[3.5rem] sm:gap-[1rem] gap-y-[2rem] place-items-center ">
 
-
-    <div class="w-full relative h-full grid grid-cols-4 gap-[3.5rem] place-items-center">
         @for (item of articles().slice(0,4); track $index) {
+
           <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
           (mouseover)="cellHoverCheck($index)" (mouseout)="cellHoverCheck($index)"
-          class="h-full aspect-square overflow-hidden relative flex" [style.height]="height()+'rem'" [ngClass]="$index % 2 == 0 ? 'evenCell' : 'oddCell items-end'">
+          class="relative flex 
+          2xl:h-[20rem] 
+          xl:h-[15rem] xl:w-fit
+          lg:w-[14rem] lg:h-[14rem] 
+          sm:h-[17.5rem] sm:aspect-square
+          xsm:h-[12rem]
+          aspect-[2/1] h-[9rem]" 
+          [ngClass]="$index % 2 == 0 ? 'evenCell flex-row-reverse sm:flex-col' : 'oddCell sm:items-end sm:flex-col-reverse'">
 
-          <img [src]="item.frontImage" [alt]="item.frontImageAlt" class="w-full  object-cover" [style.height]="height()/3*2+'rem'" [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
+          <img [src]="item.frontImage" [alt]="item.frontImageAlt" 
+          class="w-full  object-cover 
+          2xl:h-[13rem] 
+          xl:h-[10rem] 
+          lg:h-[8rem] 
+          sm:h-[11.5rem]" 
+          [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
 
-          <div class="absolute  w-full z-10 p-3" [style.height]="height()/3+'rem'" [ngClass]="{
+          <div class="w-full z-10 2xl:p-3 p-1 h-full" 
+          [ngClass]="{
           'bg-brandGrey': cellHover() == $index.toString(),
-          'bg-white': cellHover() != $index.toString(),
-          'bottom-0': $index % 2 === 0,
-          'top-0': $index % 2 !== 0
-          }"> 
-            <span class="text-[1.2rem] font-semibold">{{item.heading}}</span>
+          'bg-white': cellHover() != $index.toString()}"> 
+            <span class="font-semibold
+            2xl:text-[1.2rem] 
+            lg:text-[1rem]
+            sm:text-[1.2rem]
+            xsm:text-[1rem]
+            text-[.9rem]">{{item.heading}}</span>
           </div>
         </a>
         }
-      </div>
 
 
-      <div class="w-full relative h-full grid grid-cols-4 gap-[3.5rem] place-items-center">
+
         @for (item of articles().slice(4,8); track $index) {
+
           <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
           (mouseover)="cellHoverCheck($index+5)" (mouseout)="cellHoverCheck($index+5)"
-          class="h-full aspect-square overflow-hidden relative flex" [style.height]="height()+'rem'" [ngClass]="($index+5) % 2 == 0 ? 'evenCell' : 'oddCell items-end'">
+          class="relative flex 
+          2xl:h-[20rem] 
+          xl:h-[15rem] xl:w-fit
+          lg:w-[14rem] lg:h-[14rem] 
+          sm:h-[17.5rem] sm:aspect-square
+          xsm:h-[12rem]
+          aspect-[2/1] h-[9rem]" 
+          [ngClass]="($index+5) % 2 == 0 ? 'evenCell flex-row-reverse sm:flex-col' : 'oddCell sm:items-end sm:flex-col-reverse'">
 
-          <img [src]="item.frontImage" [alt]="item.frontImageAlt" class="w-full  object-cover" [style.height]="height()/3*2+'rem'" [ngClass]="cellHover() == ($index+5).toString() ? 'scale-105' : ''">
+          <img [src]="item.frontImage" [alt]="item.frontImageAlt" 
+          class="w-full  object-cover 
+          2xl:h-[13rem] 
+          xl:h-[10rem] 
+          lg:h-[8rem] 
+          sm:h-[11.5rem]" 
+          [ngClass]="cellHover() == ($index+5).toString() ? 'scale-105' : ''">
 
-          <div class="absolute  w-full z-10 p-3" [style.height]="height()/3+'rem'" [ngClass]="{
+          <div class="w-full z-10 2xl:p-3 p-1 h-full" 
+          [ngClass]="{
           'bg-brandGrey': cellHover() == ($index+5).toString(),
-          'bg-white': cellHover() != ($index+5).toString(),
-          'bottom-0': ($index+5) % 2 === 0,
-          'top-0': ($index+5) % 2 !== 0
-          }"> 
-            <span class="text-[1.2rem] font-semibold">{{item.heading}}</span>
+          'bg-white': cellHover() != ($index+5).toString()}"> 
+            <span class="font-semibold
+            2xl:text-[1.2rem] 
+            lg:text-[1rem]
+            sm:text-[1.2rem]
+            xsm:text-[1rem]
+            text-[.9rem]">{{item.heading}}</span>
           </div>
-        </a>
+          </a>
         }
       </div>
-  </div>
-    
   `,
   styles:`
   .evenCell{
@@ -73,7 +102,6 @@ import { NgClass } from '@angular/common';
 })
 export class Secondary2GridComponent {
   articles = input.required<Article[]>();
-  height = input.required<number>();
 
   cellHover = model<string>()
 

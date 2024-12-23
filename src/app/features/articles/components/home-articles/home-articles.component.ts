@@ -32,11 +32,12 @@ import { MainGridComponent } from '../grids/main-grid/main-grid.component';
 import { SecondaryGridComponent } from '../grids/secondary-grid/secondary-grid.component';
 import { StandardGridComponent } from '../grids/standard-grid/standard-grid.component';
 import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-grid.component";
+import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-grid.component';
 
 @Component({
   selector: 'app-home-articles',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, AsyncPipe, OrderArticlesByDatePipe, NgClass, MainGridComponent, SecondaryGridComponent, StandardGridComponent, Secondary2GridComponent],
+  imports: [NgFor, NgIf, RouterLink, AsyncPipe, OrderArticlesByDatePipe, NgClass, MainGridComponent, SecondaryGridComponent, Secondary2GridComponent, Secondary3GridComponent, StandardGridComponent],
   template: `
     @if (articles()) {
       <main class="flex flex-col items-center min-h-screen relative w-full">
@@ -53,17 +54,21 @@ import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-gri
 
         </section>
 
+        <section class=" w-[90%] h-fit pt-32">
+          <h2>Entertainment</h2>
+          <app-secondary2-grid [articles]="(articles()! | orderArticlesByDate).slice(0,8)!"/>
+        </section>
+        
         <section class=" w-[85%] h-fit pt-32">
-          <app-secondary2-grid [height]=20 [articles]="(articles()! | orderArticlesByDate).slice(0,8)!"/>
-
+          <h2>Media</h2>
+          <app-secondary3-grid [articles]="(articles()! | orderArticlesByDate).slice(8,12)!"/>
         </section>
 
-        <section class=" lg:w-2/3 h-fit pt-20">
+        <!-- <section class=" lg:w-2/3 h-fit pt-20">
           <app-standard-grid [height]=20 [articles]="(articles()! | orderArticlesByDate).slice(4,13)!"/>
+        </section> -->
 
-        </section>
-
-        <section class=" lg:w-3/5 w-full pt-6">
+        <!-- <section class=" lg:w-3/5 w-full pt-6">
         @for(item of articles(); track $index; let i = $index){
           <a
               class="bg-slate-200"
@@ -80,7 +85,7 @@ import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-gri
               />
             </a>
         }
-        </section>
+        </section> -->
         
       </main>
     } @else {
