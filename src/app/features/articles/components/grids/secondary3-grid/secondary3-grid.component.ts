@@ -10,8 +10,49 @@ import { NgClass } from '@angular/common';
   template:`
   <div class="w-full h-fit relative">
 
-    <div class="w-full absolute h-full -z-20 hidden md:flex justify-center items-center">
+    <div class="w-full absolute top-0 left-0 h-full -z-20 hidden md:flex justify-between items-center">
+      <div class="w-fit h-full flex flex-col justify-between relative 
+        xl:-ml-[2rem]
+        lg:-ml-[1.5rem]
+        -ml-[1rem]">
+
+        <div class="cornerShape bg-brandShade aspect-square 
+          xl:w-[4rem] xl:-mt-[2rem] 
+          lg:w-[3rem] lg:-mt-[1.5rem] 
+          w-[2rem]  -mt-[1rem]"></div>
+        <div class="bg-brandShade aspect-[2/1]
+          xl:w-[4rem]
+          lg:w-[3rem]
+          w-[2rem]"></div>
+        <div class="cornerShape bg-brandShade aspect-square -rotate-90
+          xl:w-[4rem] xl:-mt-[2rem] 
+          lg:w-[3rem] lg:-mt-[1.5rem] 
+          w-[2rem]  -mt-[1rem]"></div>
+
+      </div>
+
       <div class="bg-brandShade aspect-square h-[6rem] relative"></div>
+
+      <div class="w-fit h-full flex flex-col justify-between relative 
+        xl:-mr-[2rem]
+        lg:-mr-[1.5rem]
+        -mr-[1rem]">
+
+        <div class="cornerShape bg-brandShade aspect-square rotate-90 
+          xl:w-[4rem] xl:-mt-[2rem] 
+          lg:w-[3rem] lg:-mt-[1.5rem] 
+          w-[2rem]  -mt-[1rem]"></div>
+        <div class="bg-brandShade aspect-[2/1]
+          xl:w-[4rem]
+          lg:w-[3rem]
+          w-[2rem]"></div>
+        <div class="cornerShape bg-brandShade aspect-square rotate-180
+          xl:w-[4rem] xl:-mt-[2rem] 
+          lg:w-[3rem] lg:-mt-[1.5rem] 
+          w-[2rem]  -mt-[1rem]"></div>
+          
+      </div>
+
     </div>
 
 
@@ -98,6 +139,15 @@ import { NgClass } from '@angular/common';
   </div>
   `,
   styles:`
+  .cornerShape{
+    clip-path: polygon(
+      0% 0%,
+      100% 0%,
+      100% 50%,
+      50% 50%,
+      50% 100%,
+      0% 100%);
+  }
   .upperLeft{
     clip-path: polygon(
       0% 30%,

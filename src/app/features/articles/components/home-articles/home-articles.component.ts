@@ -47,22 +47,30 @@ import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-gri
           [mediumArticles]="(articles()! | orderArticlesByDate).slice(0,3)"/>
         </section>
 
-        <section class=" lg:w-3/4 h-fit pt-32">
+        <!-- <section class=" lg:w-3/4 h-fit pt-32">
           <app-secondary-grid [highArticle]="(articles()!| orderArticlesByDate).slice(1,2)" 
           [mediumArticles]="(articles()! | orderArticlesByDate).slice(2,4)"
           [lowArticles]="(articles()! | orderArticlesByDate).slice(0,3)"/>
 
-        </section>
+        </section> -->
 
-        <section class=" w-[90%] h-fit pt-32">
+        <!-- <section class=" w-[90%] h-fit pt-32">
           <h2>Entertainment</h2>
           <app-secondary2-grid [articles]="(articles()! | orderArticlesByDate).slice(0,8)!"/>
+        </section> -->
+        
+        <section class=" w-full h-fit pt-32 flex flex-col items-center">
+          <a [routerLink]="['/category/media']"
+              class=" pl-20 text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-16 block w-fit">
+                Media
+          </a>
+
+          <section class=" w-[80%] h-fit">
+            <app-secondary3-grid [articles]="(articles()! | orderArticlesByDate).slice(8,12)!"/>
+          </section>
+
         </section>
         
-        <section class=" w-[85%] h-fit pt-32">
-          <h2>Media</h2>
-          <app-secondary3-grid [articles]="(articles()! | orderArticlesByDate).slice(8,12)!"/>
-        </section>
 
         <!-- <section class=" lg:w-2/3 h-fit pt-20">
           <app-standard-grid [height]=20 [articles]="(articles()! | orderArticlesByDate).slice(4,13)!"/>
