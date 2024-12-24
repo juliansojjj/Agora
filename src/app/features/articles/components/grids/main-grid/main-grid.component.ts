@@ -57,7 +57,7 @@ import { NgClass } from '@angular/common';
           md:max-w-[95%] md:w-fit   
           sm:p-3 sm:h-full sm:max-h-[6.6rem]  
           px-5 h-fit p-3 col-span-3 " [ngClass]="highCellHover() == '0' ? 'bg-brandViolet text-white' : 'bg-white'">
-            <span class="2xl:text-[2rem] xl:text-[1.6rem] text-[1.3rem] font-semibold leading-none">{{highArticle()![0].heading}}</span>
+            <span class="2xl:text-[2rem] md:text-[1.6rem] text-[1.3rem] font-semibold leading-none">{{highArticle()![0].heading}}</span>
           </div>
           <div class="bg-white xl:block hidden h-[3.3rem] mt-[3.3rem] aspect-square"></div>
         </div>
