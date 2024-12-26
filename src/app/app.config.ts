@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalZonelessChangeDetection(), 
     provideRouter(routes,withComponentInputBinding(), withInMemoryScrolling({scrollPositionRestoration: 'enabled',})),
     provideClientHydration(), 
-    provideHttpClient(withInterceptors([errorHandlerInterceptor])),
+    // provideHttpClient(withInterceptors([errorHandlerInterceptor])),
     provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),
     provideFirebaseApp(()=>initializeApp(environment.firebase)),
     provideAuth(()=>getAuth()),

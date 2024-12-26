@@ -8,6 +8,7 @@ import { NgClass } from '@angular/common';
   standalone: true,
   imports: [RouterLink, NgClass],
   template: `
+  @if(articles()){
     <div class="w-full h-fit relative">
       <div class="grid w-full h-fit gap 
       xl:grid-cols-[55%_5%_40%] 
@@ -89,22 +90,23 @@ import { NgClass } from '@angular/common';
 
         <div class="sm:block hidden"></div>
 
-        <a [routerLink]="['/article',urlFormat(articles()![6].articleID!, articles()![6].heading)]"
-          (mouseover)="cellHoverCheck(6)" (mouseout)="cellHoverCheck(6)"
+        <a [routerLink]="['/article',urlFormat(articles()![5].articleID!, articles()![5].heading)]"
+          (mouseover)="cellHoverCheck(5)" (mouseout)="cellHoverCheck(6)"
         class="h-[20rem] 
         2xl:grid-cols-[65%_35%] 
         lg:grid-cols-[50%_50%] lg:grid 
         flex flex-col" >
           <div class="w-full lg:h-full sm:h-[10rem] xsm:h-[12rem] h-[9rem] bg-black overflow-hidden">   
-              <img [src]="articles()![6].frontImage" [alt]="articles()![6].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '6' ? 'scale-105' : ''">
+              <img [src]="articles()![5].frontImage" [alt]="articles()![5].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '5' ? 'scale-105' : ''">
             </div>
-            <div class="w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '6' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![6].heading}}</span>
+            <div class="w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '5' ? 'text-white bg-black' : 'bg-white'"> 
+              <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![5].heading}}</span>
             </div>
           </a>
 
       </div>
     </div>
+  }
   `,
   styles: ``,
 })

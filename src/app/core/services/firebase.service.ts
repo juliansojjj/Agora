@@ -22,6 +22,8 @@ import {
   getDoc,
   query,
   where,
+  limit,
+  orderBy,
   DocumentData,
   setDoc,
   updateDoc,
@@ -90,14 +92,14 @@ export class FirebaseService {
     }
   }
 
-  getMainCategoryArticles(category:string) {
+  getMainCategoryArticles(category:string, max?:number) {
     const categoryArray = category.split(' ')
     const name = categoryArray.join('-').toLowerCase()
-    
-    const ref = collection(this.firestoreService, 'articles')
-    const result = collectionData(query(ref,where('category','==', name)), { idField: 'articleID' })
 
-    return from(result) ;
+    const ref = collection(this.firestoreService, 'articles')
+    if(max) return from(collectionData(query(ref,where('category','==', name),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' }))
+    else return from(collectionData(query(ref,where('category','==', name)), { idField: 'articleID' }))
+
   }
   getCategoryArticles(category:string) {
     const categoryArray = category.split(' ')

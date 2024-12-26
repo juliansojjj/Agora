@@ -39,122 +39,84 @@ import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-gri
   standalone: true,
   imports: [NgFor, NgIf, RouterLink, AsyncPipe, OrderArticlesByDatePipe, NgClass, MainGridComponent, SecondaryGridComponent, Secondary2GridComponent, Secondary3GridComponent, StandardGridComponent],
   template: `
-    @if (articles()) {
-      <main class="flex flex-col items-center min-h-screen relative w-full">
-        
+      <main class="flex flex-col items-center h-fit relative w-full">
+        @if(techArticles()){
         <section class="h-fit w-full">
-          <app-main-grid [highArticle]="(articles()!| orderArticlesByDate).slice(0,1)" 
-          [mediumArticles]="(articles()! | orderArticlesByDate).slice(1,4)"/>
+          <app-main-grid [highArticle]="techArticles()!.slice(0,1)" 
+          [mediumArticles]="techArticles()!.slice(1,4)"/>
         </section>
-        
+        }
+ 
+    @if(scienceArticles()){
         <section class=" w-full h-fit pt-24 flex flex-col items-center">
-          <a [routerLink]="['/category/tech']"
-              class=" pl-20 text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-10 block w-fit">
-                Tech
+          <a [routerLink]="['/category/science']"
+              class="pl-3 sm:pl-10 md:pl-20 text-[2.3rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-6 block w-fit">
+                Science
           </a>
 
           <section class=" w-[85%] h-fit">
-            <app-secondary-grid [articles]="(articles()!| orderArticlesByDate).slice(4,11)"/>
+            <app-secondary-grid [articles]="scienceArticles()!"/>
           </section>
         </section>
-
+        }
+        
+        @if(entertainmentArticles()){
         <section class=" w-full h-fit pt-24 flex flex-col items-center">
           <a [routerLink]="['/category/entertainment']"
-              class=" pl-20 text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-10 block w-fit">
+              class="pl-3 sm:pl-10 md:pl-20 text-[2.3rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-10 block w-fit">
                 Entertainment
           </a>
 
           <section class=" w-[90%] h-fit">
-          <app-secondary2-grid [articles]="(articles()! | orderArticlesByDate).slice(10,18)!"/>
+          <app-secondary2-grid [articles]="entertainmentArticles()!"/>
+          </section>
         </section>
+        }
 
-        </section>
-        
+        @if(mediaArticles()){
         <section class=" w-full h-fit pt-24 flex flex-col items-center">
           <a [routerLink]="['/category/media']"
-              class=" pl-20 text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-[4rem] block w-fit">
+              class="pl-3 sm:pl-10 md:pl-20 text-[2.3rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-[4rem] block w-fit">
                 Media
           </a>
 
           <section class=" w-[80%] h-fit">
-            <app-secondary3-grid [articles]="(articles()! | orderArticlesByDate).slice(18,22)!"/>
+            <app-secondary3-grid [articles]="mediaArticles()!"/>
           </section>
-
         </section>
-
-        <!-- <section class=" lg:w-3/5 w-full pt-6">
-        @for(item of articles(); track $index; let i = $index){
-          <a
-              class="bg-slate-200"
-              [routerLink]="[
-                '/article',
-                urlFormat(item.articleID!, item.heading),
-              ]"
-            >
-              <h4 [ngClass]="item.subscription ? 'text-red-400' : ''">{{ item.heading }}</h4>
-              <img
-                [src]="item.frontImage"
-                alt="front image of {{ item.heading }}"
-                class="w-[10rem] aspect-[3/2] object-cover h-fit"
-              />
-            </a>
         }
-        </section> -->
-        
       </main>
-    } @else {
-      <ng-template [ngIf]="errorMessage">
-        <span class="whitespace-pre-line text-left">ERROR</span>
-      </ng-template>
-    }
   `,
 })
 export class HomeArticlesComponent {
   firebaseService = inject(FirebaseService);
 
-  highPriorArticles = model<Article[]>([]);
-  mediumPriorArticles = model<Article[]>([]);
-  lowPriorArticles = model<Article[]>([]);
-
-  articles = toSignal<Article[]>(
-    this.firebaseService.getLandingArticles().pipe(
-      map((res) => {
-        res.forEach((art: Article) => {
-          if (art.priority == 'high') {
-            this.highPriorArticles.update((value) =>
-              value ? [...value, art] : [art],
-            );
-          } else if (art.priority == 'medium') {
-            this.mediumPriorArticles.update((value) =>
-              value ? [...value, art] : [art],
-            );
-          } else {
-            this.lowPriorArticles.update((value) =>
-              value ? [...value, art] : [art],
-            );
-          }
-        });
-        return res;
-      }),
-    ),
+  techArticles = toSignal<Article[]>(
+    this.firebaseService.getMainCategoryArticles('tech',4)
   );
-
-  errorMessage!: string;
+  scienceArticles = toSignal<Article[]>(
+    this.firebaseService.getMainCategoryArticles('science',7)
+  );
+  entertainmentArticles = toSignal<Article[]>(
+    this.firebaseService.getMainCategoryArticles('entertainment',8)
+  );
+  mediaArticles = toSignal<Article[]>(
+    this.firebaseService.getMainCategoryArticles('media',4)
+  );
+  
 
   docUpload() {
     const ref = collection(this.firebaseService.firestoreService, 'articles');
     const res = setDoc(doc(ref,'media3'), {});
   }
 
+
   urlFormat(id: string, title: string) {
     const formatTitle = title
       .split(' ')
       .join('-')
       .replace(/[^A-Za-z0-9-._~:/?#\[\]@!$&'()*+]+/g, '')
-      .toLowerCase(); //valid url characters
+      .toLowerCase();
     return `${id}-${formatTitle}`;
   }
 }
-
-//TODO: LOADING SCREEN
-///[^A-Za-z0-9-._~:/?#\[\]@!$&'()*+,;=]+/g
