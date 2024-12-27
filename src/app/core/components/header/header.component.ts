@@ -114,16 +114,17 @@ import { Title } from '@angular/platform-browser';
                     [routerLink]="['/category/media']"
                     class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Media</li></a>
-                
-              </ul>
-
-              @if (!authState()) {
+                  @if (!authState()) {
                   <a
                     [routerLink]="['/login']"
                     class=" xl:w-36 w-28 h-full font-medium md:flex hidden justify-center items-center bg-white hover:bg-black hover:text-white active:scale-95"
-                    >Login</a
+                    ><li>Login</li></a
                   >
               }
+                
+              </ul>
+
+              
             </div>
           </div>
         

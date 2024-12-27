@@ -44,104 +44,150 @@ import { ElementRef } from '@angular/core';
   imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
   template: `
     <header
-      class="w-full flex top-0 left-0 z-50 h-[7.5rem]  "
-      [ngClass]="banner() ? 'fixed bannerHeader' : 'sticky bg-white'" 
+      class="w-full flex top-0 left-0 z-50 h-[7.5rem]"
+      [ngClass]="banner() ? 'lg:fixed bannerHeader max-lg:sticky max-lg:bg-white' : 'sticky bg-white'" 
     >
-      <nav class="w-full flex  " [ngClass]="banner() ? 'bannerNav' : 'justify-between'">
+      <nav class="w-full flex  " [ngClass]="banner() ? 'max-lg:justify-between bannerNav' : 'justify-between'">
+        <a routerLink="/" class="h-fit xl:block hidden self-center">
+          <img src="agora-imagotype.svg" class="h-[4rem]" [ngClass]="banner() ? 'max-lg:ml-12 mainBannerLogo' : 'ml-12'"/>
+        </a>
 
+          <span class="w-fit h-fit self-center hidden 2xl:block text-[1.2rem] font-medium pl-14 pr-2"
+          [ngClass]="banner() ? 'bannerArticleTitle' : ''">
+            {{headingInfo()}}
+          </span>
 
-          <a routerLink="/" class="h-fit self-center ">
-            <img src="agora-imagotype.svg" class="h-[4rem]" [ngClass]="banner() ? 'bannerLogo' : '2xl:pl-12 pl-4'"/>
-          </a>
+          <div class="xl:w-fit w-full h-full relative md:grid md:grid-rows-2 flex xl:justify-end">
+            <div class="w-full flex xl:justify-between"
+              [ngClass]="banner() ? 'bannerUpperContainer max-lg:justify-end' : ' justify-end'">
 
-          <span class="h-fit self-center hidden lg:block  text-[1.3rem] font-medium pl-4">{{headingInfo()}}</span>
+              <a routerLink="/" class="h-fit xl:hidden block self-center mx-7 my-0 md:mt-3">
+                <img src="agora-imagotype.svg" class="md:h-[3.5rem] h-[5rem]" [ngClass]="banner() ? 'responsiveBannerLogo' : ''"/>
+              </a>
 
-          <div class=" w-fit h-full relative  grid-rows-2" [ngClass]="banner() ? 'bannerNavElements' : 'grid'">
-            <div class="flex justify-end pr-7">
-              @if(search()){
-                <input type="text" class="w-full h-full border-b-2 border-black focus:outline-none">
-              }
-              <button (click)="searchTrigger()" [ngClass]="search() ? 'border-b-2 border-black' : ''">
-                <svg class="h-[1.8rem]" viewBox="0 0 1200 1200">
-                  <path
-                  stroke="black"
-                    d="m1098.1 965.59-267.19-267.26c35.961-59.324 57.039-128.85 57.039-203.32 0-217.24-175.8-393.15-393.04-393.23-217.09 0.078124-393.04 175.99-393.04 393.19 0 217.05 175.99 392.96 393.15 392.96 74.512 0 143.93-21.074 203.25-57.039l267.34 267.34zm-846.26-470.62c0.22266-134.32 108.86-242.96 243.15-243.19 134.25 0.30078 242.93 108.86 243.15 243.19-0.26172 134.21-108.9 242.93-243.15 243.11-134.32-0.1875-242.96-108.9-243.15-243.11z"
-                  />
-                </svg>
-              </button>
-              @if (authState()) {
-                <button (click)="menuTrigger()" class="ml-7">
-                  <svg viewBox="0 0 44 36" class="h-[1.55rem]">
+              
+
+              <div class="w-full flex justify-end pr-7"
+              [ngClass]="banner() ? 'bannerNavElements max-lg:flex' : 'flex'">
+              
+                
+                @if(search()){
+                  <input type="text" class="w-full h-full border-b-2 border-black focus:outline-none sm:block hidden">
+                }
+                <button (click)="searchTrigger()" class="sm:block hidden" [ngClass]="search() ? 'border-b-2 border-black' : ''">
+                  <svg class="h-[1.8rem]" viewBox="0 0 1200 1200">
                     <path
-                      d="M0 18H44M0 3H44M0 33H44"
-                      stroke="black"
-                      stroke-width="5"
+                    stroke="black"
+                      d="m1098.1 965.59-267.19-267.26c35.961-59.324 57.039-128.85 57.039-203.32 0-217.24-175.8-393.15-393.04-393.23-217.09 0.078124-393.04 175.99-393.04 393.19 0 217.05 175.99 392.96 393.15 392.96 74.512 0 143.93-21.074 203.25-57.039l267.34 267.34zm-846.26-470.62c0.22266-134.32 108.86-242.96 243.15-243.19 134.25 0.30078 242.93 108.86 243.15 243.19-0.26172 134.21-108.9 242.93-243.15 243.11-134.32-0.1875-242.96-108.9-243.15-243.11z"
                     />
                   </svg>
                 </button>
-              }
+                  <button (click)="menuTrigger()" class="md:hidden block ml-7 active:scale-[85%]">
+                    <svg viewBox="0 0 44 36" class="h-[1.55rem]">
+                      <path
+                        d="M0 18H44M0 3H44M0 33H44"
+                        stroke="black"
+                        stroke-width="5"
+                      />
+                    </svg>
+                  </button>
+                @if (authState()) {
+                  <button (click)="menuTrigger()" class="ml-7 active:scale-[85%] md:block hidden">
+                    <svg viewBox="0 0 44 36" class="h-[1.55rem]">
+                      <path
+                        d="M0 18H44M0 3H44M0 33H44"
+                        stroke="black"
+                        stroke-width="5"
+                      />
+                    </svg>
+                  </button>
+                }
+              </div>
             </div>
 
-            <div class="flex items-end">
-            <ul class="flex h-full">
+            <div class="items-end flex-row justify-self-end"
+            [ngClass]="banner() ? 'bannerNavElements max-lg:flex' : 'flex'">
+              <ul class="h-full md:flex hidden">
                   <a
                     [routerLink]="['/category/tech' ]"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
+                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Tech</li></a>
                   <a
                     [routerLink]="['/category/culture']"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
+                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Culture</li></a>
                   <a
                     [routerLink]="['/category/science' ]"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
+                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Science</li></a>
                   <a
                     [routerLink]="['/category/entertainment']"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
+                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-32 h-full"
                   ><li>Entertainment</li></a>
                   <a
                     [routerLink]="['/category/media']"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
+                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Media</li></a>
+                  @if (!authState()) {
+                  <a
+                    [routerLink]="['/login']"
+                    class=" xl:w-36 w-28 h-full font-medium md:flex hidden justify-center items-center bg-white hover:bg-black hover:text-white active:scale-95"
+                    ><li>Login</li></a
+                  >
+                  }
                 
               </ul>
 
-              @if (!authState()) {
-                <a
-                  [routerLink]="['/login']"
-                  class=" w-44 h-full font-medium flex justify-center items-center bg-white hover:bg-black hover:text-white active:scale-95"
-                  >Login</a
-                >
-              }
+              
             </div>
           </div>
-        
       </nav>
     </header>
   `,
   styles: [
     `
       .bannerHeader {
-        animation: headerTransition linear both;
-        animation-timeline:scroll(root);
-        animation-range:0 1px;
+        @media only screen and (min-width: 1024px){
+          animation: headerTransition linear both;
+          animation-timeline:scroll(root);
+          animation-range:0 1px;
+        }
       }
 
       @keyframes headerTransition {
-        from{}
+        from{background-color:transparent;}
         to{
           background-color:white;
         }
       }
 
-      .bannerLogo {
-        animation: logoTransition linear both;
-        animation-timeline:scroll(root);
-        animation-range:0 1px;
+
+      .bannerArticleTitle {
+        @media only screen and (min-width: 1024px){
+          animation: articleTitleTransition linear both;
+          animation-timeline:scroll(root);
+          animation-range:0 1px;
+        }
+      }
+
+      @keyframes articleTitleTransition {
+        from{display:none;}
+        to{
+          @media only screen and (min-width: 1536px) {display:block;}
+          }
+        }
+
+
+
+      .mainBannerLogo {
+        @media only screen and (min-width: 1024px){
+          animation: mainLogoTransition linear both;
+          animation-timeline:scroll(root);
+          animation-range:0 1px;
+        }
       }
       
-      @keyframes logoTransition {
+      @keyframes mainLogoTransition {
         from{
           margin-left:0;
           filter: brightness(0%) invert(100%);
@@ -152,10 +198,30 @@ import { ElementRef } from '@angular/core';
         }
       }
 
+      .responsiveBannerLogo {
+        @media only screen and (min-width: 1024px){
+          animation: logoTransition linear both;
+          animation-timeline:scroll(root);
+          animation-range:0 1px;
+        }
+      }
+      @keyframes logoTransition {
+        from{
+          filter: brightness(0%) invert(100%);
+        }
+        to{
+          filter: brightness(100%);
+        }
+      }
+
+
+
       .bannerNav{
-        animation: navTransition linear both;
-        animation-timeline:scroll(root);
-        animation-range:0 1px;
+        @media only screen and (min-width: 1024px){
+          animation: navTransition linear both;
+          animation-timeline:scroll(root);
+          animation-range:0 1px;
+        }
       }
       @keyframes navTransition {
         from{
@@ -166,17 +232,39 @@ import { ElementRef } from '@angular/core';
         }
       }
 
+
+
       .bannerNavElements{
-        animation: navElementsTransition linear both;
-        animation-timeline:scroll(root);
-        animation-range:0 1px;
+        @media only screen and (min-width: 1024px){
+          animation: navElementsTransition linear both;
+          animation-timeline:scroll(root);
+          animation-range:0 1px;
+        }
       }
       @keyframes navElementsTransition {
         from{
           display:none;
         }
         to{
-          display:grid;
+          display:flex;
+        }
+      }
+      
+
+
+      .bannerUpperContainer{
+        @media only screen and (min-width: 1024px){
+          animation: upperContainerTransition linear both;
+          animation-timeline:scroll(root);
+          animation-range:0 1px;
+        }
+      }
+      @keyframes upperContainerTransition {
+        from{
+          justify-content:center;
+        }
+        to{
+          justify-content:end;
         }
       }
     `,

@@ -27,7 +27,7 @@ import { NgClass } from '@angular/common';
         xl:grid-cols-[35%_65%] 
         lg:grid-cols-[50%_50%] lg:grid 
         flex flex-col-reverse" >
-            <div class=" w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '0' ? 'text-white bg-brandViolet' : 'bg-white'"> 
+            <div class=" w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '0' ? 'text-white bg-black' : 'bg-white'"> 
               <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![0].heading}}</span>
             </div>
             <div class="w-full lg:h-full sm:h-[10rem] xsm:h-[12rem] h-[9rem] bg-black overflow-hidden">   

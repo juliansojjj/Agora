@@ -77,16 +77,31 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
       <app-article-header [banner]="data.frontImageBanner" [headingInfo]="headingInfo()" [(menu)]="menu"/>
       <app-article-menu  [(menu)]="menu"/>
 
-      @if (!data.subscription || (userInfo$ | async)?.subscription) {
-        
-        <article
-          class="w-full  min-h-screen relative flex flex-col items-center  "
-        >
-          <section class=" w-full flex  flex-col items-center relative">
-            @if (!data.frontImageBanner) {
-              <div
-                class=" w-full  lg:w-1/2 p-2 lg:p-0 mt-4 flex justify-between items-start"
-              >
+      <article class="w-full  min-h-screen relative flex flex-col items-center">
+          @if (data.frontImageBanner) {
+            <section class=" w-full flex-col items-center relative lg:flex hidden">
+              <div class="w-full absolute z-10 bottom-0 text-white  " >
+                <div class="mb-20 pl-16" #domHeading>
+                <h1
+                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[2.8rem] text-left leading-[3.6rem] mb-6 "
+                  >
+                    {{ data.heading }}
+                  </h1>
+                  <h2 class="text-[1rem] md:text-[1rem] lg:text-[1.3rem] xl:text-[1.4rem]">{{ data.subheading }}</h2>
+                </div>
+              
+                  <div class="bg-gradient-to-t w-full h-96 from-black absolute bottom-0 -z-10"></div>
+              </div>
+              
+              <img
+                src="{{ data.frontImage }}"
+                alt="{{ data.frontImageAlt }}"
+                class="relative w-full h-screen object-cover"
+              />
+            </section>
+          } 
+            <div class=" w-full  lg:w-1/2 p-2 lg:p-0 mt-4 flex justify-between items-start" 
+                [ngClass]="{'lg:hidden flex': data.frontImageBanner}">
                 <div #domHeading>
                   <h1
                     class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left mb-4 "  
@@ -142,313 +157,39 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                 src="{{ data.frontImage }}"
                 alt="{{ data.frontImageAlt }}"
                 class="relative w-full  lg:w-1/2 object-cover mt-8"
+                [ngClass]="{'lg:hidden block': data.frontImageBanner}"
               />
-              <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4">{{
-                data.frontImageAlt
-              }}</span>
+              <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4" 
+              [ngClass]="{'lg:hidden block': data.frontImageBanner}">
+                {{data.frontImageAlt}}
+              </span>
 
-              
-              
-            } @else {
-              <div class="w-full absolute z-10 bottom-0 text-white  " >
-                <div class="mb-20 pl-16" #domHeading>
-                <h1
-                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[2.8rem] text-left leading-[3.6rem] mb-6 "
-                  >
-                    {{ data.heading }}
-                  </h1>
-                  <h2 class="text-[1rem] md:text-[1rem] lg:text-[1.3rem] xl:text-[1.4rem]">{{ data.subheading }}</h2>
-                </div>
-              
-                  <div class="bg-gradient-to-t w-full h-96 from-black absolute bottom-0 -z-10"></div>
+          <!-- ------------------------------------------------------------------- -->
+        <section class="w-full  lg:w-1/3 2xl:w-1/4 lg:p-0 p-3">
+          @if(data.frontImageBanner){
+            
+            <div class="text-[1.25rem] mt-5 mb-3 flex justify-between">
+              <div>
+              <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
+              <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
               </div>
-              
-              <img
-                src="{{ data.frontImage }}"
-                alt="{{ data.frontImageAlt }}"
-                class="relative w-full h-screen object-cover"
-              />
-            }
-          </section>
-
-          <section class="w-full  lg:w-1/3 2xl:w-1/4 lg:p-0 p-3">
-            @if(data.frontImageBanner){
-              
-              <div class="text-[1.25rem] mt-5 mb-3 flex justify-between">
-                <div>
-                <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
-                <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
-                </div>
-                    
-
-                    @if (
-                  (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
-                ) {
-                  <button (click)="favoriteHandle(false)">
-                  <svg class="h-8 fill-black" viewBox="0 0 166 232">
-                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
-                    </svg>
-                  </button>
-                } @else if (userInfo$ | async) {
-                  <button (click)="favoriteHandle(true)">
-                    <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
-                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
-                    </svg>
-                  </button>
-                } @else {
-                  <a
-                    [routerLink]="['/login']"
-                    [queryParams]="{
-                      redirect: 'article-' + id().split('-')[0],
-                    }"
-                    class="hover:bg-transparent hover:p-0"
-                  >
-                  <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
-                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
-                    </svg>
-                  </a>
-                }
-              </div>
-
-
-                  <span class="text-[1.1rem]"
-                    >Original source
-                    <a
-                      [href]="data.source"
-                      class="font-bold no-underline text-brandViolet hover:bg-brandViolet hover:p-[.1rem] hover:text-white"
-                      >here</a
-                    ></span>
-            }
-            @for (item of data.content; track $index) {
-
-              @if ((item | typeof) !== 'image' && (item | typeof) !== 'quote') {
-
-                @if($index == data.content.length-1){
-
-                  @if(recommendations$ | async; as recommendations){
-                    @for(element of recommendations.slice(0,1); track $index){
-                      <a [routerLink]="[
-                '/article',
-                urlFormat(element.articleID!, element.heading),
-              ]" class=" min-h-fit w-full flex flex-col p-4 justify-center border-[2px] border-gray-200 text-[1.14rem] hover:bg-gray-50 hover:border-l-4 hover:border-l-brandViolet active:scale-[99%] ">
-                        <span class="font-bold mr-2">Read also: </span>
-                        <span>  {{element.heading}}</span>
-                    </a>
-                    }
-            }
                   
 
-                }
-              }
-
-              @if ((item | typeof) == 'paragraph') {
-                <p class="m-7 mx-0 text-[1.2rem]">
-                  {{ $any(item).paragraph }}
-                </p>
-              }
-              @if ((item | typeof) == 'htmlParagraph') {
-                <p class="m-7 mx-0 text-[1.2rem]" #htmlContent>
-                  {{ $any(item).htmlParagraph }}
-                </p>
-              }
-              @if ((item | typeof) == 'htmlContent') {
-                <div #htmlContent>
-                  {{ $any(item).htmlContent }}
-                </div>
-              }
-              @if ((item | typeof) == 'quote') {
-                <blockquote
-                  class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandViolet pl-7"
-                >
-                  <i> {{ $any(item).quote }} </i>
-                </blockquote>
-              }
-              @if ((item | typeof) == 'image') {
-                <ng-container>
-                  <div class="m-12 mx-0">
-                    <img
-                      src="{{ $any(item).imageUrl }}"
-                      alt="{{ $any(item).imageAlt }} "
-                    />
-                    <span>{{ $any(item).imageAlt }}</span>
-                  </div>
-                </ng-container>
-              }
-              @if ((item | typeof) == 'title') {
-                <h3 class="font-bold text-[1.9rem] mt-12">
-                  {{ $any(item).title }}
-                </h3>
-              }
-              @if ((item | typeof) == 'subtitle') {
-                <h4 class="font-bold text-[1.5rem] mt-4 -mb-4">
-                  {{ $any(item).subtitle }}
-                </h4>
-              }
-            }
-            <ul class="flex flex-col sm:flex-row w-full h-fit mb-3">
-              <span class="mr-4 font-bold">Topics</span>
-              @for (item of data.topics; track $index) {
-                <li class="sm:mr-6 mt-1 sm:mt-0">
-                  <a
-                    [routerLink]="['/category/' + item.url]"
-                    class="font-normal articleLink"
-                  >
-                    {{ item.name }}</a
-                  >
-                </li>
-              }
-            </ul>
-            <hr />
-            <div>AUTOR</div>
-            <hr />
-
-          </section>
-
-          <section
-            class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mt-6 mb-6 p-2 lg:p-0"
-          >
-            @if (comments$ | async | orderByDate; as comments) {
-              <span class="text-[1.3rem] font-bold"
-                >{{ comments | commentsLength }} Comments</span
-              >
-
-              @if (!(userInfo$ | async)) {
-                <div class="flex flex-col mt-2 w-full ">
-                  <a
-                    [routerLink]="['/login']"
-                    [queryParams]="{
-                      redirect: 'article-' + id().split('-')[0],
-                    }"
-                    class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip hover:text-gray-400 text-gray-400 hover:cursor-text font-normal hover:bg-transparent hover:p-0"
-                  >
-                    Write your comment here...</a
-                  >
-                </div>
+                  @if (
+                (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
+              ) {
+                <button (click)="favoriteHandle(false)">
+                <svg class="h-8 fill-black" viewBox="0 0 166 232">
+                    <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                  </svg>
+                </button>
+              } @else if (userInfo$ | async) {
+                <button (click)="favoriteHandle(true)">
+                  <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
+                    <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                  </svg>
+                </button>
               } @else {
-                <form
-                  [formGroup]="form"
-                  (ngSubmit)="onCommentSubmit()"
-                  class="flex flex-col mt-2 w-full "
-                >
-                  <textarea
-                    formControlName="text"
-                    class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip"
-                    appTextAreaResize
-                    placeholder="Write your comment here..."
-                  ></textarea>
-
-                  @if (form.controls.text.errors?.['maxlength']) {
-                    <span class="text-red-300 mt-2"
-                      >The max amount of characters is 280</span
-                    >
-                  }
-                  @if (form.controls.text.touched || form.controls.text.dirty) {
-                    <div class="flex self-end ">
-                      <button
-                        type="reset"
-                        (click)="form.reset()"
-                        class="h-7 min-w-fit p-auto px-3 bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandViolet active:scale-95  mt-4 font-medium self-end mr-4"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        [disabled]="form.invalid"
-                        class="h-7 min-w-fit py-auto px-3 bg-brandViolet text-white border-2 border-transparent hover:border-brandViolet hover:text-brandViolet hover:bg-white active:scale-95  mt-4 font-medium box-border"
-                      >
-                        Comment
-                      </button>
-                    </div>
-                  }
-                </form>
-              }
-
-              @for (item of comments; track $index) {
-                <ng-container *ngIf="!item.deletedByUser">
-                  <div class="flex flex-col mt-4">
-                    <div class="flex justify-between items-center">
-                      <div>
-                        <span class="font-medium text-[1.2rem]"
-                          >{{ item.username }}
-                        </span>
-                        <span>{{ item.date.toDate() | date: 'MM/dd/yyyy' }}</span> 
-                      </div>
-                      @if (item.uid === uid()) {
-                        <button (click)="onCommentDelete(item.commentId!)">
-                          <svg
-                            viewBox="0 0 24 24"
-                            class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandViolet active:scale-75"
-                          >
-                            <g>
-                              <path
-                                d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              ></path>
-                            </g>
-                          </svg>
-                        </button>
-                      }
-                    </div>
-                    <p class="text-[1.1rem]">{{ item.content }}</p>
-                  </div>
-                </ng-container>
-              }
-            }
-          </section>
-
-          <section class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mb-6 p-2 lg:p-0">
-            <hr>
-            @if(recommendations$ | async; as recommendations){
-              <span class="text-[1.3rem] font-bold"
-                >More from {{category()}}</span
-              >
-              <div class="grid grid-cols-3 w-full">
-                @for(item of recommendations.slice(1,recommendations.length-1); track $index){
-                  <div>{{item.heading}}</div>
-                }
-              </div>
-            }
-          </section>
-        </article>
-
-
-
-
-
-
-
-
-
-
-
-      } @else if (!(authUser$ | async) || !(userInfo$ | async)?.subscription) {
-        <article
-          class="w-full  min-h-screen relative flex flex-col items-center  "
-        >
-          <section class=" w-full flex  flex-col items-center ">
-            @if (data.frontImageBanner) {
-              <img
-                src="{{ data.frontImage }}"
-                alt="{{ data.frontImageAlt }}"
-                class="relative w-full object-cover"
-              />
-            } @else {
-              <img
-                src="{{ data.frontImage }}"
-                alt="{{ data.frontImageAlt }}"
-                class="relative w-full  lg:w-1/3 2xl:w-1/4 object-cover"
-              />
-              <span
-                class=" lg:w-1/3 2xl:w-1/4 self-start lg:self-center mb-2 p-2 lg:p-0"
-                >{{ data.frontImageAlt }}</span
-              >
-              <div class=" lg:w-1/3 2xl:w-1/4 p-2 lg:p-0 flex items-start">
-                <h1
-                  class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]  text-left lg:mb-4"
-                >
-                  {{ data.heading }}
-                </h1>
                 <a
                   [routerLink]="['/login']"
                   [queryParams]="{
@@ -456,114 +197,215 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                   }"
                   class="hover:bg-transparent hover:p-0"
                 >
-                  <svg
-                    viewBox="0 0 28 28"
-                    class=" h-8 mt-4 stroke-black stroke-[2.3] fill-none"
-                  >
-                    <g>
-                      <path
-                        d="M9.25 3.5C7.45507 3.5 6 4.95507 6 6.75V24.75C6 25.0348 6.16133 25.2951 6.41643 25.4217C6.67153 25.5484 6.97638 25.5197 7.20329 25.3475L14 20.1914L20.7967 25.3475C21.0236 25.5197 21.3285 25.5484 21.5836 25.4217C21.8387 25.2951 22 25.0348 22 24.75V6.75C22 4.95507 20.5449 3.5 18.75 3.5H9.25Z"
-                      ></path>
-                    </g>
+                <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
+                    <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
                   </svg>
                 </a>
-              </div>
-              <span
-                class=" lg:w-1/3 2xl:w-1/4 w-full text-start mb-4 p-2 lg:p-0 text-[1.1rem]"
-                >Original source
-                <a
-                  [href]="data.source"
-                  class="articleLink"
-                  >here</a
-                ></span
-              >
-            }
-            <hr />
-          </section>
-
-          <section class="w-full  lg:w-1/3 2xl:w-1/4 lg:p-0 p-3">
-            <hr />
-            @for (item of data.contentPreview; track $index) {
-              @if ((item | typeof) == 'paragraph') {
-                <p class="m-7 mx-0 text-[1.2rem]">
-                  {{ $any(item).paragraph }}
-                </p>
               }
-              @if ((item | typeof) == 'htmlParagraph') {
-                <p class="m-7 mx-0 text-[1.2rem]" #htmlContent>
-                  {{ $any(item).htmlParagraph }}
-                </p>
-              }
-              @if ((item | typeof) == 'htmlContent') {
-                <div #htmlContent>
-                  {{ $any(item).htmlContent }}
-                </div>
-              }
-              @if ((item | typeof) == 'quote') {
-                <blockquote
-                  class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandViolet pl-7"
-                >
-                  <i> {{ $any(item).quote }} </i>
-                </blockquote>
-              }
-              @if ((item | typeof) == 'image') {
-                <ng-container>
-                  <div class="m-12 mx-0">
-                    <img
-                      src="{{ $any(item).imageUrl }}"
-                      alt="{{ $any(item).imageAlt }} "
-                    />
-                    <span>{{ $any(item).imageAlt }}</span>
-                  </div>
-                </ng-container>
-              }
-              @if ((item | typeof) == 'title') {
-                <h3 class="font-bold text-[1.9rem] mt-12">
-                  {{ $any(item).title }}
-                </h3>
-              }
-              @if ((item | typeof) == 'subtitle') {
-                <h4 class="font-bold text-[1.5rem] mt-4 -mb-4">
-                  {{ $any(item).subtitle }}
-                </h4>
-              }
-
-
-              
-            }
-          </section>
-
-          <section class="w-full relative">
-            <div
-              class="flex flex-col lg:w-1/3 w-full h-fit absolute  bottom-0 lg:mb-20 z-10  left-[50%] -translate-x-1/2 items-center justify-end pt-6  lg:rounded-xl rounded-none bg-white"
-            >
-              <div class="flex flex-col h-fit pb-4">
-                <img src="agora-imagotype.svg" class="h-12 mt-1" />
-                <span class="text-[1.2rem] mt-3 text-center"
-                  >This content is exclusive for subscribers</span
-                >
-              </div>
-
-              <div class="relative w-full  flex items-end lg:h-fit h-44 ">
-                <a
-                  routerLink="/subscription"
-                  class="bg-brandViolet text-white hover:p-3 hover:bg-orange-900 w-44 p-3 h-12 rounded-lg text-[1.1rem] text-center font-medium absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2 z-10  active:scale-[95%]"
-                  >Subscribe for <b>$0</b>
-                </a>
-                <img
-                  src="sub-banner.jpg"
-                  class=" relative object-cover w-full lg:h-20  h-full lg:rounded-b-xl rounded-none grayscale brightness-50"
-                  alt="Photo by Marvin Meyer on Unsplash"
-                />
-              </div>
             </div>
 
-            <div
-              class="bg-gradient-to-t w-full h-96 from-white absolute bottom-0 lg:mb-0 mb-24"
-            ></div>
-          </section>
-        </article>
-      }
+
+                <span class="text-[1.1rem]"
+                  >Original source
+                  <a
+                    [href]="data.source"
+                    class="font-bold no-underline text-brandViolet hover:bg-brandViolet hover:p-[.1rem] hover:text-white"
+                    >here</a
+                  ></span>
+          }
+          @for (item of data.content; track $index) {
+
+            @if ((item | typeof) !== 'image' && (item | typeof) !== 'quote') {
+
+              @if($index == data.content.length-1){
+
+                @if(recommendations$ | async; as recommendations){
+                  @for(element of recommendations.slice(0,1); track $index){
+                    <a [routerLink]="[
+              '/article',
+              urlFormat(element.articleID!, element.heading),
+            ]" class=" min-h-fit w-full flex flex-col p-4 justify-center border-[2px] border-gray-200 text-[1.14rem] hover:bg-gray-50 hover:border-l-4 hover:border-l-brandViolet active:scale-[99%] ">
+                      <span class="font-bold mr-2">Read also: </span>
+                      <span>  {{element.heading}}</span>
+                  </a>
+                  }
+          }
+                
+
+              }
+            }
+
+            @if ((item | typeof) == 'paragraph') {
+              <p class="m-7 mx-0 text-[1.2rem]">
+                {{ $any(item).paragraph }}
+              </p>
+            }
+            @if ((item | typeof) == 'htmlParagraph') {
+              <p class="m-7 mx-0 text-[1.2rem]" #htmlContent>
+                {{ $any(item).htmlParagraph }}
+              </p>
+            }
+            @if ((item | typeof) == 'htmlContent') {
+              <div #htmlContent>
+                {{ $any(item).htmlContent }}
+              </div>
+            }
+            @if ((item | typeof) == 'quote') {
+              <blockquote
+                class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandViolet pl-7"
+              >
+                <i> {{ $any(item).quote }} </i>
+              </blockquote>
+            }
+            @if ((item | typeof) == 'image') {
+              <ng-container>
+                <div class="m-12 mx-0">
+                  <img
+                    src="{{ $any(item).imageUrl }}"
+                    alt="{{ $any(item).imageAlt }} "
+                  />
+                  <span>{{ $any(item).imageAlt }}</span>
+                </div>
+              </ng-container>
+            }
+            @if ((item | typeof) == 'title') {
+              <h3 class="font-bold text-[1.9rem] mt-12">
+                {{ $any(item).title }}
+              </h3>
+            }
+            @if ((item | typeof) == 'subtitle') {
+              <h4 class="font-bold text-[1.5rem] mt-4 -mb-4">
+                {{ $any(item).subtitle }}
+              </h4>
+            }
+          }
+          <ul class="flex flex-col sm:flex-row w-full h-fit mb-3">
+            <span class="mr-4 font-bold">Topics</span>
+            @for (item of data.topics; track $index) {
+              <li class="sm:mr-6 mt-1 sm:mt-0">
+                <a
+                  [routerLink]="['/category/' + item.url]"
+                  class="font-normal articleLink"
+                >
+                  {{ item.name }}</a
+                >
+              </li>
+            }
+          </ul>
+          <hr />
+          <div>AUTOR</div>
+          <hr />
+
+        </section>
+
+        <section
+          class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mt-6 mb-6 p-2 lg:p-0"
+        >
+          @if (comments$ | async | orderByDate; as comments) {
+            <span class="text-[1.3rem] font-bold"
+              >{{ comments | commentsLength }} Comments</span
+            >
+
+            @if (!(userInfo$ | async)) {
+              <div class="flex flex-col mt-2 w-full ">
+                <a
+                  [routerLink]="['/login']"
+                  [queryParams]="{
+                    redirect: 'article-' + id().split('-')[0],
+                  }"
+                  class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip hover:text-gray-400 text-gray-400 hover:cursor-text font-normal hover:bg-transparent hover:p-0"
+                >
+                  Write your comment here...</a
+                >
+              </div>
+            } @else {
+              <form
+                [formGroup]="form"
+                (ngSubmit)="onCommentSubmit()"
+                class="flex flex-col mt-2 w-full "
+              >
+                <textarea
+                  formControlName="text"
+                  class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip"
+                  appTextAreaResize
+                  placeholder="Write your comment here..."
+                ></textarea>
+
+                @if (form.controls.text.errors?.['maxlength']) {
+                  <span class="text-red-300 mt-2"
+                    >The max amount of characters is 280</span
+                  >
+                }
+                @if (form.controls.text.touched || form.controls.text.dirty) {
+                  <div class="flex self-end ">
+                    <button
+                      type="reset"
+                      (click)="form.reset()"
+                      class="h-7 min-w-fit p-auto px-3 bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandViolet active:scale-95  mt-4 font-medium self-end mr-4"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      [disabled]="form.invalid"
+                      class="h-7 min-w-fit py-auto px-3 bg-brandViolet text-white border-2 border-transparent hover:border-brandViolet hover:text-brandViolet hover:bg-white active:scale-95  mt-4 font-medium box-border"
+                    >
+                      Comment
+                    </button>
+                  </div>
+                }
+              </form>
+            }
+
+            @for (item of comments; track $index) {
+              <ng-container *ngIf="!item.deletedByUser">
+                <div class="flex flex-col mt-4">
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <span class="font-medium text-[1.2rem]"
+                        >{{ item.username }}
+                      </span>
+                      <span>{{ item.date.toDate() | date: 'MM/dd/yyyy' }}</span> 
+                    </div>
+                    @if (item.uid === uid()) {
+                      <button (click)="onCommentDelete(item.commentId!)">
+                        <svg
+                          viewBox="0 0 24 24"
+                          class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandViolet active:scale-75"
+                        >
+                          <g>
+                            <path
+                              d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </button>
+                    }
+                  </div>
+                  <p class="text-[1.1rem]">{{ item.content }}</p>
+                </div>
+              </ng-container>
+            }
+          }
+        </section>
+
+        <section class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mb-6 p-2 lg:p-0">
+          <hr>
+          @if(recommendations$ | async; as recommendations){
+            <span class="text-[1.3rem] font-bold"
+              >More from {{category()}}</span
+            >
+            <div class="grid grid-cols-3 w-full">
+              @for(item of recommendations.slice(1,recommendations.length-1); track $index){
+                <div>{{item.heading}}</div>
+              }
+            </div>
+          }
+        </section>
+      </article>
+
     } @else {
       <p>Loading...</p>
     }
