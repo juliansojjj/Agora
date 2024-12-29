@@ -100,54 +100,61 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               />
             </section>
           } 
-            <div class=" w-full  lg:w-1/2 p-2 lg:p-0 mt-4 flex justify-between items-start" 
+            <div class="w-full flex justify-between items-start 
+                lg:w-1/2 lg:p-0 
+                sm:mt-4
+                mt-0 px-2" 
                 [ngClass]="{'lg:hidden flex': data.frontImageBanner}">
                 <div #domHeading>
                   <h1
-                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] text-left mb-4 "  
+                    class=" font-bold text-left
+                    xl:text-[3.5rem]
+                    md:text-[2.5rem]
+                    sm:text-[2.25rem]
+                    text-[2rem] mb-4"  
                   >
                     {{ data.heading }}
                   </h1>
-                  <h2 class="lg:text-[1.5rem] mb-9">{{ data.subheading }}</h2>
-                  <span class="text-[1.1rem]"
-                    >Original source
-                    <a
-                      [href]="data.source"
-                      class="font-bold no-underline text-brandViolet hover:bg-brandViolet hover:p-[.1rem] hover:text-white"
-                      >here</a
-                    ></span>
-                  <div class="text-[1.25rem] mt-5 flex justify-between">
-                    <div>
-                      <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
-                      <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
-                    </div>
+                  <h2 class="
+                  xl:text-[1.5rem] 
+                  xsm:text-[1.4rem] xsm:mb-9
+                  text-[1.1rem] mb-5">{{ data.subheading }}</h2>
+                  <span class="xsm:text-[1.25rem] text-[1rem]">
+                    <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white">{{data.authorName}}</a>
+                    <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
+                  </span>
+
+                  <div class=" mt-3 flex justify-between">
+                    <span class="xsm:text-[1.25rem] text-[1rem]">
+                      Original source <a [href]="data.source" class="font-medium hover:bg-black hover:text-white">here</a>
+                    </span>
                     @if (
-                  (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
-                ) {
-                  <button (click)="favoriteHandle(false)">
-                  <svg class="h-8 fill-black" viewBox="0 0 166 232">
-                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
-                    </svg>
-                  </button>
-                } @else if (userInfo$ | async) {
-                  <button (click)="favoriteHandle(true)">
-                    <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
-                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
-                    </svg>
-                  </button>
-                } @else {
-                  <a
-                    [routerLink]="['/login']"
-                    [queryParams]="{
-                      redirect: 'article-' + id().split('-')[0],
-                    }"
-                    class="hover:bg-transparent hover:p-0"
-                  >
-                  <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
-                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
-                    </svg>
-                  </a>
-                }
+                    (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
+                    ) {
+                      <button (click)="favoriteHandle(false)">
+                      <svg class="xsm:h-8 h-7 max-lg:mr-2 fill-black" viewBox="0 0 166 232">
+                          <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                        </svg>
+                      </button>
+                    } @else if (userInfo$ | async) {
+                      <button (click)="favoriteHandle(true)">
+                        <svg class="xsm:h-8 h-7 max-lg:mr-2 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
+                          <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                        </svg>
+                      </button>
+                    } @else {
+                      <a
+                        [routerLink]="['/login']"
+                        [queryParams]="{
+                          redirect: 'article-' + id().split('-')[0],
+                        }"
+                        class="hover:bg-transparent hover:p-0"
+                      >
+                      <svg class="xsm:h-8 h-7 max-lg:mr-2 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
+                          <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                        </svg>
+                      </a>
+                    }
                   </div>
                 </div>
 
@@ -156,16 +163,16 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               <img
                 src="{{ data.frontImage }}"
                 alt="{{ data.frontImageAlt }}"
-                class="relative w-full  lg:w-1/2 object-cover mt-8"
+                class="relative w-full  lg:w-1/2 object-cover mt-6"
                 [ngClass]="{'lg:hidden block': data.frontImageBanner}"
               />
-              <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4" 
+              <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4 max-lg:px-2" 
               [ngClass]="{'lg:hidden block': data.frontImageBanner}">
                 {{data.frontImageAlt}}
               </span>
 
           <!-- ------------------------------------------------------------------- -->
-        <section class="w-full  lg:w-1/3 2xl:w-1/4 lg:p-0 p-3">
+        <section class="w-full lg:p-0 px-2 flex flex-col items-center">
           @if(data.frontImageBanner){
             
             <div class="text-[1.25rem] mt-5 mb-3 flex justify-between">
@@ -205,11 +212,11 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
             </div>
 
 
-                <span class="text-[1.1rem]"
+                <span class="text-[1.25rem]"
                   >Original source
                   <a
                     [href]="data.source"
-                    class="font-bold no-underline text-brandViolet hover:bg-brandViolet hover:p-[.1rem] hover:text-white"
+                    class="font-medium hover:bg-black hover:text-white"
                     >here</a
                   ></span>
           }
@@ -220,28 +227,24 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               @if($index == data.content.length-1){
 
                 @if(recommendations$ | async; as recommendations){
-                  @for(element of recommendations.slice(0,1); track $index){
-                    <a [routerLink]="[
-              '/article',
-              urlFormat(element.articleID!, element.heading),
-            ]" class=" min-h-fit w-full flex flex-col p-4 justify-center border-[2px] border-gray-200 text-[1.14rem] hover:bg-gray-50 hover:border-l-4 hover:border-l-brandViolet active:scale-[99%] ">
-                      <span class="font-bold mr-2">Read also: </span>
-                      <span>  {{element.heading}}</span>
+                    <a [routerLink]="['/article',urlFormat(recommendations[articleRecommendationIndex()!].articleID!, recommendations[articleRecommendationIndex()!].heading)]" 
+                      class="min-h-fit italic text-[1.2rem] my-4 underline hover:text-brandViolet
+                      2xl:w-1/4 lg:w-1/3 md:w-1/2 xsm:w-4/5 w-full">
+                        Read also: {{recommendations[articleRecommendationIndex()!].heading}}
                   </a>
-                  }
-          }
+                }
                 
 
               }
             }
 
             @if ((item | typeof) == 'paragraph') {
-              <p class="m-7 mx-0 text-[1.2rem]">
+              <p class="xsm:my-7 my-4 xsm:text-[1.2rem] text-[1.1rem] contentElement">
                 {{ $any(item).paragraph }}
               </p>
             }
             @if ((item | typeof) == 'htmlParagraph') {
-              <p class="m-7 mx-0 text-[1.2rem]" #htmlContent>
+              <p class="xsm:my-7 my-4 xsm:text-[1.2rem] text-[1.1rem] contentElement" #htmlContent>
                 {{ $any(item).htmlParagraph }}
               </p>
             }
@@ -252,54 +255,70 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
             }
             @if ((item | typeof) == 'quote') {
               <blockquote
-                class="m-12 mx-0 w-5/6 sm:w-5/6 text-[1.3rem] border-l-[2px]  border-brandViolet pl-7"
+                class="border-brandViolet contentElement 
+                md:text-[1.3rem]
+                sm:pl-7 sm:border-l-[4px]
+                xsm:mb-7 xsm:text-[1.2rem]  
+                text-[1.1rem] mb-4 pl-3 border-l-[2px]"
               >
                 <i> {{ $any(item).quote }} </i>
               </blockquote>
             }
             @if ((item | typeof) == 'image') {
-              <ng-container>
-                <div class="m-12 mx-0">
+                <div class="my-12 2xl:w-1/3 lg:w-1/2 md:w-3/4 w-full flex flex-col">
                   <img
+                    class="w-full object-cover"
                     src="{{ $any(item).imageUrl }}"
                     alt="{{ $any(item).imageAlt }} "
                   />
-                  <span>{{ $any(item).imageAlt }}</span>
+                  <span class="w-full">{{ $any(item).imageAlt }}</span>
                 </div>
-              </ng-container>
             }
             @if ((item | typeof) == 'title') {
-              <h3 class="font-bold text-[1.9rem] mt-12">
+              <h3 class="font-bold md:text-[1.9rem] text-[1.6rem] mt-12 contentElement">
                 {{ $any(item).title }}
               </h3>
             }
             @if ((item | typeof) == 'subtitle') {
-              <h4 class="font-bold text-[1.5rem] mt-4 -mb-4">
+              <h4 class="font-bold md:text-[1.5rem] text-[1.35rem] mt-4 xsm:-mb-4 contentElement">
                 {{ $any(item).subtitle }}
               </h4>
             }
           }
-          <ul class="flex flex-col sm:flex-row w-full h-fit mb-3">
-            <span class="mr-4 font-bold">Topics</span>
+          <div class="h-fit mb-8 contentElement xsm:text-[1.2rem] text-[1.1rem]">
+            <span class="mr-1 font-bold">Topics</span>
             @for (item of data.topics; track $index) {
-              <li class="sm:mr-6 mt-1 sm:mt-0">
                 <a
                   [routerLink]="['/category/' + item.url]"
-                  class="font-normal articleLink"
-                >
-                  {{ item.name }}</a
-                >
-              </li>
+                  class="font-normal articleLink inline mx-1">
+                  {{ item.name }}
+                </a>
             }
-          </ul>
-          <hr />
-          <div>AUTOR</div>
-          <hr />
+          </div>
+
+          <hr class="contentElement h-[.05rem] bg-slate-200">
+
+          <section class="contentElement flex flex-col items-center my-6">
+            <div class="w-full h-fit flex sm:flex-row flex-col items-center">
+              <img src="https://thispersondoesnotexist.com/" alt="fake image of author"
+              class="h-[7rem] w-[7rem] sm:mr-8 rounded-full">
+
+              <a [routerLink]="['/author',data.authorID]"
+                class=" w-fit h-fit font-bold text-left text-[2rem] hover:bg-black hover:text-white">
+                {{data.authorName}}
+              </a>
+            </div>
+            <p class="mt-4 xsm:text-[1.2rem] text-[1.1rem]">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique nostrum eligendi doloremque repellat aliquam? Ducimus est perspiciatis autem, id beatae commodi illum placeat! Possimus quod vitae, animi dolorem laborum expedita.
+            </p>
+          </section>
+
+          <hr class="contentElement h-[.05rem] bg-slate-200">
 
         </section>
 
         <section
-          class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mt-6 mb-6 p-2 lg:p-0"
+          class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mt-6 px-2 lg:p-0"
         >
           @if (comments$ | async | orderByDate; as comments) {
             <span class="text-[1.3rem] font-bold"
@@ -412,13 +431,33 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
   `,
   styles: [
     `
+      .contentElement {
+        width: 100%;
+
+        @media (min-width: 640px) {
+          width: 80%;
+        }
+
+        @media (min-width: 768px) {
+          width: 50%;
+        }
+
+        @media (min-width: 1024px) {
+          width: 33.33%;
+        }
+
+        @media (min-width: 1536px) {
+          width: 25%;
+        }
+      }
+
       .articleLink {
         font-weight: 700;
-        color: #fd7e7e;
+        color: #5E0060;
       }
       .articleLink:hover {
         color: #ffffff;
-        background-color: #fd7e7e;
+        background-color: #5E0060;
         padding: 0.1rem 0 0.1rem 0;
       }
 
@@ -531,12 +570,12 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
   );
 
   category = model<string>('')
+  articleRecommendationIndex = model<number>()
   recommendations$ = toObservable(this.category).pipe(
     switchMap(category=> this.firebaseService.getMainCategoryArticles(category).pipe(
       map((res:Article[])=>{
-        const id = this.id().split('-');
-
-        return res.filter(item=>item.articleID !== id[0])
+        this.articleRecommendationIndex.set(Math.round((Math.random()*10)*((res.length-1)/10)))
+        return res
       })
     ))
   )

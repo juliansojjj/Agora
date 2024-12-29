@@ -20,14 +20,14 @@ import { NgClass } from '@angular/common';
           xl:w-[4rem] xl:-mt-[2rem] 
           lg:w-[3rem] lg:-mt-[1.5rem] 
           w-[2rem]  -mt-[1rem]"></div>
-        <div class="bg-brandShade aspect-[2/1]
+        <div class="bg-brandShade aspect-[2/1] mb-[2rem]
           xl:w-[4rem]
           lg:w-[3rem]
           w-[2rem]"></div>
         <div class="cornerShape bg-brandShade aspect-square -rotate-90
           xl:w-[4rem] xl:-mt-[2rem] 
           lg:w-[3rem] lg:-mt-[1.5rem] 
-          w-[2rem]  -mt-[1rem]"></div>
+          w-[2rem]  -mb-[2rem]"></div>
 
       </div>
 
@@ -42,14 +42,14 @@ import { NgClass } from '@angular/common';
           xl:w-[4rem] xl:-mt-[2rem] 
           lg:w-[3rem] lg:-mt-[1.5rem] 
           w-[2rem]  -mt-[1rem]"></div>
-        <div class="bg-brandShade aspect-[2/1]
+        <div class="bg-brandShade aspect-[2/1] mb-[2rem]
           xl:w-[4rem]
           lg:w-[3rem]
           w-[2rem]"></div>
         <div class="cornerShape bg-brandShade aspect-square rotate-180
           xl:w-[4rem] xl:-mt-[2rem] 
           lg:w-[3rem] lg:-mt-[1.5rem] 
-          w-[2rem]  -mt-[1rem]"></div>
+          w-[2rem]  -mb-[2rem]"></div>
           
       </div>
 
