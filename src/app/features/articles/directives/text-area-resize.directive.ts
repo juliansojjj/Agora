@@ -2,7 +2,8 @@ import { Directive, ElementRef, HostListener, inject, OnInit, Renderer2 } from '
 
 @Directive({
   selector: '[appTextAreaResize]',
-  standalone: true
+  standalone: true,
+  exportAs: 'appTextAreaResize'
 })
 export class TextAreaResizeDirective implements OnInit{
   elementRef = inject(ElementRef)
@@ -23,7 +24,11 @@ export class TextAreaResizeDirective implements OnInit{
   }
 
   resize(){
-    this.renderer.setStyle(this.elementRef.nativeElement,'height',0)
+    this.renderer.setStyle(this.elementRef.nativeElement,'height','0')
     this.renderer.setStyle(this.elementRef.nativeElement,'height',this.elementRef.nativeElement.scrollHeight+'px')
+  }
+
+  resetHeight() {
+    this.renderer.setStyle(this.elementRef.nativeElement, 'height', 'auto');
   }
 }

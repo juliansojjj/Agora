@@ -26,7 +26,7 @@ import {
   paragraph,
 } from '../../../../shared/interfaces/article.interface';
 import { catchError, EMPTY, map, Observable, switchMap, take } from 'rxjs';
-import { NgIf, AsyncPipe, NgClass, DecimalPipe } from '@angular/common';
+import { NgIf, AsyncPipe, NgClass, DecimalPipe, TitleCasePipe } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FirebaseService } from '../../../../core/services/firebase.service';
@@ -51,6 +51,8 @@ import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
 import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
 import { ArticleHeaderComponent } from '../article-header/article-header.component';
 import { ArticleMenuComponent } from '../article-menu/article-menu.component';
+import { Author } from '../../../../shared/interfaces/author.interface';
+import { StandardGridComponent } from "../grids/standard-grid/standard-grid.component";
 
 @Component({
   selector: 'app-single-article',
@@ -62,6 +64,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
     DatePipe,
     NgClass,
     OrderByDatePipe,
+    TitleCasePipe,
     RouterLink,
     ReactiveFormsModule,
     TextAreaResizeDirective,
@@ -70,8 +73,9 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
     DecimalPipe,
     CustomDecimalPipePipe,
     ArticleHeaderComponent,
-    ArticleMenuComponent
-  ],
+    ArticleMenuComponent,
+    StandardGridComponent
+],
   template: `
     @if (data$ | async; as data) {
       <app-article-header [banner]="data.frontImageBanner" [headingInfo]="headingInfo()" [(menu)]="menu"/>
@@ -120,13 +124,13 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                   xsm:text-[1.4rem] xsm:mb-9
                   text-[1.1rem] mb-5">{{ data.subheading }}</h2>
                   <span class="xsm:text-[1.25rem] text-[1rem]">
-                    <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white">{{data.authorName}}</a>
+                    <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium underline hover:no-underline hover:bg-black hover:text-white">{{data.authorName}}</a>
                     <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
                   </span>
 
                   <div class=" mt-3 flex justify-between">
                     <span class="xsm:text-[1.25rem] text-[1rem]">
-                      Original source <a [href]="data.source" class="font-medium hover:bg-black hover:text-white">here</a>
+                      Original source <a [href]="data.source" class="font-medium underline hover:no-underline hover:bg-black hover:text-white">here</a>
                     </span>
                     @if (
                     (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
@@ -239,12 +243,12 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
             }
 
             @if ((item | typeof) == 'paragraph') {
-              <p class="xsm:my-7 my-4 xsm:text-[1.2rem] text-[1.1rem] contentElement">
+              <p class="my-4 xsm:text-[1.2rem] text-[1.1rem] contentElement">
                 {{ $any(item).paragraph }}
               </p>
             }
             @if ((item | typeof) == 'htmlParagraph') {
-              <p class="xsm:my-7 my-4 xsm:text-[1.2rem] text-[1.1rem] contentElement" #htmlContent>
+              <p class="my-4 xsm:text-[1.2rem] text-[1.1rem] contentElement" #htmlContent>
                 {{ $any(item).htmlParagraph }}
               </p>
             }
@@ -258,14 +262,14 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                 class="border-brandViolet contentElement 
                 md:text-[1.3rem]
                 sm:pl-7 sm:border-l-[4px]
-                xsm:mb-7 xsm:text-[1.2rem]  
-                text-[1.1rem] mb-4 pl-3 border-l-[2px]"
+                xsm:text-[1.2rem]  
+                text-[1.1rem] my-5 pl-3 border-l-[2px]"
               >
                 <i> {{ $any(item).quote }} </i>
               </blockquote>
             }
             @if ((item | typeof) == 'image') {
-                <div class="my-12 2xl:w-1/3 lg:w-1/2 md:w-3/4 w-full flex flex-col">
+                <div class="my-9 2xl:w-1/3 lg:w-1/2 md:w-3/4 w-full flex flex-col">
                   <img
                     class="w-full object-cover"
                     src="{{ $any(item).imageUrl }}"
@@ -275,7 +279,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                 </div>
             }
             @if ((item | typeof) == 'title') {
-              <h3 class="font-bold md:text-[1.9rem] text-[1.6rem] mt-12 contentElement">
+              <h3 class="font-bold md:text-[1.9rem] text-[1.6rem] mt-7 contentElement">
                 {{ $any(item).title }}
               </h3>
             }
@@ -304,26 +308,20 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               class="h-[7rem] w-[7rem] sm:mr-8 rounded-full">
 
               <a [routerLink]="['/author',data.authorID]"
-                class=" w-fit h-fit font-bold text-left text-[2rem] hover:bg-black hover:text-white">
+                class=" w-fit h-fit font-bold text-left text-[2rem] underline hover:no-underline hover:bg-black hover:text-white">
                 {{data.authorName}}
               </a>
             </div>
-            <p class="mt-4 xsm:text-[1.2rem] text-[1.1rem]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique nostrum eligendi doloremque repellat aliquam? Ducimus est perspiciatis autem, id beatae commodi illum placeat! Possimus quod vitae, animi dolorem laborum expedita.
-            </p>
+            <p class="mt-4 xsm:text-[1.2rem] text-[1.1rem]">{{authorData()?.authorDescription}}</p>
           </section>
 
           <hr class="contentElement h-[.05rem] bg-slate-200">
 
         </section>
 
-        <section
-          class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mt-6 px-2 lg:p-0"
-        >
+        <section class="contentElement flex flex-col my-6 lg:p-0 px-2">
           @if (comments$ | async | orderByDate; as comments) {
-            <span class="text-[1.3rem] font-bold"
-              >{{ comments | commentsLength }} Comments</span
-            >
+            <span class="md:text-[1.9rem] text-[1.6rem] font-bold">{{ comments | commentsLength }} Comments</span>
 
             @if (!(userInfo$ | async)) {
               <div class="flex flex-col mt-2 w-full ">
@@ -332,7 +330,8 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                   [queryParams]="{
                     redirect: 'article-' + id().split('-')[0],
                   }"
-                  class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip hover:text-gray-400 text-gray-400 hover:cursor-text font-normal hover:bg-transparent hover:p-0"
+                  class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip 
+                  hover:text-gray-400 text-gray-400 hover:cursor-text font-normal hover:bg-transparent hover:p-0"
                 >
                   Write your comment here...</a
                 >
@@ -341,12 +340,13 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
               <form
                 [formGroup]="form"
                 (ngSubmit)="onCommentSubmit()"
-                class="flex flex-col mt-2 w-full "
-              >
+                class="flex flex-col mt-3 w-full "
+                >
                 <textarea
                   formControlName="text"
                   class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip"
                   appTextAreaResize
+                  #textAreaResize="appTextAreaResize"
                   placeholder="Write your comment here..."
                 ></textarea>
 
@@ -359,17 +359,17 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                   <div class="flex self-end ">
                     <button
                       type="reset"
-                      (click)="form.reset()"
-                      class="h-7 min-w-fit p-auto px-3 bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandViolet active:scale-95  mt-4 font-medium self-end mr-4"
-                    >
-                      Cancel
+                      (click)="onCancel()"
+                      class="h-7 min-w-fit p-auto px-3  mt-4 font-medium self-end mr-4
+                      bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandViolet active:scale-95">
+                        Cancel
                     </button>
                     <button
                       type="submit"
                       [disabled]="form.invalid"
-                      class="h-7 min-w-fit py-auto px-3 bg-brandViolet text-white border-2 border-transparent hover:border-brandViolet hover:text-brandViolet hover:bg-white active:scale-95  mt-4 font-medium box-border"
-                    >
-                      Comment
+                      class="h-7 min-w-fit py-auto px-3 mt-4 font-medium box-border
+                      bg-brandViolet text-white border-2 border-transparent hover:border-brandViolet hover:text-brandViolet hover:bg-white active:scale-95  ">
+                        Comment
                     </button>
                   </div>
                 }
@@ -377,21 +377,18 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
             }
 
             @for (item of comments; track $index) {
-              <ng-container *ngIf="!item.deletedByUser">
-                <div class="flex flex-col mt-4">
+              @if(!item.deletedByUser){
+                <div class="flex flex-col mt-4 h-fit">
                   <div class="flex justify-between items-center">
                     <div>
-                      <span class="font-medium text-[1.2rem]"
-                        >{{ item.username }}
-                      </span>
+                      <span class="font-medium text-[1.2rem] mr-3">{{ item.username }}</span>
                       <span>{{ item.date.toDate() | date: 'MM/dd/yyyy' }}</span> 
                     </div>
                     @if (item.uid === uid()) {
                       <button (click)="onCommentDelete(item.commentId!)">
                         <svg
                           viewBox="0 0 24 24"
-                          class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandViolet active:scale-75"
-                        >
+                          class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandRed active:scale-75">
                           <g>
                             <path
                               d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6"
@@ -405,22 +402,23 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
                   </div>
                   <p class="text-[1.1rem]">{{ item.content }}</p>
                 </div>
-              </ng-container>
+              }
             }
           }
         </section>
 
-        <section class="self-start h-fit lg:self-center  lg:w-1/3 2xl:w-1/4 w-full mb-6 p-2 lg:p-0">
-          <hr>
+        <hr class="contentElement h-[.05rem] bg-slate-200">
+
+        <section class="flex flex-col items-center 2xl:w-1/2 lg:w-3/4 w-full mt-6 lg:p-0 px-2">
+
+          @if(authorArticles$ | async; as authorArticles){
+            <h4 class="md:text-[1.9rem] text-[1.6rem] md:mb-6 mb-3 font-bold">More from {{authorData()?.authorName}}</h4>
+            <app-standard-grid [articles]="authorArticles"/>
+          }
+
           @if(recommendations$ | async; as recommendations){
-            <span class="text-[1.3rem] font-bold"
-              >More from {{category()}}</span
-            >
-            <div class="grid grid-cols-3 w-full">
-              @for(item of recommendations.slice(1,recommendations.length-1); track $index){
-                <div>{{item.heading}}</div>
-              }
-            </div>
+            <h4 class="md:text-[1.9rem] text-[1.6rem] mt-6 md:mb-6 mb-3 font-bold">More from {{category() | titlecase}}</h4>
+            <app-standard-grid [articles]="recommendations.slice(0,9)"/>
           }
         </section>
       </article>
@@ -429,8 +427,7 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
       <p>Loading...</p>
     }
   `,
-  styles: [
-    `
+  styles:`
       .contentElement {
         width: 100%;
 
@@ -466,18 +463,16 @@ import { ArticleMenuComponent } from '../article-menu/article-menu.component';
         text-shadow: 5px 0px 0px black;
       }
     `,
-  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class SingleArticleComponent implements AfterViewInit, OnInit {
   firebaseService = inject(FirebaseService);
   id = input.required<string>();
   title = inject(Title);
+  menu:boolean = false;
 
   renderer = inject(Renderer2);
-  @ViewChildren('htmlContent') htmlElements?: QueryList<
-    ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>
-  >;
+  @ViewChildren('htmlContent') htmlElements?: QueryList<ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>>;
   
   @ViewChild('domHeading') domHeading?:ElementRef;
   ngOnInit(): void {
@@ -490,22 +485,13 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     const top = this.domHeading?.nativeElement.getBoundingClientRect().top
     const height = this.domHeading?.nativeElement.getBoundingClientRect().height
 
-    if(top <= -height*.45){
-      this.headingInfo.set(this.heading()?.heading!)
-    } else{
-      this.headingInfo.set('')
-
-    }
-
+    if(top <= -height*.45) this.headingInfo.set(this.heading()?.heading!)
+    else this.headingInfo.set('')
   }
 
   ngAfterViewInit(): void {
     this.htmlElements?.changes.subscribe(
-      (
-        query: QueryList<
-          ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>
-        >,
-      ) => {
+      (query: QueryList<ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>>) => {
         query.forEach((item) => {
           const unparsedString = item.nativeElement.innerText;
 
@@ -521,10 +507,8 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     );
   }
 
-  menu:boolean = false;
 
-
-  authUser$ = this.firebaseService.authState$;
+  @ViewChild(TextAreaResizeDirective) textAreaResizeDirective!: TextAreaResizeDirective;
 
   formBuilder = inject(NonNullableFormBuilder);
   form = this.formBuilder.group({
@@ -537,6 +521,16 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     }),
   });
 
+  trimValidator(control: AbstractControl) {
+    return control.value.trim() ? null : { blankText: true };
+  }
+
+  onCancel() {
+    this.form.reset();
+    this.textAreaResizeDirective.resetHeight();
+  }
+
+  authUser$ = this.firebaseService.authState$;
   uid = model<string>();
   userInfo = model<FirestoreCollectionUser>();
   userInfo$: Observable<FirestoreCollectionUser> = this.authUser$.pipe(
@@ -569,13 +563,25 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     )),
   );
 
+  authorData = model<Author>()
+  authorArticles$ = this.data$.pipe(
+    switchMap((article:Article)=>this.firebaseService.getAuthor(article.authorID).pipe(
+      map((res:Author)=>{
+        this.authorData.set(res)
+
+        return article.authorID
+      })
+    )),
+    switchMap((authorID:string) => this.firebaseService.getAuthorArticles(authorID,9))
+  );
+
   category = model<string>('')
   articleRecommendationIndex = model<number>()
   recommendations$ = toObservable(this.category).pipe(
-    switchMap(category=> this.firebaseService.getMainCategoryArticles(category).pipe(
+    switchMap(category=> this.firebaseService.getMainCategoryArticles(category,15).pipe(
       map((res:Article[])=>{
         this.articleRecommendationIndex.set(Math.round((Math.random()*10)*((res.length-1)/10)))
-        return res
+        return res.filter(val=>val.articleID !== this.id())
       })
     ))
   )
@@ -631,10 +637,6 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     const articleID = this.id().split('-');
 
     this.firebaseService.handleFavorite(this.uid()!, operation, articleID[0]);
-  }
-
-  trimValidator(control: AbstractControl) {
-    return control.value.trim() ? null : { blankText: true };
   }
 
   urlFormat(id: string, title: string) {

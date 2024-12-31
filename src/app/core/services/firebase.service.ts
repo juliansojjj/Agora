@@ -60,11 +60,11 @@ export class FirebaseService {
     return from(result);
   }
 
-  getAuthorArticles(authorID:string){
+  getAuthorArticles(authorID:string, max?:number){
     const ref = collection(this.firestoreService, 'articles')
-    const result = collectionData(query(ref,where('authorID','==',authorID)), { idField: 'articleID' })
 
-    return from(result);
+    if(max) return from(collectionData(query(ref,where('authorID','==',authorID),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' }))
+      else return from(collectionData(query(ref,where('authorID','==',authorID)), { idField: 'articleID' }))
   }
 
   getFavoriteArticles(ids:string[]){
@@ -99,7 +99,6 @@ export class FirebaseService {
     const ref = collection(this.firestoreService, 'articles')
     if(max) return from(collectionData(query(ref,where('category','==', name),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' }))
     else return from(collectionData(query(ref,where('category','==', name)), { idField: 'articleID' }))
-
   }
   getCategoryArticles(category:string) {
     const categoryArray = category.split(' ')

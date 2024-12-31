@@ -8,27 +8,25 @@ import { NgClass, NgStyle } from '@angular/common';
   standalone: true,
   imports: [RouterLink, NgClass, NgStyle],
   template:`
-    <div class="w-full relative h-full grid  gap-[3.5rem] place-items-center justify-center" 
-    [ngStyle]="{'grid-template-columns': 'repeat(3, ' + height() + 'rem)'}">
+    <div class="w-full relative h-full grid md:grid-cols-3 xsm:grid-cols-2 grid-cols-1 gap-[1rem] place-items-center justify-center place-content-center">
 
       @for (item of articles(); track $index) {
 
         <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
         (mouseover)="cellHoverCheck($index)" 
         (mouseout)="cellHoverCheck($index)"
-        class="h-full aspect-square overflow-hidden relative flex" 
-        [style.height]="height()+'rem'">
+        class="h-full w-full aspect-square relative flex flex-col">
 
-        <img [src]="item.frontImage" 
-        [alt]="item.frontImageAlt" class="w-full h-full object-cover" 
-        [style.height]="height()/12*7+'rem'" 
-        [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
+        <div class="w-full sm:h-1/2 xsm:h-1/3 h-3/5 object-cover overflow-hidden">
+          <img [src]="item.frontImage" 
+          [alt]="item.frontImageAlt" class="w-full h-full object-cover" 
+          [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
+        </div>
 
-        <div class="absolute bottom-0 w-full z-10 p-3" 
-        [style.height]="height()/12*5+'rem'" 
+        <div class="w-full sm:h-1/2 xsm:h-2/3 h-2/5 p-2 z-10"
         [ngClass]="cellHover() == $index.toString() ? ' bg-brandGrey' : 'bg-white'"> 
 
-          <span class="text-[1.2rem] font-semibold">{{item.heading}}</span>
+          <span class="text-[1rem] font-semibold">{{item.heading}}</span>
 
         </div>
       </a>
@@ -39,7 +37,6 @@ import { NgClass, NgStyle } from '@angular/common';
 })
 export class StandardGridComponent {
   articles = input.required<Article[]>();
-  height = input.required<number>();
 
   cellHover = model<string>()
 

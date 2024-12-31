@@ -28,14 +28,10 @@ import { OrderArticlesByDatePipe } from "../../../articles/pipes/order-articles-
   } 
   @else {
     <section class="w-full h-fit pt-20 flex">
-          <app-standard-grid [height]=20 [articles]="((favoriteArticles$ | async)! | orderArticlesByDate)"/>
+          <app-standard-grid [articles]="((favoriteArticles$ | async)! | orderArticlesByDate)"/>
 
-        </section>
+    </section>
       }
-
-
-      <div class="h-[10rem]"></div>
-  </div>
   `,
   styles:`` 
 })
