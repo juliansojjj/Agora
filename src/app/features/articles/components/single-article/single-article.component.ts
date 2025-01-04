@@ -83,18 +83,22 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
 
       <article class="w-full  min-h-screen relative flex flex-col items-center">
           @if (data.frontImageBanner) {
-            <section class=" w-full flex-col items-center relative lg:flex hidden">
-              <div class="w-full absolute z-10 bottom-0 text-white  " >
-                <div class="mb-20 pl-16" #domHeading>
-                <h1
-                    class=" font-bold text-[1.8rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[2.8rem] text-left leading-[3.6rem] mb-6 "
-                  >
-                    {{ data.heading }}
-                  </h1>
-                  <h2 class="text-[1rem] md:text-[1rem] lg:text-[1.3rem] xl:text-[1.4rem]">{{ data.subheading }}</h2>
+            <section class="h-full w-full flex-col items-center relative bannerLanding">
+              <div class="w-full h-full absolute z-10 left-0 bottom-0 grid grid-cols-[14rem_4rem_4rem] grid-rows-[1fr_4rem]" >
+                <div class="bg-brandShade col-span-2 h-full flex flex-col p-7 pt-12">
+                  <h1 class="font-semibold text-[2.8rem] leading-[3.5rem] mb-8">{{data.heading}}</h1>
+                  <h2 class="font-medium text-[1.6rem]">{{data.subheading}}</h2>
                 </div>
-              
-                  <div class="bg-gradient-to-t w-full h-96 from-black absolute bottom-0 -z-10"></div>
+                <div class="flex flex-col w-full place-self-end relative">
+                  <div class="h-[4rem] w-full bannerTriangle bg-white rotate-180"></div>
+                  <div class="h-[34rem] w-full bg-white flex items-center justify-center">
+                    <span class="[writing-mode:vertical-lr] rotate-180 text-[1.6rem]">{{data.authorName}} on {{data.date.toDate() | date:'MMMM d, y'}}</span> 
+                  </div>
+                </div>
+
+                <div class="h-[4rem] w-full bg-white"></div>
+                <div class="h-[4rem] w-full bannerTriangle bg-white"></div>
+                <div class="h-[4rem] w-full bannerTriangle bg-white"></div>
               </div>
               
               <img
@@ -104,11 +108,11 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
               />
             </section>
           } 
-            <div class="w-full flex justify-between items-start 
+            <div class="w-full justify-between items-start 
                 lg:w-1/2 lg:p-0 
                 sm:mt-4
                 mt-0 px-2" 
-                [ngClass]="{'lg:hidden flex': data.frontImageBanner}">
+                [ngClass]="data.frontImageBanner ? 'normalLanding' : 'flex'">
                 <div #domHeading>
                   <h1
                     class=" font-bold text-left
@@ -168,30 +172,26 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
                 src="{{ data.frontImage }}"
                 alt="{{ data.frontImageAlt }}"
                 class="relative w-full  lg:w-1/2 object-cover mt-6"
-                [ngClass]="{'lg:hidden block': data.frontImageBanner}"
+                [ngClass]="{'normalImage': data.frontImageBanner}"
               />
               <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4 max-lg:px-2" 
-              [ngClass]="{'lg:hidden block': data.frontImageBanner}">
+              [ngClass]="{'normalImageAlt': data.frontImageBanner}">
                 {{data.frontImageAlt}}
               </span>
 
           <!-- ------------------------------------------------------------------- -->
         <section class="w-full lg:p-0 px-2 flex flex-col items-center">
+          
           @if(data.frontImageBanner){
-            
-            <div class="text-[1.25rem] mt-5 mb-3 flex justify-between">
-              <div>
-              <a [routerLink]="['/author', data.authorID]" class="mr-2 font-medium hover:bg-black hover:text-white  ">{{data.authorName}}</a>
-              <span>on {{data.date.toDate() | date:'MMMM d, y'}}</span>  
-              </div>
-                  
+            <div class="contentElement mt-5 mb-3 pr-1 flex justify-between bannerInfo">
+              <span class="text-[1.25rem]">
+                Original source <a [href]="data.source" class="font-medium hover:bg-black hover:text-white">here</a>
+              </span>
 
-                  @if (
-                (userInfo$ | async)?.favorites?.includes(id().split('-')[0])
-              ) {
+              @if ((userInfo$ | async)?.favorites?.includes(id().split('-')[0])) {
                 <button (click)="favoriteHandle(false)">
-                <svg class="h-8 fill-black" viewBox="0 0 166 232">
-                    <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                  <svg class="h-8 fill-black" viewBox="0 0 166 232">
+                      <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
                   </svg>
                 </button>
               } @else if (userInfo$ | async) {
@@ -201,28 +201,13 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
                   </svg>
                 </button>
               } @else {
-                <a
-                  [routerLink]="['/login']"
-                  [queryParams]="{
-                    redirect: 'article-' + id().split('-')[0],
-                  }"
-                  class="hover:bg-transparent hover:p-0"
-                >
+              <a [routerLink]="['/login']" [queryParams]="{redirect: 'article-' + id().split('-')[0]}" class="hover:bg-transparent hover:p-0">
                 <svg class="h-8 stroke-black stroke-[21] fill-none" viewBox="0 0 166 232">
-                    <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
-                  </svg>
-                </a>
+                  <path d="M77.8192 169.537L9.5 213.986V9.5H156.5V213.986L88.1808 169.537L83 166.166L77.8192 169.537Z" />
+                </svg>
+              </a>
               }
             </div>
-
-
-                <span class="text-[1.25rem]"
-                  >Original source
-                  <a
-                    [href]="data.source"
-                    class="font-medium hover:bg-black hover:text-white"
-                    >here</a
-                  ></span>
           }
           @for (item of data.content; track $index) {
 
@@ -428,6 +413,54 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
     }
   `,
   styles:`
+      .bannerLanding{
+        display:none;
+        @media (min-width: 1024px){
+          display:none;
+          @supports (animation-timeline: scroll(root)) {
+            display:flex;
+          } 
+        }
+      }
+      .bannerInfo{
+        display:none;
+        @media (min-width: 1024px){
+          display:none;
+          @supports (animation-timeline: scroll(root)) {
+            display:flex;
+          } 
+        }
+      }
+      .normalLanding{
+        display:flex;
+        @media (min-width: 1024px){
+          display:flex;
+          margin-top:7.5rem;
+          @supports (animation-timeline: scroll(root)) {
+            display:none;
+            margin-top:0;
+          } 
+        }
+      }
+      .normalImage{
+        display:block;
+        @media (min-width: 1024px){
+          display:block;
+          @supports (animation-timeline: scroll(root)) {
+            display:none;
+          } 
+        }
+      }
+      .normalImageAlt{
+        display:block;
+        @media (min-width: 1024px){
+          display:block;
+          @supports (animation-timeline: scroll(root)) {
+            display:none;
+          } 
+        }
+      }
+
       .contentElement {
         width: 100%;
 
@@ -461,6 +494,12 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
       .bannerTitle{
         color:white;
         text-shadow: 5px 0px 0px black;
+      }
+      .bannerTriangle{
+        clip-path: polygon(
+          0% 0%,
+          100% 0%,
+          100% 100%);
       }
     `,
   encapsulation: ViewEncapsulation.None,

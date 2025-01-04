@@ -47,22 +47,24 @@ import { ElementRef } from '@angular/core';
       class="w-full flex top-0 left-0 z-50 h-[7.5rem]"
       [ngClass]="banner() ? 'lg:fixed bannerHeader max-lg:sticky max-lg:bg-white' : 'sticky bg-white'" 
     >
-      <nav class="w-full flex  " [ngClass]="banner() ? 'max-lg:justify-between bannerNav' : 'justify-between'">
-        <a routerLink="/" class="h-fit xl:block hidden self-center">
-          <img src="agora-imagotype.svg" class="h-[4rem]" [ngClass]="banner() ? 'max-lg:ml-12 mainBannerLogo' : 'ml-12'"/>
+      <nav class="w-full flex " [ngClass]="banner() ? 'max-lg:justify-between bannerNav' : 'justify-between'">
+        <a routerLink="/" class="h-[4rem] xl:block hidden self-center relative">
+          <img src="agora-imagotype.svg" class="h-[4rem]" [ngClass]="banner() ? 'normalLogo ml-12' : 'ml-12'"/>
+          <img src="negative-isotype.svg" class="h-[4rem]" [ngClass]="banner() ? 'mainBannerLogo mr-12' : 'hidden'"/>
+          <div class="absolute right-0 top-0 w-[4rem] h-[4rem] -z-10 mr-12" [ngClass]="banner() ? 'responsiveBannerShadow' : 'hidden'"></div>
         </a>
 
           <span class="w-fit h-fit self-center hidden 2xl:block text-[1.2rem] font-medium pl-14 pr-2"
-          [ngClass]="banner() ? 'bannerArticleTitle' : ''">
-            {{headingInfo()}}
-          </span>
+          [ngClass]="banner() ? 'bannerArticleTitle' : ''">{{headingInfo()}}</span>
 
           <div class="xl:w-fit w-full h-full relative md:grid md:grid-rows-2 flex xl:justify-end">
             <div class="w-full flex xl:justify-between"
-              [ngClass]="banner() ? 'bannerUpperContainer max-lg:justify-end' : ' justify-end'">
+              [ngClass]="banner() ? 'justify-end' : ' justify-end'">
 
-              <a routerLink="/" class="h-fit xl:hidden block self-center mx-7 my-0 md:mt-3">
-                <img src="agora-imagotype.svg" class="md:h-[3.5rem] h-[5rem]" [ngClass]="banner() ? 'responsiveBannerLogo' : ''"/>
+              <a routerLink="/" class="md:h-[3.5rem] h-[5rem] xl:hidden block self-center mx-7 my-0 md:mt-3 relative">
+                <img src="agora-imagotype.svg" class="md:h-[3.5rem] h-[5rem]" [ngClass]="banner() ? 'responsiveNormalLogo' : ''"/>
+                <img src="negative-isotype.svg" class="h-[4rem] mt-4 mr-4" [ngClass]="banner() ? 'responsiveBannerLogo' : 'hidden'"/>
+                <div class="absolute right-0 top-0 w-[4rem] h-[4rem] mt-4 mr-4 -z-10 " [ngClass]="banner() ? 'responsiveBannerShadow' : 'hidden'"></div>
               </a>
 
               
@@ -150,7 +152,7 @@ import { ElementRef } from '@angular/core';
         @media only screen and (min-width: 1024px){
           animation: headerTransition linear both;
           animation-timeline:scroll(root);
-          animation-range:0 1px;
+          animation-range: 89vh 89.1vh;
         }
       }
 
@@ -166,7 +168,7 @@ import { ElementRef } from '@angular/core';
         @media only screen and (min-width: 1024px){
           animation: articleTitleTransition linear both;
           animation-timeline:scroll(root);
-          animation-range:0 1px;
+          animation-range: 89vh 89.1vh;
         }
       }
 
@@ -177,13 +179,22 @@ import { ElementRef } from '@angular/core';
           }
         }
 
-
+      .normalLogo{
+        display:block;
+        @supports (animation-timeline: scroll(root)) {
+            display:none;
+          }
+      }
 
       .mainBannerLogo {
-        @media only screen and (min-width: 1024px){
+        display:none;
+        @supports (animation-timeline: scroll(root)) {
+          @media only screen and (min-width: 1024px){
+          display:block;
           animation: mainLogoTransition linear both;
           animation-timeline:scroll(root);
-          animation-range:0 1px;
+          animation-range: 89vh 89.1vh;
+          }
         }
       }
       
@@ -197,12 +208,35 @@ import { ElementRef } from '@angular/core';
           filter: brightness(100%);
         }
       }
+      .bannerShadow{
+        display:none;
+        @supports (animation-timeline: scroll(root)) {
+          @media only screen and (min-width: 1024px){
+            display:block;
+            opacity:.2;
+            background: radial-gradient(#000000, rgba(255, 0, 0, 0));
+            background-repeat: no-repeat;
+          }
+        }
+      }
 
+      .responsiveNormalLogo{
+        display:block;
+        @supports (animation-timeline: scroll(root)) {
+          @media only screen and (min-width: 1024px){
+            display:none;
+          }
+        }
+      }
       .responsiveBannerLogo {
-        @media only screen and (min-width: 1024px){
-          animation: logoTransition linear both;
-          animation-timeline:scroll(root);
-          animation-range:0 1px;
+        display:none;
+        @supports (animation-timeline: scroll(root)) {
+          @media only screen and (min-width: 1024px){
+            display:block;
+            animation: logoTransition linear both;
+            animation-timeline:scroll(root);
+            animation-range: 89vh 89.1vh;
+          }
         }
       }
       @keyframes logoTransition {
@@ -214,18 +248,29 @@ import { ElementRef } from '@angular/core';
         }
       }
 
+      .responsiveBannerShadow{
+        display:none;
+        @supports (animation-timeline: scroll(root)) {
+          @media only screen and (min-width: 1024px){
+            display:block;
+            opacity:.2;
+            background: radial-gradient(#000000, rgba(255, 0, 0, 0));
+            background-repeat: no-repeat;
+          }
+        }
+      }
 
 
       .bannerNav{
         @media only screen and (min-width: 1024px){
           animation: navTransition linear both;
           animation-timeline:scroll(root);
-          animation-range:0 1px;
+          animation-range: 89vh 89.1vh;
         }
       }
       @keyframes navTransition {
         from{
-          justify-content: center;
+          justify-content: end;
         }
         to{
           justify-content: space-between;
@@ -238,7 +283,7 @@ import { ElementRef } from '@angular/core';
         @media only screen and (min-width: 1024px){
           animation: navElementsTransition linear both;
           animation-timeline:scroll(root);
-          animation-range:0 1px;
+          animation-range: 89vh 89.1vh;
         }
       }
       @keyframes navElementsTransition {
@@ -247,24 +292,6 @@ import { ElementRef } from '@angular/core';
         }
         to{
           display:flex;
-        }
-      }
-      
-
-
-      .bannerUpperContainer{
-        @media only screen and (min-width: 1024px){
-          animation: upperContainerTransition linear both;
-          animation-timeline:scroll(root);
-          animation-range:0 1px;
-        }
-      }
-      @keyframes upperContainerTransition {
-        from{
-          justify-content:center;
-        }
-        to{
-          justify-content:end;
         }
       }
     `,
