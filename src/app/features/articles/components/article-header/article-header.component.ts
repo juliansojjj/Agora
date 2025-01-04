@@ -50,8 +50,8 @@ import { ElementRef } from '@angular/core';
       <nav class="w-full flex " [ngClass]="banner() ? 'max-lg:justify-between bannerNav' : 'justify-between'">
         <a routerLink="/" class="h-[4rem] xl:block hidden self-center relative">
           <img src="agora-imagotype.svg" class="h-[4rem]" [ngClass]="banner() ? 'normalLogo ml-12' : 'ml-12'"/>
-          <img src="negative-isotype.svg" class="h-[4rem]" [ngClass]="banner() ? 'mainBannerLogo mr-12' : 'hidden'"/>
-          <div class="absolute right-0 top-0 w-[4rem] h-[4rem] -z-10 mr-12" [ngClass]="banner() ? 'responsiveBannerShadow' : 'hidden'"></div>
+          <img src="negative-isotype.svg" class="h-[4rem]" [ngClass]="banner() ? 'bannerLogo mr-12' : 'hidden'"/>
+          <div class="absolute right-0 top-0 w-[4rem] h-[4rem] -z-10 mr-12" [ngClass]="banner() ? 'bannerShadow' : 'hidden'"></div>
         </a>
 
           <span class="w-fit h-fit self-center hidden 2xl:block text-[1.2rem] font-medium pl-14 pr-2"
@@ -62,9 +62,9 @@ import { ElementRef } from '@angular/core';
               [ngClass]="banner() ? 'justify-end' : ' justify-end'">
 
               <a routerLink="/" class="md:h-[3.5rem] h-[5rem] xl:hidden block self-center mx-7 my-0 md:mt-3 relative">
-                <img src="agora-imagotype.svg" class="md:h-[3.5rem] h-[5rem]" [ngClass]="banner() ? 'responsiveNormalLogo' : ''"/>
-                <img src="negative-isotype.svg" class="h-[4rem] mt-4 mr-4" [ngClass]="banner() ? 'responsiveBannerLogo' : 'hidden'"/>
-                <div class="absolute right-0 top-0 w-[4rem] h-[4rem] mt-4 mr-4 -z-10 " [ngClass]="banner() ? 'responsiveBannerShadow' : 'hidden'"></div>
+                <img src="agora-imagotype.svg" class="md:h-[3.5rem] h-[5rem]" [ngClass]="banner() ? 'normalLogo' : ''"/>
+                <img src="negative-isotype.svg" class="h-[4rem] mt-4 mr-4" [ngClass]="banner() ? 'bannerLogo' : 'hidden'"/>
+                <div class="absolute right-0 top-0 w-[4rem] h-[4rem] mt-4 mr-4 -z-10 " [ngClass]="banner() ? 'bannerShadow' : 'hidden'"></div>
               </a>
 
               
@@ -155,7 +155,6 @@ import { ElementRef } from '@angular/core';
           animation-range: 89vh 89.1vh;
         }
       }
-
       @keyframes headerTransition {
         from{background-color:transparent;}
         to{
@@ -171,7 +170,6 @@ import { ElementRef } from '@angular/core';
           animation-range: 89vh 89.1vh;
         }
       }
-
       @keyframes articleTitleTransition {
         from{display:none;}
         to{
@@ -182,41 +180,42 @@ import { ElementRef } from '@angular/core';
       .normalLogo{
         display:block;
         @supports (animation-timeline: scroll(root)) {
-            display:none;
+          @media only screen and (min-width: 1024px){
+            animation: normalLogoTransition linear both;
+            animation-timeline:scroll(root);
+            animation-range: 89vh 89.1vh;
+          }
           }
       }
+      @keyframes normalLogoTransition {
+        from{
+          display:none;
 
-      .mainBannerLogo {
+        }
+        to{
+          display:block;
+        }
+      }
+
+      .bannerLogo {
         display:none;
         @supports (animation-timeline: scroll(root)) {
           @media only screen and (min-width: 1024px){
           display:block;
-          animation: mainLogoTransition linear both;
+          animation: bannerLogoTransition linear both;
           animation-timeline:scroll(root);
           animation-range: 89vh 89.1vh;
           }
         }
       }
       
-      @keyframes mainLogoTransition {
+      @keyframes bannerLogoTransition {
         from{
-          margin-left:0;
-          filter: brightness(0%) invert(100%);
+          display:block;
+
         }
         to{
-          margin-left:3rem;
-          filter: brightness(100%);
-        }
-      }
-      .bannerShadow{
-        display:none;
-        @supports (animation-timeline: scroll(root)) {
-          @media only screen and (min-width: 1024px){
-            display:block;
-            opacity:.2;
-            background: radial-gradient(#000000, rgba(255, 0, 0, 0));
-            background-repeat: no-repeat;
-          }
+          display:none;
         }
       }
 
@@ -228,38 +227,30 @@ import { ElementRef } from '@angular/core';
           }
         }
       }
-      .responsiveBannerLogo {
+
+      .bannerShadow{
         display:none;
         @supports (animation-timeline: scroll(root)) {
           @media only screen and (min-width: 1024px){
-            display:block;
-            animation: logoTransition linear both;
+            animation: shadowTransition linear both;
             animation-timeline:scroll(root);
             animation-range: 89vh 89.1vh;
-          }
-        }
-      }
-      @keyframes logoTransition {
-        from{
-          filter: brightness(0%) invert(100%);
-        }
-        to{
-          filter: brightness(100%);
-        }
-      }
-
-      .responsiveBannerShadow{
-        display:none;
-        @supports (animation-timeline: scroll(root)) {
-          @media only screen and (min-width: 1024px){
+            opacity:0.2;
             display:block;
-            opacity:.2;
             background: radial-gradient(#000000, rgba(255, 0, 0, 0));
             background-repeat: no-repeat;
           }
         }
       }
+      @keyframes shadowTransition {
+        from{
+          display:block;
 
+        }
+        to{
+          display:none;
+        }
+      }
 
       .bannerNav{
         @media only screen and (min-width: 1024px){
