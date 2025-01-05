@@ -72,7 +72,11 @@ export class FirebaseService {
 
     if(ids.length <= 30){
       const result = collectionData(query(ref,where(documentId(),'in',ids)), { idField: 'articleID' })
-      return from(result)
+      return from(result).pipe(
+        map((articles) =>
+          articles.sort((a: any, b: any) => ids.indexOf(b.articleID) - ids.indexOf(a.articleID)) 
+        )
+      );
     }
     else{
       const chunkedArrays:string[][] = []
@@ -87,7 +91,13 @@ export class FirebaseService {
       })
 
       return forkJoin(observables).pipe(
-        map(results=>results.flat())
+        map((results) => {
+          // Flatten and sort by the order in the original array
+          const flattenedResults = results.flat();
+          return flattenedResults.sort(
+            (a: any, b: any) => ids.indexOf(b.articleID) - ids.indexOf(a.articleID)
+          );
+        })
       )
     }
   }

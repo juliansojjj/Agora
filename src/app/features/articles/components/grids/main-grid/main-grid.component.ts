@@ -50,13 +50,14 @@ import { NgClass } from '@angular/common';
 
 
       <a class="w-full h-full overflow-hidden relative" [routerLink]="['/article',urlFormat(highArticle()![0].articleID!, highArticle()![0].heading)]" (mouseover)="cellHoverCheck('high',0)" (mouseout)="cellHoverCheck('high',0)">
-        <div class="absolute w-full h-fit sm:h-[6.6rem] bottom-0 grid grid-cols-[3.3rem_1fr_3.3rem] mb-[1.5rem] z-10">
+        <div class="absolute w-full h-fit sm:h-[6.6rem] bottom-0 grid grid-cols-[3.3rem_1fr_3.3rem] lg:mb-[1.5rem] mb-[.5rem] z-10">
           <div class="xl:block hidden"></div>
           <div class="w-full flex items-center
           xl:col-span-1
           md:max-w-[95%] md:w-fit   
           sm:p-3 sm:h-full sm:max-h-[6.6rem]  
-          px-5 h-fit p-3 col-span-3 " [ngClass]="highCellHover() == '0' ? 'bg-black text-white' : 'bg-white'">
+          xsm:py-7
+          px-5 py-4 h-fit col-span-3 " [ngClass]="highCellHover() == '0' ? 'bg-black text-white' : 'bg-white'">
             <span class="2xl:text-[2rem] md:text-[1.6rem] text-[1.3rem] font-semibold leading-none">{{highArticle()![0].heading}}</span>
           </div>
           <div class="bg-white xl:block hidden h-[3.3rem] mt-[3.3rem] aspect-square"></div>

@@ -13,25 +13,35 @@ import { OrderArticlesByDatePipe } from "../../../articles/pipes/order-articles-
   standalone: true,
   imports: [AsyncPipe, StandardGridComponent, OrderArticlesByDatePipe],
   template:`
-  <div class="w-full h-full flex flex-col items-center  pt-8 pl-[2rem] xl:pl-[6rem] 2xl:pl-[16rem]">
+  <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col items-center md:pt-6 xl:px-0 sm:px-6 px-0">
+    <div></div>
 
-  <h1 class="text-[4rem] font-bold self-start">Favorites</h1>
+    <div class="flex flex-col">
+      <h1 class="font-bold text-center mt-14 text-brandViolet 
+      xl:pl-6
+      lg:text-[5rem] 
+      md:text-start
+      sm:text-[3.5rem] sm:px-0
+      xsm:text-[3rem] xsm:px-4     
+      px-2 text-[2.3rem]">
+        Favorites
+      </h1>
 
-    
+      @if(!(favoriteArticles$ | async)){
+        Loading
+      } @else if(!(favoriteArticles$ | async)?.length){
+        No favorites
+          
+      } @else {
+      <section class="w-full h-fit pt-20 flex">
+        <app-standard-grid [articles]="(favoriteArticles$ | async)!"/>
 
-  @if(!(favoriteArticles$ | async)){
-    Loading
-  } 
-  @else if(!(favoriteArticles$ | async)?.length){
-    No favorites
-        
-  } 
-  @else {
-    <section class="w-full h-fit pt-20 flex">
-          <app-standard-grid [articles]="((favoriteArticles$ | async)! | orderArticlesByDate)"/>
-
-    </section>
+      </section>
       }
+    </div>
+
+    <div></div>
+  </div>
   `,
   styles:`` 
 })

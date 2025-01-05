@@ -6,6 +6,8 @@ import { nonAuthGuard } from './core/guards/non-auth.guard';
 import { FavoritesComponent } from './features/user/components/favorites/favorites.component';
 import { ProfileComponent } from './features/user/components/profile/profile.component';
 import { authGuard } from './core/guards/auth.guard';
+import { AboutComponent } from './core/components/about/about.component';
+import { SitemapComponent } from './core/components/sitemap/sitemap.component';
 
 export const routes: Routes = [
   {
@@ -45,6 +47,15 @@ export const routes: Routes = [
 
   { path: 'favorites', component: FavoritesComponent, canActivate: [authGuard], title: 'Favorites' },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard], title: 'Profile' },
+
+  { path: 'about', component: AboutComponent, title: 'About' },
+  {
+    path: 'sitemap',
+    loadComponent: () =>
+      import(
+        './core/components/sitemap/sitemap.component'
+      ).then((c) => c.SitemapComponent),
+  },
 
   { path: '**', component: NotFoundComponent, title: 'Page Not Found' },
 

@@ -80,7 +80,7 @@ import { NgClass } from '@angular/common';
               <div class="h-[5.5rem] w-[12rem] bg-brandShade lg:block hidden"></div>
               <a [routerLink]="['/article',urlFormat(articles()![$index+2].articleID!, articles()![$index+2].heading)]"
               (mouseover)="cellHoverCheck($index+2)" (mouseout)="cellHoverCheck($index+2)"
-              [ngClass]="$index == 1 ? 'bg-white  hover:bg-brandGrey sm:bg-brandGrey sm:hover:bg-white lg:bg-white lg:hover:bg-brandGrey': 'bg-white  hover:bg-brandGrey'"
+              [ngClass]="$index == 1 ? 'bg-white  hover:bg-brandGrey sm:bg-brandGrey sm:border-white sm:border-t-4 sm:border-b-4 md:border-t-0 md:border-b-0 md:border-r-4 md:border-l-4 lg:border-r-0 lg:border-l-0 sm:hover:bg-white lg:bg-white lg:hover:bg-brandGrey': 'bg-white  hover:bg-brandGrey'"
               class="w-full h-full p-1 sm:p-3 sm:border-0 border-t-2 border-black">
                 <span class="font-medium lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
               </a>
@@ -91,16 +91,29 @@ import { NgClass } from '@angular/common';
         <div class="sm:block hidden"></div>
 
         <a [routerLink]="['/article',urlFormat(articles()![5].articleID!, articles()![5].heading)]"
-          (mouseover)="cellHoverCheck(5)" (mouseout)="cellHoverCheck(6)"
-        class="h-[20rem] 
-        2xl:grid-cols-[65%_35%] 
-        lg:grid-cols-[50%_50%] lg:grid 
-        flex flex-col" >
+          (mouseover)="cellHoverCheck(5)" (mouseout)="cellHoverCheck(5)"
+          class="h-[20rem] 
+          2xl:grid-cols-[65%_35%] 
+          lg:grid-cols-[50%_50%] lg:grid 
+          flex flex-col" >
           <div class="w-full lg:h-full sm:h-[10rem] xsm:h-[12rem] h-[9rem] bg-black overflow-hidden">   
               <img [src]="articles()![5].frontImage" [alt]="articles()![5].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '5' ? 'scale-105' : ''">
             </div>
             <div class="w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '5' ? 'text-white bg-black' : 'bg-white'"> 
               <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![5].heading}}</span>
+            </div>
+          </a>
+
+          <a [routerLink]="['/article',urlFormat(articles()![6].articleID!, articles()![6].heading)]"
+          (mouseover)="cellHoverCheck(6)" (mouseout)="cellHoverCheck(6)"
+          class="h-[20rem] 
+          sm:hidden
+          flex flex-col" >
+          <div class="w-full lg:h-full sm:h-[10rem] xsm:h-[12rem] h-[9rem] bg-black overflow-hidden">   
+              <img [src]="articles()![6].frontImage" [alt]="articles()![6].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '6' ? 'scale-105' : ''">
+            </div>
+            <div class="w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '6' ? 'text-white bg-black' : 'bg-white'"> 
+              <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![6].heading}}</span>
             </div>
           </a>
 
