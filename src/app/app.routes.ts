@@ -8,6 +8,7 @@ import { ProfileComponent } from './features/user/components/profile/profile.com
 import { authGuard } from './core/guards/auth.guard';
 import { AboutComponent } from './core/components/about/about.component';
 import { SitemapComponent } from './core/components/sitemap/sitemap.component';
+import { SearchComponent } from './core/components/search/search.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,11 @@ export const routes: Routes = [
 
   { path: 'favorites', component: FavoritesComponent, canActivate: [authGuard], title: 'Favorites' },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard], title: 'Profile' },
+
+  { path: 'search', loadComponent: () =>
+    import(
+      './core/components/search/search.component'
+    ).then((c) => c.SearchComponent), title: 'Search' },
 
   { path: 'about', component: AboutComponent, title: 'About' },
   {

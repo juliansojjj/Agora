@@ -168,7 +168,11 @@ getUserInfo(uid:string){
 
   return from(result)
 }
-
+  getUsers(){
+    const ref = collection(this.firestoreService, 'users');
+    const result = collectionData(ref);
+    return from(result);
+  }
   checkUsername() {
     
     const ref = collection(this.firestoreService, 'users');
