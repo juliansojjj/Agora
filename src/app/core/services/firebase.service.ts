@@ -216,7 +216,8 @@ export class FirebaseService {
 
       return from(updateEmail(this.authService.currentUser,newEmail)).pipe(
         map(()=>{
-          from(updateDoc(ref,{email:newEmail}))}),
+          from(updateDoc(ref,{email:newEmail}))
+        }),
         catchError(err=>throwError(()=>err))
       )
 
@@ -266,30 +267,26 @@ export class FirebaseService {
   }
 
   // ----------------------- AUTH
-  signup(username: string, email: string, password: string): Observable<any> {
-    let uid:string
-    const createUser = createUserWithEmailAndPassword(
-      this.authService,
-      email,
-      password,
-    )
-      .then((res) => {
-        updateProfile(res.user, { displayName: username });
-        uid = res.user.uid
-      })
-      .then(() => this.documentUser(username, email,uid));
+  signup(username: string, email: string, password: string){
+    const createUser = createUserWithEmailAndPassword(this.authService, email, password)
 
-    return from(createUser);
+    return from(createUser).pipe(
+      map(res=>{
+        console.log('hola?')
+        return forkJoin([
+          updateProfile(res.user, { displayName: username }),
+          this.documentUser(username, email,res.user.uid)
+        ])
+      }),
+      catchError(err=>throwError(()=>err))
+    );
   }
 
-  login(email: string, password: string): Observable<any> {
-    const signIn = signInWithEmailAndPassword(
-      this.authService,
-      email,
-      password,
-    );
-
-    return from(signIn);
+  login(email: string, password: string){
+    return from(signInWithEmailAndPassword(this.authService,email,password)).pipe(
+      map(res=>res),
+      catchError(err=>throwError(()=>err))
+    )
   }
 
   logout() {

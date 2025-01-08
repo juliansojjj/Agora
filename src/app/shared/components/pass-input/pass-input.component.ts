@@ -1,15 +1,21 @@
+import { NgClass } from '@angular/common';
 import { Component, Input, input, model } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'pass-input',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   template: `
   <div class="relative flex flex-col-reverse w-fit">
-    <input [type]="visibility()"  [formControl]="control()" id="pass" 
-    class="peer sm:w-[20rem] w-[12rem] h-[2.5rem] sm:border-[.5rem] border-[.4rem] border-brandShade box-content px-2 focus:outline-none focus:border-brandViolet text-[1.1rem]"> 
-    <label class="sm:text-[1.8rem] text-[1.5rem] font-semibold mb-4 text-brandShade peer-focus:text-brandViolet" for="pass">Password</label> 
+    <input [type]="visibility()"  [formControl]="control()" id="pass"
+    [ngClass]="inputErrors() && dirtyInput() ? 'border-brandRed' : 'border-brandShade'"
+    class="peer sm:w-[20rem] w-[12rem] h-[2.5rem] sm:border-[.5rem] border-[.35rem]  box-content px-2 focus:outline-none focus:border-brandViolet text-[1.1rem]"> 
+    
+    <label [ngClass]="inputErrors() && dirtyInput() ? 'text-brandRed' : 'text-brandShade'"
+    class="sm:text-[1.8rem] text-[1.3rem] font-semibold sm:mb-4 mb-2 text-brandShade peer-focus:text-brandViolet" for="pass">
+      Password
+    </label> 
 
       @if(visibility() == 'password'){
         <svg viewBox="0 0 90 90" (click)="triggerPassVisibility()"
@@ -45,6 +51,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class PassInputComponent {
   visibility = model<'text'|'password'>('password')
   control  = input(new FormControl())
+  inputErrors = input()
+  dirtyInput = input()
 
   triggerPassVisibility(){
     if(this.visibility() === 'text') this.visibility.set('password')
