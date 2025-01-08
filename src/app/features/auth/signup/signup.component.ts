@@ -98,16 +98,18 @@ import { NgIf } from '@angular/common';
                     @if (form.controls.password.errors?.['minlength']) {
                       <span class="errorLabel">The min amount of characters is 6</span>
                     }
+                    @if (form.controls.password.errors?.['maxlength']) {
+                      <span class="errorLabel">The max amount of characters is 4096</span>
+                    }
                   }
                 </div>
 
                 
-                <button type="submit" [disabled]="form.invalid" 
+                <button type="submit" [disabled]="form.invalid || form.pending" 
                 class="bg-brandViolet py-2 px-8 font-semibold mt-1 text-[1.6rem] text-white w-fit hover:bg-brandShade hover:text-black active:scale-95">Send</button>
                 
                 <div class="h-[2rem] mt-4 w-fit self-start pl-6 sm:pl-0">
                   <span class="errorLabel">{{error()}}</span>
-                  <span class="errorLabel">{{errorMessage}}</span>
                 </div>
 
                 @if(redirect()){
@@ -151,8 +153,6 @@ export class SignupComponent {
 
   redirect  = input<string>();
 
-
-  errorMessage = '';
   error = model<string>('')
 
   form = this.formBuilder.group({
@@ -170,7 +170,7 @@ export class SignupComponent {
       validators: [Validators.email, Validators.required],
     }),
     password: this.formBuilder.control('', {
-      validators: [Validators.required, Validators.minLength(6)],
+      validators: [Validators.required, Validators.minLength(6), Validators.maxLength(4096)],
     }),
   });
 

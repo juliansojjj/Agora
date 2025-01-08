@@ -7,8 +7,9 @@ import {
   signInWithEmailAndPassword,
   authState,
   user,
+  updateEmail,
 } from '@angular/fire/auth';
-import { debounceTime, filter, forkJoin, from, map, Observable, ObservableInput, of, take } from 'rxjs';
+import { catchError, debounceTime, filter, forkJoin, from, map, Observable, ObservableInput, of, take, throwError } from 'rxjs';
 import {
   FirebaseAuthUser,
   FirestoreCollectionUser,
@@ -36,6 +37,8 @@ import {
 } from '@angular/fire/firestore';
 import { AbstractControl } from '@angular/forms';
 import { Article } from '../../shared/interfaces/article.interface';
+import { updatePassword } from 'firebase/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +47,7 @@ import { Article } from '../../shared/interfaces/article.interface';
 export class FirebaseService {
   authService = inject(Auth);
   firestoreService = inject(Firestore);
+  router = inject(Router)
 
   //authState es obs https://github.com/FirebaseExtended/rxfire/blob/main/docs/auth.md
   authState$ = authState(this.authService);
@@ -162,12 +166,12 @@ export class FirebaseService {
     : from(updateDoc(ref,{favorites:arrayRemove(articleID)})) 
   }
 
-getUserInfo(uid:string){
-  const ref = doc(this.firestoreService, 'users', uid);
-  const result = docData(ref)
+  getUserInfo(uid:string){
+    const ref = doc(this.firestoreService, 'users', uid);
+    const result = docData(ref)
 
-  return from(result)
-}
+    return from(result)
+  }
   getUsers(){
     const ref = collection(this.firestoreService, 'users');
     const result = collectionData(ref);
@@ -191,6 +195,38 @@ getUserInfo(uid:string){
         }),
       );
     };
+  }
+
+  updateUsername(newUsername:string){
+    if(this.authService.currentUser) {
+      const uid = this.authService.currentUser?.uid
+      const ref = doc(this.firestoreService, 'users', uid)
+
+      const firestoreRes = updateDoc(ref,{username:newUsername})
+      const authRes = updateProfile(this.authService.currentUser, { displayName: newUsername })
+
+      return forkJoin([firestoreRes,authRes])
+
+    } else return throwError(()=>new Error('Your current session is to old, please login again'))
+  }
+  updateUserEmail(newEmail:string){
+    if(this.authService.currentUser) {
+      const uid = this.authService.currentUser?.uid
+      const ref = doc(this.firestoreService, 'users', uid)
+
+      return from(updateEmail(this.authService.currentUser,newEmail)).pipe(
+        map(()=>{
+          from(updateDoc(ref,{email:newEmail}))}),
+        catchError(err=>throwError(()=>err))
+      )
+
+    } else return throwError(()=>new Error('Your current session is to old, please login again'))
+  }
+  updateUserPassword(newPassword:string){
+    if(this.authService.currentUser) {
+      return from(updatePassword(this.authService.currentUser,newPassword))
+
+    } else return throwError(()=>new Error('Your current session is to old, please login again'))
   }
 
   documentUser(username: string, email: string, id:string) {
@@ -258,5 +294,6 @@ getUserInfo(uid:string){
 
   logout() {
     signOut(this.authService);
+    this.router.navigate(['/'])
   }
 }

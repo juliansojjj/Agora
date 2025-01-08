@@ -351,7 +351,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
                     </button>
                     <button
                       type="submit"
-                      [disabled]="form.invalid"
+                      [disabled]="form.invalid || form.pending"
                       class="h-7 min-w-fit py-auto px-3 mt-4 font-medium box-border
                       bg-brandViolet text-white border-2 border-transparent hover:border-brandViolet hover:text-brandViolet hover:bg-white active:scale-95  ">
                         Comment
