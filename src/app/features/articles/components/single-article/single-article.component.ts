@@ -25,7 +25,7 @@ import {
   contentItems,
   paragraph,
 } from '../../../../shared/interfaces/article.interface';
-import { catchError, EMPTY, map, Observable, switchMap, take } from 'rxjs';
+import { catchError, EMPTY, map, Observable, of, switchMap, take } from 'rxjs';
 import { NgIf, AsyncPipe, NgClass, DecimalPipe, TitleCasePipe } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -58,20 +58,16 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
   selector: 'app-single-article',
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
     TypeofPipe,
     DatePipe,
     NgClass,
-    OrderByDatePipe,
     TitleCasePipe,
     RouterLink,
     ReactiveFormsModule,
     TextAreaResizeDirective,
     CommentsLengthPipe,
     RouterLink,
-    DecimalPipe,
-    CustomDecimalPipePipe,
     ArticleHeaderComponent,
     ArticleMenuComponent,
     StandardGridComponent
@@ -305,7 +301,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
         </section>
 
         <section class="contentElement flex flex-col my-6 lg:p-0 px-2">
-          @if (comments$ | async | orderByDate; as comments) {
+          @if (comments$ | async; as comments) {
             <span class="md:text-[1.9rem] text-[1.6rem] font-bold">{{ comments | commentsLength }} Comments</span>
 
             @if (!(userInfo$ | async)) {
@@ -572,20 +568,22 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
   authUser$ = this.firebaseService.authState$;
   uid = model<string>();
   userInfo = model<FirestoreCollectionUser>();
-  userInfo$: Observable<FirestoreCollectionUser> = this.authUser$.pipe(
-    map((auth: null | FirebaseAuthUser) => {
-      if (!auth) return false;
-      else return auth;
+  userInfo$ = this.authUser$.pipe(
+    map(auth => {
+      return auth ? auth : null
     }),
-    switchMap((auth: FirebaseAuthUser) => {
-      this.uid.set(auth.uid);
+    switchMap((auth) => {
+      if(auth) {
+        this.uid.set(auth.uid);
 
-      return this.firebaseService.getUserInfo(auth.uid).pipe(
-        map((res: FirestoreCollectionUser) => {
-          this.userInfo.set(res);
-          return res;
-        }),
-      );
+        return this.firebaseService.getUserInfo(auth.uid).pipe(
+          map((res) => {
+            this.userInfo.set(res);
+            return res;
+          }),
+        )
+      } else return of()
+
     }),
   );
 

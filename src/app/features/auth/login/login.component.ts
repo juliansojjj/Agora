@@ -25,7 +25,7 @@ import { NgClass } from '@angular/common';
                 
                 <div class="flex flex-col-reverse sm:mt-8 mt-3">
                   <input type="email" formControlName="email" id="email" 
-                  class="peer sm:w-[20rem] w-[12rem] h-[2.5rem] sm:border-[.5rem] border-[.4rem] border-brandShade box-content px-2 focus:outline-none focus:border-brandViolet text-[1.1rem]"/>
+                  class="peer sm:w-[20rem] w-[12rem] h-[2.5rem] sm:border-[.5rem] border-[.35rem] border-brandShade box-content px-2 focus:outline-none focus:border-brandViolet text-[1.1rem]"/>
                   <label class="sm:text-[1.8rem] text-[1.3rem] font-semibold sm:mb-4 mb-2 text-brandShade peer-focus:text-brandViolet" for="email">
                     Email
                   </label>

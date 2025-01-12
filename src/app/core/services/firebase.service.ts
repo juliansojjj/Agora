@@ -39,6 +39,9 @@ import { AbstractControl } from '@angular/forms';
 import { Article } from '../../shared/interfaces/article.interface';
 import { updatePassword } from 'firebase/auth';
 import { Router } from '@angular/router';
+import { Author } from '../../shared/interfaces/author.interface';
+import { Category } from '../../shared/interfaces/category.interface';
+import { Comment } from '../../shared/interfaces/comment.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -52,33 +55,27 @@ export class FirebaseService {
   //authState es obs https://github.com/FirebaseExtended/rxfire/blob/main/docs/auth.md
   authState$ = authState(this.authService);
   //lo mismo con user
-  user$: Observable<FirebaseAuthUser> = user(this.authService);
+  user$  = user(this.authService);
 
   constructor() {}
 
 
 // ----------------------- ARTICLES
-  getLandingArticles() {
-    const ref = collection(this.firestoreService, 'articles');
-    const result = collectionData(ref, { idField: 'articleID' });
-    return from(result);
-  }
-
   getAuthorArticles(authorID:string, max?:number){
-    const ref = collection(this.firestoreService, 'articles')
+    const ref = collection(this.firestoreService, 'articles');
 
-    if(max) return from(collectionData(query(ref,where('authorID','==',authorID),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' }))
-      else return from(collectionData(query(ref,where('authorID','==',authorID)), { idField: 'articleID' }))
+    if(max) return from(collectionData(query(ref,where('authorID','==',authorID),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' })) as Observable<Article[]>
+    else return from(collectionData(query(ref,where('authorID','==',authorID)), { idField: 'articleID' })) as Observable<Article[]>
   }
 
-  getFavoriteArticles(ids:string[]){
+  getFavoriteArticles(ids:string[]):Observable<Article[]>{
     const ref = collection(this.firestoreService, 'articles')
 
     if(ids.length <= 30){
       const result = collectionData(query(ref,where(documentId(),'in',ids)), { idField: 'articleID' })
       return from(result).pipe(
         map((articles) =>
-          articles.sort((a: any, b: any) => ids.indexOf(b.articleID) - ids.indexOf(a.articleID)) 
+          articles.sort((a: any, b: any) => ids.indexOf(b.articleID) - ids.indexOf(a.articleID)) as Article[] 
         )
       );
     }
@@ -91,16 +88,15 @@ export class FirebaseService {
       const observables = chunkedArrays.map((chunk) => {
         return from(
           collectionData(query(ref, where(documentId(), 'in', chunk)), { idField: 'articleID' })
-        ).pipe(take(1))
+        ).pipe(take(1)) 
       })
 
       return forkJoin(observables).pipe(
         map((results) => {
-          // Flatten and sort by the order in the original array
           const flattenedResults = results.flat();
           return flattenedResults.sort(
-            (a: any, b: any) => ids.indexOf(b.articleID) - ids.indexOf(a.articleID)
-          );
+            (a: any, b: any) => ids.indexOf(b.articleID) - ids.indexOf(a.articleID)  
+          ) as Article[] 
         })
       )
     }
@@ -111,8 +107,8 @@ export class FirebaseService {
     const name = categoryArray.join('-').toLowerCase()
 
     const ref = collection(this.firestoreService, 'articles')
-    if(max) return from(collectionData(query(ref,where('category','==', name),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' }))
-    else return from(collectionData(query(ref,where('category','==', name)), { idField: 'articleID' }))
+    if(max) return from(collectionData(query(ref,where('category','==', name),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' })) as Observable<Article[]>
+    else return from(collectionData(query(ref,where('category','==', name)), { idField: 'articleID' })) as Observable<Article[]>
   }
   getCategoryArticles(category:string) {
     const categoryArray = category.split(' ')
@@ -121,7 +117,7 @@ export class FirebaseService {
     const ref = collection(this.firestoreService, 'articles')
     const result = collectionData(query(ref,where('urlTopics','array-contains', name)), { idField: 'articleID' })
 
-    return from(result);
+    return from(result) as Observable<Article[]>;
   }
 
 
@@ -129,14 +125,14 @@ export class FirebaseService {
     const ref = doc(this.firestoreService, 'articles', id);
     const result = docData(ref)
 
-    return from(result)
+    return from(result) as Observable<Article>
   }
   
-  getArticleComments(id:string){
+  getArticleComments(id:string):Observable<Comment[]>{
     const ref = collection(this.firestoreService, 'articles',id,'comments');
     const result = collectionData(ref,{ idField: 'commentId' });
 
-    return from(result)
+    return from(result) as Observable<Comment[]>
   }
 
 
@@ -147,14 +143,14 @@ export class FirebaseService {
     const ref = collection(this.firestoreService, 'categories')
     const result = collectionData(query(ref,where('url','==',url)))
 
-    return from(result);
+    return from(result) as Observable<Category[]>
   }
   
   getAuthor(id:string) {
     const ref = doc(this.firestoreService, 'authors', id);
     const result = docData(ref)
 
-    return from(result);
+    return from(result) as Observable<Author>;
   }
 
   
@@ -166,16 +162,16 @@ export class FirebaseService {
     : from(updateDoc(ref,{favorites:arrayRemove(articleID)})) 
   }
 
-  getUserInfo(uid:string){
+  getUserInfo(uid:string):Observable<FirestoreCollectionUser>{
     const ref = doc(this.firestoreService, 'users', uid);
     const result = docData(ref)
 
-    return from(result)
+    return from(result) as Observable<FirestoreCollectionUser>
   }
-  getUsers(){
+  getUsers():Observable<FirestoreCollectionUser[]>{
     const ref = collection(this.firestoreService, 'users');
     const result = collectionData(ref);
-    return from(result);
+    return from(result) as Observable<FirestoreCollectionUser[]>
   }
   checkUsername() {
     
@@ -185,8 +181,8 @@ export class FirebaseService {
       return from(result).pipe(
         debounceTime(200),
         take(1),
-        map((users: FirestoreCollectionUser[]) => {
-          return users.filter(
+        map((users: any) => {
+          return users?.filter(
             (item: FirestoreCollectionUser) =>
               item.username.toLowerCase() == control.value.toLowerCase(),
           ).length
@@ -272,7 +268,6 @@ export class FirebaseService {
 
     return from(createUser).pipe(
       map(res=>{
-        console.log('hola?')
         return forkJoin([
           updateProfile(res.user, { displayName: username }),
           this.documentUser(username, email,res.user.uid)

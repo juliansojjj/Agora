@@ -25,6 +25,8 @@
     "@angular/ssr": "^18.2.0",
     "@fontsource-variable/montserrat": "^5.1.0",
     "express": "^4.18.2",
+    "firebase": "^11.1.0",
+    "fuse.js": "^7.0.0",
     "ngxtension": "^4.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

@@ -80,7 +80,7 @@ export class AuthorComponent {
   articles$:Observable<Article[]> = toObservable(this.id).pipe(
     switchMap((id) => this.firebaseService.getAuthorArticles(id)),
   );
-  authorData$:Observable<Author>  = toObservable(this.id).pipe(
+  authorData$ = toObservable(this.id).pipe(
     switchMap((id) => this.firebaseService.getAuthor(id)),
   );
 

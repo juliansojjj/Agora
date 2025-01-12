@@ -107,7 +107,7 @@ export class ArticleMenuComponent{
   authState$ = this.firebaseService.authState$;
 
   authState = toSignal(this.authState$);
-  subscriptionState$: Observable<FirestoreCollectionUser> =
+  subscriptionState$: Observable<FirestoreCollectionUser|undefined> =
     this.authState$.pipe(
       switchMap((auth: any) => {
         return this.firebaseService.getUserInfo(auth.uid);

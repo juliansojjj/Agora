@@ -55,8 +55,7 @@ export class FavoritesComponent {
 
   
 
-  favoriteArticles$: Observable<Article[]> =
-    this.authState$.pipe(
+  favoriteArticles$ = this.authState$.pipe(
       switchMap((auth: any) => {
         return this.firebaseService.getUserInfo(auth.uid);
       }),

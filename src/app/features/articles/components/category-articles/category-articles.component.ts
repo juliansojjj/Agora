@@ -103,35 +103,6 @@ export class CategoryArticlesComponent {
       : this.firebaseService.getCategoryArticles(this.title())})
   );
   
-  highPriorArticles = model<Article[]>([]);
-  mediumPriorArticles = model<Article[]>([]);
-  lowPriorArticles = model<Article[]>([]);
-
-  articles = toSignal<Article[]>(
-    this.firebaseService.getLandingArticles().pipe(
-      map((res) => {
-        res.forEach((art: Article) => {
-          if (art.priority == 'high') {
-            this.highPriorArticles.update((value) =>
-              value ? [...value, art] : [art],
-            );
-          } else if (art.priority == 'medium') {
-            this.mediumPriorArticles.update((value) =>
-              value ? [...value, art] : [art],
-            );
-          } else {
-            this.lowPriorArticles.update((value) =>
-              value ? [...value, art] : [art],
-            );
-          }
-        });
-        return res;
-      }),
-    ),
-  );
-
-  errorMessage!: string;
-
   urlFormat(id: string, title: string) {
     const formatTitle = title
       .split(' ')

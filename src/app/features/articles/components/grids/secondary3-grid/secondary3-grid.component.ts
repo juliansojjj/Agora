@@ -182,18 +182,17 @@ import { NgClass } from '@angular/common';
   }
 
   @media only screen and (max-width: 768px) {
-  .lowerRight,
-  .upperRight, 
-  .lowerLeft, 
-  .upperLeft{
-    clip-path: polygon(
-      0% 0%,
-      100% 0%,
-      100% 100%,
-      0% 100%);
+    .lowerRight,
+    .upperRight, 
+    .lowerLeft, 
+    .upperLeft{
+      clip-path: polygon(
+        0% 0%,
+        100% 0%,
+        100% 100%,
+        0% 100%);
+    }
   }
-  }
-}
   `
 })
 export class Secondary3GridComponent {
