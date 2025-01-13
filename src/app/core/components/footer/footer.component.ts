@@ -3,10 +3,9 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [RouterLink],
-  template:`
+    selector: 'app-footer',
+    imports: [RouterLink],
+    template: `
   @if(visibility()){
     <footer class="flex items-center flex-col justify-between md:justify-center w-full h-[27vh] sm:h-[33vh] md:h-[38vh] bg-brandViolet mt-32 relative overflow-hidden">
       <img class="w-fit h-[10rem] -mt-[4.2rem] block md:hidden" src="agora-logo-fill.svg" alt="Agora Logo">
@@ -26,7 +25,7 @@ import { filter } from 'rxjs';
     </footer>
   }
   `,
-  styles:``
+    styles: ``
 })
 export class FooterComponent {
   router = inject(Router);

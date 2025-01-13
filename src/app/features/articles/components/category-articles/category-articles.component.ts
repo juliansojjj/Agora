@@ -15,10 +15,9 @@ import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-gr
 import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
 
 @Component({
-  selector: 'app-category-articles',
-  standalone: true,
-  imports: [NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe],
-  template: `
+    selector: 'app-category-articles',
+    imports: [NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe],
+    template: `
       <div class="relative "
       [ngClass]="category() && !category()?.main ? 'xl:mt-[2rem]' : ''">
         
@@ -78,7 +77,7 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
         </div>
       </div>
   `,
-  styles:`
+    styles: `
     .triangleShape{
       clip-path: polygon(
         0% 100%,

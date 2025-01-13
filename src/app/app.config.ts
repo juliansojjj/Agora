@@ -7,9 +7,10 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 
 import { environment } from '../environments/environment.development';
 
-import {provideAuth, getAuth } from '@angular/fire/auth'
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import {provideAuth, getAuth } from '@angular/fire/auth'
+
 import { errorHandlerInterceptor } from './core/interceptors/error-handler.interceptor';
 import { TitleStrategyService } from './core/services/title-strategy.service';
 
@@ -21,13 +22,14 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(), 
     // provideHttpClient(withInterceptors([errorHandlerInterceptor])),
     provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),
-    provideFirebaseApp(()=>initializeApp(environment.firebase)),
-    provideAuth(()=>getAuth()),
-    provideFirestore(()=>getFirestore()),
+
+    provideFirebaseApp(() => initializeApp(environment.firebase)), 
+    provideAuth(() => getAuth()), 
+    provideFirestore(() => getFirestore()),
     {
       provide: TitleStrategy,
       useClass: TitleStrategyService
-    }
+    }, 
   ]
 };
 

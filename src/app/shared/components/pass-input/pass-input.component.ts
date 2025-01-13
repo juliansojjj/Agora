@@ -3,10 +3,9 @@ import { Component, Input, input, model } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'pass-input',
-  standalone: true,
-  imports: [ReactiveFormsModule, NgClass],
-  template: `
+    selector: 'pass-input',
+    imports: [ReactiveFormsModule, NgClass],
+    template: `
   <div class="relative flex flex-col-reverse w-fit">
     <input [type]="visibility()"  [formControl]="control()" id="pass"
     [ngClass]="inputErrors() && dirtyInput() ? 'border-brandRed' : 'border-brandShade'"
@@ -46,7 +45,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
       }
   </div>
   `,
-  styles: ``
+    styles: ``
 })
 export class PassInputComponent {
   visibility = model<'text'|'password'>('password')

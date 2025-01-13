@@ -39,10 +39,9 @@ import { Title } from '@angular/platform-browser';
 import { ElementRef } from '@angular/core';
 
 @Component({
-  selector: 'app-article-header',
-  standalone: true,
-  imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
-  template: `
+    selector: 'app-article-header',
+    imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
+    template: `
     <header
       class="w-full flex top-0 left-0 z-50 h-[7.5rem]"
       [ngClass]="banner() ? 'lg:fixed bannerHeader max-lg:sticky max-lg:bg-white' : 'sticky bg-white'" 
@@ -146,8 +145,8 @@ import { ElementRef } from '@angular/core';
       </nav>
     </header>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .bannerHeader {
         @media only screen and (min-width: 1024px){
           animation: headerTransition linear both;
@@ -286,7 +285,7 @@ import { ElementRef } from '@angular/core';
         }
       }
     `,
-  ],
+    ]
 })
 export class ArticleHeaderComponent implements AfterViewChecked {
   firebaseService = inject(FirebaseService);

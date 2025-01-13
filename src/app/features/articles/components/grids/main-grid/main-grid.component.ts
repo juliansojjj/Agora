@@ -4,10 +4,9 @@ import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-main-grid',
-  standalone: true,
-  imports: [RouterLink, NgClass],
-  template:`
+    selector: 'app-main-grid',
+    imports: [RouterLink, NgClass],
+    template: `
   <div class="w-full h-[47.5rem] relative  overflow-hidden">
 
     <div class="absolute hidden lg:block w-[21%] right-0 h-full z-10">
@@ -113,7 +112,7 @@ import { NgClass } from '@angular/common';
   </div>
   
   `,
-  styles:``
+    styles: ``
 })
 export class MainGridComponent {
   highArticle = input<Article[]>();

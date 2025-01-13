@@ -55,24 +55,23 @@ import { Author } from '../../../../shared/interfaces/author.interface';
 import { StandardGridComponent } from "../grids/standard-grid/standard-grid.component";
 
 @Component({
-  selector: 'app-single-article',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    TypeofPipe,
-    DatePipe,
-    NgClass,
-    TitleCasePipe,
-    RouterLink,
-    ReactiveFormsModule,
-    TextAreaResizeDirective,
-    CommentsLengthPipe,
-    RouterLink,
-    ArticleHeaderComponent,
-    ArticleMenuComponent,
-    StandardGridComponent
-],
-  template: `
+    selector: 'app-single-article',
+    imports: [
+        AsyncPipe,
+        TypeofPipe,
+        DatePipe,
+        NgClass,
+        TitleCasePipe,
+        RouterLink,
+        ReactiveFormsModule,
+        TextAreaResizeDirective,
+        CommentsLengthPipe,
+        RouterLink,
+        ArticleHeaderComponent,
+        ArticleMenuComponent,
+        StandardGridComponent
+    ],
+    template: `
     @if (data$ | async; as data) {
       <app-article-header [banner]="data.frontImageBanner" [headingInfo]="headingInfo()" [(menu)]="menu"/>
       <app-article-menu  [(menu)]="menu"/>
@@ -314,8 +313,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
                   class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip 
                   hover:text-gray-400 text-gray-400 hover:cursor-text font-normal hover:bg-transparent hover:p-0"
                 >
-                  Write your comment here...</a
-                >
+                  Write your comment here...</a>
               </div>
             } @else {
               <form
@@ -408,7 +406,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
       <p>Loading...</p>
     }
   `,
-  styles:`
+    styles: `
       .bannerLanding{
         display:none;
         @media (min-width: 1024px){
@@ -498,7 +496,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
           100% 100%);
       }
     `,
-  encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
 })
 export class SingleArticleComponent implements AfterViewInit, OnInit {
   firebaseService = inject(FirebaseService);

@@ -4,10 +4,9 @@ import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-secondary3-grid',
-  standalone: true,
-  imports: [RouterLink, NgClass],
-  template:`
+    selector: 'app-secondary3-grid',
+    imports: [RouterLink, NgClass],
+    template: `
   <div class="w-full h-fit relative">
 
     <div class="w-full absolute top-0 left-0 h-full -z-20 hidden md:flex justify-between items-center">
@@ -138,7 +137,7 @@ import { NgClass } from '@angular/common';
     </div>
   </div>
   `,
-  styles:`
+    styles: `
   .cornerShape{
     clip-path: polygon(
       0% 0%,

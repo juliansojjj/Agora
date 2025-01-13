@@ -7,10 +7,9 @@ import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-article-menu',
-  standalone: true,
-  imports: [AsyncPipe, RouterLink],
-  template: `
+    selector: 'app-article-menu',
+    imports: [AsyncPipe, RouterLink],
+    template: `
     @if (menu() ) {
       <div class="fixed left-0 top-0 w-screen h-screen overflow-hidden z-[100] flex justify-end ">
         
@@ -96,7 +95,7 @@ import { RouterLink } from '@angular/router';
       </div>
     }
   `,
-  styles: ``,
+    styles: ``
 })
 export class ArticleMenuComponent{
   firebaseService = inject(FirebaseService);

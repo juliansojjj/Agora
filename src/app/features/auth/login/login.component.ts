@@ -7,10 +7,9 @@ import { catchError, map, throwError } from 'rxjs';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, PassInputComponent, NgClass],
-  template:`
+    selector: 'app-login',
+    imports: [ReactiveFormsModule, RouterLink, PassInputComponent, NgClass],
+    template: `
     <div class="relative w-full h-fit">
       <div class="w-full lg:grid lg:grid-cols-[9%_82%_9%] flex flex-col lg:items-start items-center pt-6">
 
@@ -102,7 +101,7 @@ import { NgClass } from '@angular/common';
       </div>
     </div>
     `,
-  styles:`
+    styles: `
   .errorLabel{
     font-size:1.2rem;
     font-weight:500;

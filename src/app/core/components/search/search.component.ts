@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'app-search',
+    imports: [],
+    template: `
     <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col items-center md:pt-6 xl:px-0 sm:px-6 px-0">
     <div></div>
 
@@ -23,7 +22,7 @@ import { Component } from '@angular/core';
     <div></div>
   </div>
   `,
-  styles: ``
+    styles: ``
 })
 export class SearchComponent {
 

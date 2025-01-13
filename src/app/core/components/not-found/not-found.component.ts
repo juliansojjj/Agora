@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-not-found',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'app-not-found',
+    imports: [],
+    template: `
     <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%] flex pt-6 xl:pl-0 pl-6 h-screen overflow-y-hidden">
       <div></div>
       <div class="flex">
@@ -19,7 +18,7 @@ import { Component } from '@angular/core';
       <div></div>
     </div>
   `,
-  styles:`
+    styles: `
   .triangleShape{
     margin-bottom:6rem;
     width:6rem;

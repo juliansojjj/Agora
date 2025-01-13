@@ -34,10 +34,9 @@ import { TitleStrategyService } from '../../services/title-strategy.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
-  template: `
+    selector: 'app-header',
+    imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass],
+    template: `
     <header
       class="sticky top-0 left-0 z-50 md:h-[7.5rem] h-[8.5rem]   bg-white"
       [ngClass]="visibility() ? 'flex' : 'hidden'"
@@ -96,23 +95,23 @@ import { Title } from '@angular/platform-browser';
               <ul class="h-full md:flex hidden">
                   <a
                     [routerLink]="['/category/tech' ]"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Tech</li></a>
                   <a
                     [routerLink]="['/category/culture']"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Culture</li></a>
                   <a
                     [routerLink]="['/category/science' ]"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Science</li></a>
                   <a
                     [routerLink]="['/category/entertainment']"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-32 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Entertainment</li></a>
                   <a
                     [routerLink]="['/category/media']"
-                    class="hover:bg-white bg-black text-white text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
                   ><li>Media</li></a>
                   @if (!authState()) {
                   <a
@@ -131,7 +130,7 @@ import { Title } from '@angular/platform-browser';
       </nav>
     </header>
   `,
-  styles: ``,
+    styles: ``
 })
 export class HeaderComponent implements AfterViewChecked {
   firebaseService = inject(FirebaseService);

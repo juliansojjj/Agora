@@ -4,10 +4,9 @@ import { RouterLink } from '@angular/router';
 import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
-  selector: 'app-standard-grid',
-  standalone: true,
-  imports: [RouterLink, NgClass, NgStyle],
-  template:`
+    selector: 'app-standard-grid',
+    imports: [RouterLink, NgClass, NgStyle],
+    template: `
     <div class="w-full relative h-full grid md:grid-cols-3 xsm:grid-cols-2 grid-cols-1 gap-[1rem] place-items-center justify-center place-content-center">
 
       @for (item of articles(); track $index) {
@@ -33,7 +32,7 @@ import { NgClass, NgStyle } from '@angular/common';
       }
     </div>
   `,
-  styles:''
+    styles: ''
 })
 export class StandardGridComponent {
   articles = input.required<Article[]>();

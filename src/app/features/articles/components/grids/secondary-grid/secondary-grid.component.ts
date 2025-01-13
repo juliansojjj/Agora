@@ -4,10 +4,9 @@ import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-secondary-grid',
-  standalone: true,
-  imports: [RouterLink, NgClass],
-  template: `
+    selector: 'app-secondary-grid',
+    imports: [RouterLink, NgClass],
+    template: `
   @if(articles()){
     <div class="w-full h-fit relative">
       <div class="grid w-full h-fit gap 
@@ -121,7 +120,7 @@ import { NgClass } from '@angular/common';
     </div>
   }
   `,
-  styles: ``,
+    styles: ``
 })
 export class SecondaryGridComponent {
   articles = input.required<Article[]>();

@@ -35,10 +35,9 @@ import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-gri
 import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-grid.component';
 
 @Component({
-  selector: 'app-home-articles',
-  standalone: true,
-  imports: [NgFor, NgIf, RouterLink, AsyncPipe, OrderArticlesByDatePipe, NgClass, MainGridComponent, SecondaryGridComponent, Secondary2GridComponent, Secondary3GridComponent, StandardGridComponent],
-  template: `
+    selector: 'app-home-articles',
+    imports: [NgFor, NgIf, RouterLink, AsyncPipe, OrderArticlesByDatePipe, NgClass, MainGridComponent, SecondaryGridComponent, Secondary2GridComponent, Secondary3GridComponent, StandardGridComponent],
+    template: `
       <main class="flex flex-col items-center h-fit relative w-full">
         @if(techArticles()){
         <section class="h-fit w-full">
@@ -86,7 +85,7 @@ import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-gri
         </section>
         }
       </main>
-  `,
+  `
 })
 export class HomeArticlesComponent {
   firebaseService = inject(FirebaseService);
@@ -104,10 +103,53 @@ export class HomeArticlesComponent {
     this.firebaseService.getMainCategoryArticles('media',4)
   );
   
+  multipleDocs:Article[] = []
 
   docUpload() {
-    const ref = collection(this.firebaseService.firestoreService, 'articles');
-    const res = setDoc(doc(ref,'media3'), {});
+    // const authorID = 'ChristiannaSilva'
+    // const ref = collection(this.firebaseService.firestoreService, 'articles');
+
+    // this.multipleDocs.
+    // filter((item:any,index:number)=>{
+    //   return index == this.multipleDocs.findIndex(obj=>item?.heading == obj?.heading)
+    // }).
+    // filter((item:any)=>item.authorID == authorID).
+    // forEach((item,index)=>{
+    //   setDoc(doc(ref,'scr0'+authorID+index), item)
+    // })
+    // console.log(this.multipleDocs.
+    //   filter((item:any,index:number)=>{
+    //     return index == this.multipleDocs.findIndex(obj=>item?.heading == obj?.heading)
+    //   }).
+    //   filter((item:any)=>item.authorID == authorID).length)
+
+    const authorID = 'KristyPuchko'
+    const ref = collection(this.firebaseService.firestoreService, 'authors');
+      setDoc(doc(ref,authorID), {
+        authorDescription :"Kristy Puchko is the Film Editor at Mashable. Based in New York City, she's an established film critic and entertainment reporter, who has traveled the world on assignment, covered a variety of film festivals, co-hosted movie-focused podcasts, interviewed a wide array of performers and filmmakers, and had her work published on RogerEbert.com, Vanity Fair, and The Guardian. A member of the Critics Choice Association and GALECA as well as a Top Critic on Rotten Tomatoes, Kristy's primary focus is movies. However, she's also been known to gush over television, podcasts, and board games. You can follow her on Twitter.",
+        authorDesignation :'',
+        authorImage:'"https://thispersondoesnotexist.com/"',
+        authorName:'Kristy Puchko',
+        source:'https://mashable.com/author/kristypuchko'   
+      })
+
+  }
+
+  categoriesArray = []
+  docUpload2() {
+    // let newArray:{}[] = []
+    // const ref = collection(this.firebaseService.firestoreService, 'categories');
+    // this.categoriesArray.forEach(item=>item.forEach(obj=>newArray.push(obj)))
+    // console.log(newArray.filter((item:any,index:number)=>{
+    //   return index == newArray.findIndex((obj:any)=>item?.url == obj?.url)
+    // }))
+
+    // newArray.
+    // filter((item:any,index:number)=>{
+    //   return index == newArray.findIndex((obj:any)=>item?.url == obj?.url)
+    // }).
+    // forEach((item:any)=>setDoc(doc(ref,item.url), {name:item.name,url:item.url}))
+  
   }
 
 

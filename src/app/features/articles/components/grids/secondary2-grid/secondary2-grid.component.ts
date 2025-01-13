@@ -4,10 +4,9 @@ import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-secondary2-grid',
-  standalone: true,
-  imports: [RouterLink, NgClass],
-  template:`
+    selector: 'app-secondary2-grid',
+    imports: [RouterLink, NgClass],
+    template: `
   <div class="w-full relative h-full grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-[3.5rem] sm:gap-[1rem] gap-y-[2rem] place-items-center ">
 
         @for (item of articles().slice(0,4); track $index) {
@@ -83,7 +82,7 @@ import { NgClass } from '@angular/common';
         }
       </div>
   `,
-  styles:`
+    styles: `
   .evenCell{
     clip-path: polygon(0% 0%,
       70% 0%,

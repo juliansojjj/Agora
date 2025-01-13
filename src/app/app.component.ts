@@ -10,15 +10,10 @@ import '@fontsource-variable/montserrat';
 import { FooterComponent } from './core/components/footer/footer.component';
 
 
-
-
-
-
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, HeaderComponent, MenuComponent,FooterComponent],
-  template: ` 
+    selector: 'app-root',
+    imports: [RouterOutlet, HeaderComponent, MenuComponent, FooterComponent],
+    template: ` 
   <ng-container class="flex flex-col min-h-fit" >
 
     <app-menu [(menu)]="menu"  />
@@ -29,7 +24,7 @@ import { FooterComponent } from './core/components/footer/footer.component';
     <router-outlet/>
 
     <app-footer />
-  </ng-container>`,
+  </ng-container>`
 })
 
 export class AppComponent  {

@@ -17,10 +17,9 @@ import { NgClass, NgIf } from '@angular/common';
 
 
 @Component({
-  selector: 'app-signup',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, PassInputComponent, NgIf, NgClass],
-  template: `
+    selector: 'app-signup',
+    imports: [ReactiveFormsModule, RouterLink, PassInputComponent, NgIf, NgClass],
+    template: `
   <div class="relative w-full h-fit">
       <div class="w-full lg:grid lg:grid-cols-[9%_82%_9%] flex flex-col lg:items-start items-center pt-6">
 
@@ -145,7 +144,7 @@ import { NgClass, NgIf } from '@angular/common';
       </div>
     </div>
   `,
-  styles:`
+    styles: `
   .errorLabel{
     font-size:1.2rem;
     font-weight:500;
@@ -157,7 +156,7 @@ import { NgClass, NgIf } from '@angular/common';
       margin-top:.15rem;
     }
   }
-`,
+`
 })
 export class SignupComponent {
   firebaseService = inject(FirebaseService);

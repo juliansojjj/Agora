@@ -9,10 +9,9 @@ import { Author } from '../../../../shared/interfaces/author.interface';
 import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-grid/ext-standard-grid.component';
 
 @Component({
-  selector: 'app-author',
-  standalone: true,
-  imports: [AsyncPipe, ExtStandardGridComponent, OrderArticlesByDatePipe],
-  template: `
+    selector: 'app-author',
+    imports: [AsyncPipe, ExtStandardGridComponent, OrderArticlesByDatePipe],
+    template: `
     @if(id()){
       <div class="relative mt-[2rem]">
 
@@ -64,7 +63,7 @@ import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-gr
     }
   
   `,
-  styles:`
+    styles: `
   .triangleShape{
     clip-path: polygon(
       0% 100%,

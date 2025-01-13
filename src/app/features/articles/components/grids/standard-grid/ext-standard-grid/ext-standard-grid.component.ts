@@ -4,10 +4,9 @@ import { RouterLink } from '@angular/router';
 import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
-  selector: 'app-ext-standard-grid',
-  standalone: true,
-  imports: [RouterLink, NgClass, NgStyle],
-  template:`
+    selector: 'app-ext-standard-grid',
+    imports: [RouterLink, NgClass, NgStyle],
+    template: `
     <div class="w-full relative h-full place-items-center justify-center grid  sm:gap-[1rem]
     2xl:grid-cols-4
     xl:grid-cols-3
@@ -46,7 +45,7 @@ import { NgClass, NgStyle } from '@angular/common';
       }
     </div>
   `,
-  styles:''
+    styles: ''
 })
 export class ExtStandardGridComponent {
   articles = input.required<Article[]>();

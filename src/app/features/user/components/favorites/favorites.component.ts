@@ -9,10 +9,9 @@ import { StandardGridComponent } from "../../../articles/components/grids/standa
 import { OrderArticlesByDatePipe } from "../../../articles/pipes/order-articles-by-date.pipe";
 
 @Component({
-  selector: 'app-favorites',
-  standalone: true,
-  imports: [AsyncPipe, StandardGridComponent, OrderArticlesByDatePipe],
-  template:`
+    selector: 'app-favorites',
+    imports: [AsyncPipe, StandardGridComponent, OrderArticlesByDatePipe],
+    template: `
   <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col items-center md:pt-6 xl:px-0 sm:px-6 px-0">
     <div></div>
 
@@ -43,7 +42,7 @@ import { OrderArticlesByDatePipe } from "../../../articles/pipes/order-articles-
     <div></div>
   </div>
   `,
-  styles:`` 
+    styles: ``
 })
 
 

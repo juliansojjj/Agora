@@ -7,10 +7,9 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
 import { AsyncPipe, NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-profile',
-  standalone: true,
-  imports: [ReactiveFormsModule, AsyncPipe, NgClass],
-  template:`
+    selector: 'app-profile',
+    imports: [ReactiveFormsModule, AsyncPipe, NgClass],
+    template: `
   <div class="w-full min-h-[75vh] xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col max-xl:items-center md:pt-6 xl:px-0 sm:px-6 px-0">
     <div></div>
 
@@ -209,7 +208,7 @@ import { AsyncPipe, NgClass } from '@angular/common';
     <div></div>
   </div>
   `,
-  styles:`
+    styles: `
   .errorLabel{
     font-size:1.2rem;
     line-height:normal;
