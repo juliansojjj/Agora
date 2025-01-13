@@ -62,6 +62,12 @@ export class FirebaseService {
 
 
 // ----------------------- ARTICLES
+  getSearchArticles():Observable<Article[]>{
+    const ref = collection(this.firestoreService, 'articles');
+    const result = collectionData(query(ref,orderBy('date', 'desc')),{ idField: 'articleID' });
+
+    return from(result) as Observable<Article[]>
+  }
   getAuthorArticles(authorID:string, max?:number){
     const ref = collection(this.firestoreService, 'articles');
     
@@ -117,6 +123,7 @@ export class FirebaseService {
     if(max) return from(collectionData(query(ref,where('category','==', name),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' })) as Observable<Article[]>
     else return from(collectionData(query(ref,where('category','==', name)), { idField: 'articleID' })) as Observable<Article[]>
   }
+
   getCategoryArticles(category:string) {
     const categoryArray = category.split(' ')
     const name = categoryArray.join('-').toLowerCase()

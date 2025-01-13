@@ -47,7 +47,7 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
 
           <div>
             @if(category() && category()?.main){
-              <section class="flex flex-col w-full  h-fit mt-14">
+              <section class="flex flex-col w-full  h-fit mt-14 -mb-20">
                     <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet self-center md:self-start xl:pl-6 sm:px-0 xsm:px-4 px-2">{{category()?.name}}</h1>
 
                     <div class="w-full xl:grid-cols-[45%_55%] grid h-fit">
@@ -64,10 +64,14 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
                     </div>
                     <div class="aspect-square rounded-full bg-brandShade self-end w-[8rem] -mt-[3rem] -mr-[4rem] -z-10 xl:block hidden"></div>
               </section>
-            }@else{<h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 xsm:px-4 px-2 mt-14 md:text-start text-center">{{category()?.name}}</h1>}
+            }@else{
+              <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 xsm:px-4 px-2 mt-14 md:text-start text-center">
+                {{category()?.name}}
+              </h1>
+            }
             
             @if(data$ | async; as data){
-              <section class=" w-full h-fit lg:pt-40 pt-10">
+              <section class="w-full h-fit lg:pt-40 pt-10">
                   <app-ext-standard-grid [articles]="(data | orderArticlesByDate)"/>
               </section>
             }

@@ -166,7 +166,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
               <img
                 src="{{ data.frontImage }}"
                 alt="{{ data.frontImageAlt }}"
-                class="relative w-full  lg:w-1/2 object-cover mt-6"
+                class="relative w-full  lg:w-1/2 object-cover mt-9"
                 [ngClass]="{'normalImage': data.frontImageBanner}"
               />
               <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4 max-lg:px-2" 
