@@ -79,7 +79,7 @@ import { Article } from 'app/shared/interfaces/article.interface';
                   <input type="text" placeholder="Search" formControlName="search"
                   class="peer w-full h-full border-b-2 border-white focus:border-black focus:outline-none sm:block hidden pl-[2rem]">
                   
-                  <button class="sm:block hidden border-b-2 peer-focus:border-black border-white"  type="submit">
+                  <button class="sm:block hidden border-b-2 peer-focus:border-black border-white"  type="submit" [disabled]="searchForm.invalid || searchForm.pending">
                     <svg class="h-[1.8rem]" viewBox="0 0 1200 1200">
                       <path
                       stroke="black"
@@ -367,7 +367,7 @@ export class ArticleHeaderComponent implements AfterViewChecked, OnInit {
   }
 
   trimValidator(control:AbstractControl){
-    return control.value.trim().length >= 3 ? null : {blankText:true}
+    return control.value.trim().length >= 2 ? null : {blankText:true}
   }
   ngOnInit(): void {
     if(!localStorage.getItem('articles')) {
@@ -387,6 +387,7 @@ export class ArticleHeaderComponent implements AfterViewChecked, OnInit {
           // useExtendedSearch: true,
           keys: [
             "heading",
+            "subheading",
             "authorName"
           ]
         };
@@ -399,7 +400,7 @@ export class ArticleHeaderComponent implements AfterViewChecked, OnInit {
             "authorName"
           ]
         };
-        const authorFuse = new Fuse(this.articlesList(), fuseArticleOptions);
+        const authorFuse = new Fuse(this.articlesList(), fuseAuthorOptions);
   
         this.articleSearchList.set(articlesFuse.search(input).splice(0,8))
   
