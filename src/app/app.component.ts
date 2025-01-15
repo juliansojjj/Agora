@@ -14,7 +14,7 @@ import { FooterComponent } from './core/components/footer/footer.component';
     selector: 'app-root',
     imports: [RouterOutlet, HeaderComponent, MenuComponent, FooterComponent],
     template: ` 
-  <ng-container class="flex flex-col min-h-fit" >
+  <ng-container class="flex flex-col min-h-fit">
 
     <app-menu [(menu)]="menu"  />
 

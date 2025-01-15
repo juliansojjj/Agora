@@ -175,7 +175,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
               </span>
 
           <!-- ------------------------------------------------------------------- -->
-        <section class="w-full lg:p-0 px-2 flex flex-col items-center">
+        <section class="w-full lg:p-0 xsm:px-6 px-2 flex flex-col items-center">
           
           @if(data.frontImageBanner){
             <div class="contentElement mt-5 mb-3 pr-1 flex justify-between bannerInfo">

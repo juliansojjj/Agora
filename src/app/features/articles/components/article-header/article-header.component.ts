@@ -331,6 +331,9 @@ export class ArticleHeaderComponent implements AfterViewChecked, OnInit {
   router = inject(Router);
   title = inject(Title);
 
+  renderer = inject(Renderer2);
+  document = inject(DOCUMENT);
+
   banner = input()
   headingInfo = input()
 
@@ -441,6 +444,11 @@ export class ArticleHeaderComponent implements AfterViewChecked, OnInit {
   }
 
   menuTrigger() {
+    if(this.menu()){
+      this.renderer.removeStyle(this.document.body, 'overflow');
+    } else{
+      this.renderer.setStyle(this.document.body, 'overflow', 'hidden');
+    }
     this.menu.update((value) => !value);
   }
   

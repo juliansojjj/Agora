@@ -8,6 +8,7 @@ import {
   model,
   OnInit,
   output,
+  Renderer2,
 } from '@angular/core';
 import {
   AsyncPipe,
@@ -177,6 +178,9 @@ export class HeaderComponent implements AfterViewChecked, OnInit {
   title = inject(Title);
   formBuilder = inject(NonNullableFormBuilder)
 
+  renderer = inject(Renderer2);
+  document = inject(DOCUMENT);
+
   articlesList = model<Article[]>([])
   articleSearchList = model<FuseResult<Article>[]>([])
   authorSearchList = model<{authorID:string,authorName:string}[]>([])
@@ -273,8 +277,14 @@ export class HeaderComponent implements AfterViewChecked, OnInit {
   }
 
   menuTrigger() {
+    if(this.menu()){
+      this.renderer.removeStyle(this.document.body, 'overflow');
+    } else{
+      this.renderer.setStyle(this.document.body, 'overflow', 'hidden');
+    }
     this.menu.update((value) => !value);
   }
+  
   searchTrigger(){
     this.searchForm.reset()
     this.search.update((value) => !value);
