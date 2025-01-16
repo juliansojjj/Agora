@@ -34,7 +34,9 @@ import {
   FieldValue,
   arrayUnion,
   arrayRemove,
-  docData
+  docData,
+  startAfter,
+  Timestamp
 } from '@angular/fire/firestore';
 
 import {
@@ -113,15 +115,30 @@ export class FirebaseService {
     }
   }
 
-  getMainCategoryArticles(category:string, max?:number) {
+  getMainCategoryArticles(category:string, max:number, startAfterDoc?:Timestamp) {
     const categoryArray = category.split(' ')
     const name = categoryArray.join('-').toLowerCase()
 
     const ref = collection(this.firestoreService, 'articles')
     
-
-    if(max) return from(collectionData(query(ref,where('category','==', name),orderBy('date', 'desc'),limit(max)), { idField: 'articleID' })) as Observable<Article[]>
-    else return from(collectionData(query(ref,where('category','==', name)), { idField: 'articleID' })) as Observable<Article[]>
+    return startAfterDoc 
+    ? from(
+      collectionData(query(ref,
+        where('category','==', name),
+        orderBy('date', 'desc'),
+        startAfter(startAfterDoc),
+        limit(max)), 
+        { idField: 'articleID' }
+      )
+    ) as Observable<Article[]>
+    : from(
+      collectionData(query(ref,
+        where('category','==', name),
+        orderBy('date', 'desc'),
+        limit(max)), 
+        { idField: 'articleID' }
+      )
+    ) as Observable<Article[]>
   }
 
   getCategoryArticles(category:string) {

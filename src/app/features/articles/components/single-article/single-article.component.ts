@@ -106,6 +106,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
             <div class="w-full justify-between items-start 
                 lg:w-1/2 lg:p-0 
                 sm:mt-4
+                xsm:px-6
                 mt-0 px-2" 
                 [ngClass]="data.frontImageBanner ? 'normalLanding' : 'flex'">
                 <div #domHeading>

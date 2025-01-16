@@ -1,6 +1,6 @@
 import { Component, inject, input, Input, model, numberAttribute, OnInit } from '@angular/core';
 import { Article, title } from '../../../../shared/interfaces/article.interface';
-import { catchError, EMPTY, map, Observable, Subscription, switchMap, take } from 'rxjs';
+import { bufferCount, catchError, EMPTY, map, Observable, Subscription, switchMap, take, takeLast } from 'rxjs';
 import { NgFor, NgIf, AsyncPipe, NgClass } from '@angular/common';
 import {
   NavigationEnd,
@@ -45,9 +45,9 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
         <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col items-center md:pt-6 xl:px-0 sm:px-6 px-0">
           <div></div>
 
-          <div>
+          <div class="flex flex-col items-center w-full">
             @if(category() && category()?.main){
-              <section class="flex flex-col w-full  h-fit mt-14 -mb-20">
+              <section class="flex flex-col w-full  h-fit mt-14 lg:-mb-20">
                     <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet self-center md:self-start xl:pl-6 sm:px-0 xsm:px-4 px-2">{{category()?.name}}</h1>
 
                     <div class="w-full xl:grid-cols-[45%_55%] grid h-fit">
@@ -58,7 +58,7 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
                         <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] mr-[3rem]"></div>
                         <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] 2xl:block hidden"></div>
                       </div>
-                      <p class=" sm:px-0 xsm:px-4 px-2 xsm:text-[1.4rem] text-[1rem] xl:text-right text-left self-end w-full">
+                      <p class=" sm:px-0 xsm:px-4 px-2 xsm:text-[1.4rem] text-[1rem] xl:text-right text-left self-end w-full max-md:mt-7">
                         {{category()?.main ? category()?.description : ''}}
                       </p>
                     </div>
@@ -70,10 +70,20 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
               </h1>
             }
             
-            @if(data$ | async; as data){
+            @if(initialData$ | async; as data){
               <section class="w-full h-fit lg:pt-40 pt-10">
-                  <app-ext-standard-grid [articles]="(data | orderArticlesByDate)"/>
+                  <app-ext-standard-grid [articles]="data"/>
+                  <div class="mt-4">
+                    @if(chunksData()){
+                      <app-ext-standard-grid [articles]="chunksData()!"/>
+                    }
+                  </div>
               </section>
+              @if(!categoryEnd()){
+                <button class="bg-brandViolet text-white font-semibold py-2 w-[7rem] mt-4" (invalid)="isChunkLoading()" (click)="loadChunk()">
+                  @if(isChunkLoading()){...}@else{See more}
+                </button>
+              }
             }
           </div>
 
@@ -93,18 +103,69 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
 export class CategoryArticlesComponent {
   firebaseService = inject(FirebaseService)
   title = input.required<string>();
+  router = inject(Router)
 
   category = model<Category>()
 
-  data$ = toObservable(this.title).pipe(
+  categoryEnd = model(false)
+  chunksData = model<Article[]>()
+  lastDoc = model<Article>()
+  isChunkLoading = model<boolean>()
+
+  loadChunk(){
+    // this.router.navigate(['/category/'+this.title()], { queryParams: {date: this.currentLastDate()} });
+    this.isChunkLoading.set(true)
+    this.firebaseService.getMainCategoryArticles(this.title(),9,this.lastDoc()?.date).pipe(
+      map(((res:any)=>{
+        let nextArt = {}
+        if(res.length == 9) {
+          this.categoryEnd.set(false)
+          nextArt = res[res.length-1];
+        } else {
+          this.categoryEnd.set(true)}
+        console.log(res.length)
+        const newChunk = res.slice(0,res.length-1)
+        // if(nextArt == 'end') 
+        
+        // console.log('nextArt')
+        // console.log(nextArt)
+        // console.log('newChunk')
+        // console.log(newChunk)
+        
+        if(this.chunksData()){
+          // console.log('oldData')
+          // console.log(this.chunksData())
+          const oldData = this.chunksData()
+          
+          const newChunksData = [...oldData as Article[], ...newChunk] 
+          this.chunksData.set(newChunksData)
+        } else{
+          // console.log('new')
+          this.chunksData.set(newChunk)
+        }
+        this.lastDoc.set(newChunk[newChunk.length-1])
+        this.isChunkLoading.set(false)
+      
+      
+
+      
+    }))).subscribe()
+  }
+
+  initialData$ = toObservable(this.title).pipe(
     switchMap(title=>this.firebaseService.getCategory(title)),
     switchMap((res) => {
       this.category.set(res[0])
 
       return res[0].main 
-      ? this.firebaseService.getMainCategoryArticles(this.title())
+      ? this.firebaseService.getMainCategoryArticles(this.title(),8).pipe(
+        map(res=>{
+          this.lastDoc.set(res[res.length-1])
+          return res
+        })
+      )
       : this.firebaseService.getCategoryArticles(this.title())})
-  );
+  )
   
   urlFormat(id: string, title: string) {
     const formatTitle = title
