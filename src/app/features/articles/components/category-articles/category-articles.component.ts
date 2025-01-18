@@ -13,6 +13,7 @@ import { FirebaseService } from '../../../../core/services/firebase.service';
 import { Category } from '../../../../shared/interfaces/category.interface';
 import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-grid/ext-standard-grid.component';
 import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
+import { parse } from 'path';
 
 @Component({
     selector: 'app-category-articles',
@@ -72,16 +73,11 @@ import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe
             
             @if(initialData$ | async; as data){
               <section class="w-full h-fit lg:pt-40 pt-10">
-                  <app-ext-standard-grid [articles]="data"/>
-                  <div class="mt-4">
-                    @if(chunksData()){
-                      <app-ext-standard-grid [articles]="chunksData()!"/>
-                    }
-                  </div>
+                  <app-ext-standard-grid [articles]="chunksData()!"/>
               </section>
               @if(!categoryEnd()){
-                <button class="bg-brandViolet text-white font-semibold py-2 w-[7rem] mt-4" (invalid)="isChunkLoading()" (click)="loadChunk()">
-                  @if(isChunkLoading()){...}@else{See more}
+                <button class="bg-brandViolet text-white font-semibold py-2 w-[7rem] mt-12" (invalid)="isChunkLoading()" (click)="loadChunk()">
+                  @if(isChunkLoading()){. . .}@else{See more}
                 </button>
               }
             }
@@ -111,44 +107,36 @@ export class CategoryArticlesComponent {
   chunksData = model<Article[]>()
   lastDoc = model<Article>()
   isChunkLoading = model<boolean>()
+  end = input<unknown>()
 
   loadChunk(){
-    // this.router.navigate(['/category/'+this.title()], { queryParams: {date: this.currentLastDate()} });
     this.isChunkLoading.set(true)
     this.firebaseService.getMainCategoryArticles(this.title(),9,this.lastDoc()?.date).pipe(
       map(((res:any)=>{
-        let nextArt = {}
-        if(res.length == 9) {
-          this.categoryEnd.set(false)
-          nextArt = res[res.length-1];
-        } else {
-          this.categoryEnd.set(true)}
-        console.log(res.length)
-        const newChunk = res.slice(0,res.length-1)
-        // if(nextArt == 'end') 
-        
-        // console.log('nextArt')
-        // console.log(nextArt)
-        // console.log('newChunk')
-        // console.log(newChunk)
-        
-        if(this.chunksData()){
-          // console.log('oldData')
-          // console.log(this.chunksData())
-          const oldData = this.chunksData()
-          
-          const newChunksData = [...oldData as Article[], ...newChunk] 
-          this.chunksData.set(newChunksData)
-        } else{
-          // console.log('new')
-          this.chunksData.set(newChunk)
-        }
-        this.lastDoc.set(newChunk[newChunk.length-1])
-        this.isChunkLoading.set(false)
-      
-      
+        let newChunk 
 
-      
+        if(res.length == 9) {
+          newChunk = res.slice(0,res.length-1)
+          this.categoryEnd.set(false)
+        }
+        else {
+          newChunk = res
+          this.categoryEnd.set(true)
+        }
+        
+        const oldData = this.chunksData()
+        
+        const newChunksData = [...oldData as Article[], ...newChunk]
+        
+        this.chunksData.set(newChunksData.filter((item:any,index:number)=>{
+          return index == newChunksData.findIndex((obj:any)=>item?.articleID == obj?.articleID)
+          })
+        )
+        
+        this.lastDoc.set(newChunk[newChunk.length-1])
+
+        if(res.length !== 1)this.router.navigate(['/category/'+this.title()], { queryParams: {end: this.end() ? parseInt(this.end() as string) + 1 : 2 },fragment:'PKnxuKkRmS' });
+        this.isChunkLoading.set(false)
     }))).subscribe()
   }
 
@@ -157,14 +145,23 @@ export class CategoryArticlesComponent {
     switchMap((res) => {
       this.category.set(res[0])
 
-      return res[0].main 
-      ? this.firebaseService.getMainCategoryArticles(this.title(),8).pipe(
+      return this.end()
+      ? this.firebaseService.getMainCategoryArticles(this.title(),8,undefined,parseInt(this.end()! as string)).pipe(
         map(res=>{
           this.lastDoc.set(res[res.length-1])
+          this.chunksData.set(res)
           return res
         })
       )
-      : this.firebaseService.getCategoryArticles(this.title())})
+      : this.firebaseService.getMainCategoryArticles(this.title(),8).pipe(
+        map(res=>{
+          this.lastDoc.set(res[res.length-1])
+          this.chunksData.set(res)
+          return res
+        })
+      )
+    }
+    )
   )
   
   urlFormat(id: string, title: string) {

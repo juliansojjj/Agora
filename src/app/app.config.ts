@@ -18,7 +18,7 @@ import { TitleStrategyService } from './core/services/title-strategy.service';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideExperimentalZonelessChangeDetection(), 
-    provideRouter(routes,withComponentInputBinding(), withInMemoryScrolling({scrollPositionRestoration: 'enabled',})),
+    provideRouter(routes,withComponentInputBinding(), withInMemoryScrolling({scrollPositionRestoration: 'enabled',anchorScrolling:'enabled'})),
     provideClientHydration(), 
     // provideHttpClient(withInterceptors([errorHandlerInterceptor])),
     provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),

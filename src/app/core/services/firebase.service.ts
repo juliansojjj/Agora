@@ -36,7 +36,11 @@ import {
   arrayRemove,
   docData,
   startAfter,
-  Timestamp
+  Timestamp,
+  endAt,
+  limitToLast,
+  startAt,
+  endBefore
 } from '@angular/fire/firestore';
 
 import {
@@ -47,6 +51,7 @@ import { Article } from '../../shared/interfaces/article.interface';
 import { Author } from '../../shared/interfaces/author.interface';
 import { Category } from '../../shared/interfaces/category.interface';
 import { Comment } from '../../shared/interfaces/comment.interface';
+import { limitToFirst } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root',
@@ -115,27 +120,42 @@ export class FirebaseService {
     }
   }
 
-  getMainCategoryArticles(category:string, max:number, startAfterDoc?:Timestamp) {
+  getMainCategoryArticles(category:string, max?:number, dateStart?:Timestamp, end?:number) {
+    const obj = {
+      "date": {
+        "seconds": 1733281200,
+        "nanoseconds": 0
+      },
+    }
     const categoryArray = category.split(' ')
     const name = categoryArray.join('-').toLowerCase()
 
     const ref = collection(this.firestoreService, 'articles')
-    
-    return startAfterDoc 
-    ? from(
+
+    if(end) return from(
       collectionData(query(ref,
         where('category','==', name),
         orderBy('date', 'desc'),
-        startAfter(startAfterDoc),
-        limit(max)), 
+        limit(max!*end)), 
         { idField: 'articleID' }
       )
     ) as Observable<Article[]>
-    : from(
+    
+    else if(dateStart) return from(
       collectionData(query(ref,
         where('category','==', name),
         orderBy('date', 'desc'),
-        limit(max)), 
+        startAfter(dateStart),
+        limit(max!)), 
+        { idField: 'articleID' }
+      )
+    ) as Observable<Article[]>
+    
+    else return from(
+      collectionData(query(ref,
+        where('category','==', name),
+        orderBy('date', 'desc'),
+        limit(max!)), 
         { idField: 'articleID' }
       )
     ) as Observable<Article[]>
