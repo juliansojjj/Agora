@@ -13,7 +13,7 @@ import { NgClass } from '@angular/common';
 
           <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
           (mouseover)="cellHoverCheck($index)" (mouseout)="cellHoverCheck($index)"
-          class="relative flex 
+          class="relative flex overflow-hidden
           2xl:h-[20rem] 
           xl:h-[15rem] xl:w-fit
           lg:w-[14rem] lg:h-[14rem] 
@@ -50,7 +50,7 @@ import { NgClass } from '@angular/common';
 
           <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
           (mouseover)="cellHoverCheck($index+5)" (mouseout)="cellHoverCheck($index+5)"
-          class="relative flex 
+          class="relative flex overflow-hidden
           2xl:h-[20rem] 
           xl:h-[15rem] xl:w-fit
           lg:w-[14rem] lg:h-[14rem] 
@@ -84,18 +84,22 @@ import { NgClass } from '@angular/common';
   `,
     styles: `
   .evenCell{
-    clip-path: polygon(0% 0%,
-      70% 0%,
-      100% 30%,
-      100% 100%,
-      0% 100%);
+    @media(min-width:640px){
+      clip-path: polygon(0% 0%,
+        70% 0%,
+        100% 30%,
+        100% 100%,
+        0% 100%);
+    }
   }
   .oddCell{
-    clip-path: polygon(0% 0%,
-      100% 0%,
-      100% 100%,
-      30% 100%,
-      0% 70%);
+    @media(min-width:640px){
+      clip-path: polygon(0% 0%,
+        100% 0%,
+        100% 100%,
+        30% 100%,
+        0% 70%);
+    }
   }
   `
 })

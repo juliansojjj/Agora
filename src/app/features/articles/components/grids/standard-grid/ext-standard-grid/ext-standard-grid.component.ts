@@ -7,11 +7,12 @@ import { NgClass, NgStyle } from '@angular/common';
     selector: 'app-ext-standard-grid',
     imports: [RouterLink, NgClass, NgStyle],
     template: `
-    <div class="w-full relative h-full place-items-center justify-center grid  sm:gap-[1rem]
+    <div class="w-full relative h-full place-items-center justify-center grid  
     2xl:grid-cols-4
     xl:grid-cols-3
     sm:grid-cols-2
-    grid-cols-1
+    xsm:gap-[1rem]
+    grid-cols-1 gap-[.5rem]
     ">
 
       @for (item of articles(); track $index) {
@@ -19,27 +20,23 @@ import { NgClass, NgStyle } from '@angular/common';
         <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
         (mouseover)="cellHoverCheck($index)" 
         (mouseout)="cellHoverCheck($index)"
-        class="w-full h-full sm:aspect-square aspect-[3/1]  overflow-hidden relative flex">
+        class="xsm:w-full w-[95%] h-full sm:aspect-square aspect-[3/1]  overflow-hidden relative flex">
 
         <img [src]="item.frontImage" 
         [alt]="item.frontImageAlt" class="w-full h-full object-cover" 
         [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
 
-        <div class="sm:absolute bottom-0 sm:h-2/5 h-full relative w-full z-10 p-0 px-1 xsm:p-3 " 
+        <div class="sm:absolute bottom-0 sm:h-2/5 h-full relative w-full z-10 p-0 px-1 xsm:pt-2 xsm:px-3" 
   
         [ngClass]="cellHover() == $index.toString() ? ' bg-brandGrey' : 'bg-white'"> 
 
           <span class=" block
-          text-[.85rem] leading-[1.2rem] font-medium
-          xsm:text-[1rem] xsm:leading-normal 
+          text-[.8rem] leading-[1.2rem] font-medium
+          xsm:text-[.9rem] xsm:leading-normal 
           sm:font-semibold
-          md:text-[1.3rem] 
-          2xl:text-[1.2rem] 
-          3xl:text-[1.48rem] 
-          4xl:text-[2rem] 
-          
-          ">{{item.heading}}</span>
-
+          md:text-[1rem]">
+            {{item.heading}}
+          </span>
         </div>
       </a>
       }

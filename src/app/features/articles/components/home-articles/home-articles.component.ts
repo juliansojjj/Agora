@@ -49,7 +49,7 @@ import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-gri
     @if(scienceArticles()){
         <section class=" w-full h-fit pt-24 flex flex-col items-center">
           <a [routerLink]="['/category/science']"
-              class="pl-3 sm:pl-10 md:pl-20 text-[2.3rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-6 block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[1.9rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-6 block w-fit">
                 Science
           </a>
 
@@ -62,7 +62,7 @@ import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-gri
         @if(entertainmentArticles()){
         <section class=" w-full h-fit pt-24 flex flex-col items-center">
           <a [routerLink]="['/category/entertainment']"
-              class="pl-3 sm:pl-10 md:pl-20 text-[2.3rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-10 block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[1.9rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-10 block w-fit">
                 Entertainment
           </a>
 
@@ -75,11 +75,11 @@ import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-gri
         @if(mediaArticles()){
         <section class=" w-full h-fit pt-24 flex flex-col items-center">
           <a [routerLink]="['/category/media']"
-              class="pl-3 sm:pl-10 md:pl-20 text-[2.3rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-[6rem] block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[1.9rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-[6rem] block w-fit">
                 Media
           </a>
 
-          <section class=" w-[75%] h-fit">
+          <section class="w-[80%] sm:w-[75%] h-fit">
             <app-secondary3-grid [articles]="mediaArticles()!"/>
           </section>
         </section>
@@ -100,7 +100,7 @@ export class HomeArticlesComponent {
     this.firebaseService.getMainCategoryArticles('entertainment',8)
   );
   mediaArticles = toSignal<Article[]>(
-    this.firebaseService.getMainCategoryArticles('media',4)
+    this.firebaseService.getMainCategoryArticles('media',8)
   );
   
   multipleDocs:Article[] = []

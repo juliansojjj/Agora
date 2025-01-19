@@ -1,11 +1,11 @@
 import { Component, input, model } from '@angular/core';
 import { Article } from '../../../../../shared/interfaces/article.interface';
 import { RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-secondary3-grid',
-    imports: [RouterLink, NgClass],
+    imports: [RouterLink, NgClass, DatePipe],
     template: `
   <div class="w-full h-fit relative">
 
@@ -75,7 +75,7 @@ import { NgClass } from '@angular/common';
 
         </div>
 
-        <div class="w-full p-3 z-10
+        <div class="w-full p-3 z-10 flex flex-col justify-between
           xl:h-full
           md:h-[7rem]
           sm:h-full
@@ -84,6 +84,10 @@ import { NgClass } from '@angular/common';
         'bg-brandGrey': cellHover() == $index.toString(),
         'bg-white': cellHover() != $index.toString()}"> 
           <span class="lg:text-[1.2rem] text-[1rem] font-semibold">{{item.heading}}</span>
+          <div class="flex flex-col">
+            <span class="hidden xl:inline-block text-[1.1rem] font-italic self-end">{{item.authorName}}</span>
+            <span class="hidden xl:inline-block text-[1rem] font-italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
+          </div>
         </div>
       </a>
       }
@@ -113,7 +117,7 @@ import { NgClass } from '@angular/common';
             [ngClass]="{'scale-105': cellHover() == ($index+2).toString()}">
         </div>
 
-        <div class="w-full p-3 z-10
+        <div class="w-full p-3 z-10 flex flex-col justify-between
           xl:h-full
           md:h-[7rem]
           sm:h-full
@@ -121,6 +125,47 @@ import { NgClass } from '@angular/common';
         [ngClass]="{
         'bg-brandGrey': cellHover() == ($index+2).toString(),
         'bg-white': cellHover() != ($index+2).toString()}"> 
+          <span class="lg:text-[1.2rem] text-[1rem] font-semibold">{{item.heading}}</span>
+          <div class="flex flex-col">
+            <span class="hidden xl:inline-block text-[1.1rem] font-italic self-end">{{item.authorName}}</span>
+            <span class="hidden xl:inline-block text-[1rem] font-italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
+          </div>
+        </div>
+      </a>
+      }
+      @for (item of articles().slice(4,8); track $index) {
+        <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
+        (mouseover)="cellHoverCheck($index+4)" (mouseout)="cellHoverCheck($index+4)"
+        class="w-full   relative 
+        2xl:h-[20rem]
+        xl:aspect-[2/1]
+        h-[17rem] md:hidden
+        sm:flex-row
+        flex-col flex"
+        [ngClass]="$index+4 % 2 !== 0 ? 'xl:flex-row-reverse' : 'xl:flex-row'">
+
+        <div class="w-full
+          xl:h-full
+          md:h-[10rem]
+          sm:h-full
+          h-[10rem]"
+          [ngClass]="{
+          'lowerLeft': $index+4 % 2 === 0,
+          'lowerRight': $index+4 % 2 !== 0}">
+
+            <img [src]="item.frontImage" [alt]="item.frontImageAlt" 
+            class="h-full w-full object-cover"
+            [ngClass]="{'scale-105': cellHover() == ($index+4).toString()}">
+        </div>
+
+        <div class="w-full p-3 z-10
+          xl:h-full
+          md:h-[7rem]
+          sm:h-full
+          h-[7rem]" 
+        [ngClass]="{
+        'bg-brandGrey': cellHover() == ($index+4).toString(),
+        'bg-white': cellHover() != ($index+4).toString()}"> 
           <span class="lg:text-[1.2rem] text-[1rem] font-semibold">{{item.heading}}</span>
         </div>
       </a>
