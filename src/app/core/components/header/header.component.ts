@@ -135,23 +135,23 @@ import { Author } from 'app/shared/interfaces/author.interface';
               <ul class="h-full md:flex hidden">
                   <a
                     [routerLink]="['/category/tech' ]"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
                   ><li>Tech</li></a>
                   <a
                     [routerLink]="['/category/culture']"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
                   ><li>Culture</li></a>
                   <a
                     [routerLink]="['/category/science' ]"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
                   ><li>Science</li></a>
                   <a
                     [routerLink]="['/category/entertainment']"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
                   ><li>Entertainment</li></a>
                   <a
                     [routerLink]="['/category/media']"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black xl:w-36 w-28 h-full"
+                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black w-36 h-full"
                   ><li>Media</li></a>
                   @if (!authState()) {
                   <a

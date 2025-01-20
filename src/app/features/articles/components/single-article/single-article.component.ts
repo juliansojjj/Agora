@@ -285,7 +285,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
 
           <section class="contentElement flex flex-col items-center my-6">
             <div class="w-full h-fit flex sm:flex-row flex-col items-center">
-              <img src="https://thispersondoesnotexist.com/" alt="fake image of author"
+              <img [src]="authorData()?.authorImage" alt="fake image of author"
               class="h-[7rem] w-[7rem] sm:mr-8 rounded-full">
 
               <a [routerLink]="['/author',data.authorID]"
@@ -300,9 +300,9 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
 
         </section>
 
-        <section class="contentElement flex flex-col my-6 lg:p-0 px-2">
+        <section class="contentElement flex flex-col my-6 lg:p-0 xsm:px-6 px-2">
           @if (comments$ | async; as comments) {
-            <span class="md:text-[1.9rem] text-[1.6rem] font-bold">{{ comments | commentsLength }} Comments</span>
+            <span class="md:text-[1.9rem] text-[1.6rem] font-bold self-center">{{ comments | commentsLength }} Comments</span>
 
             @if (!(userInfo$ | async)) {
               <div class="flex flex-col mt-2 w-full ">
@@ -318,39 +318,43 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
               </div>
             } @else {
               <form
-                [formGroup]="form"
+                [formGroup]="commentForm"
                 (ngSubmit)="onCommentSubmit()"
-                class="flex flex-col mt-3 w-full "
+                class="flex flex-col mt-6 w-full "
                 >
                 <textarea
                   formControlName="text"
-                  class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip"
+                  class="focus:outline-none border-b-2 py-1 resize-none h-fit w-full overflow-y-clip"
                   appTextAreaResize
                   #textAreaResize="appTextAreaResize"
                   placeholder="Write your comment here..."
                 ></textarea>
 
-                @if (form.controls.text.errors?.['maxlength']) {
-                  <span class="text-red-300 mt-2"
-                    >The max amount of characters is 280</span
-                  >
-                }
-                @if (form.controls.text.touched || form.controls.text.dirty) {
-                  <div class="flex self-end ">
-                    <button
-                      type="reset"
-                      (click)="onCancel()"
-                      class="h-7 min-w-fit p-auto px-3  mt-4 font-medium self-end mr-4
-                      bg-white text-gray-400 border-2 border-gray-200 hover:text-black hover:border-brandViolet active:scale-95">
-                        Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      [disabled]="form.invalid || form.pending"
-                      class="h-7 min-w-fit py-auto px-3 mt-4 font-medium box-border
-                      bg-brandViolet text-white border-2 border-transparent hover:border-brandViolet hover:text-brandViolet hover:bg-white active:scale-95  ">
-                        Comment
-                    </button>
+                @if (commentForm.controls.text.touched || commentForm.controls.text.dirty) {
+
+                  <div class="h-5 w-full mt-2">
+                    @if (commentForm.controls.text.errors?.['maxlength']) {
+                      <span class="errorLabel">The max amount of characters is 280</span>
+                    }
+                  </div>
+                
+                  <div class="flex items-end self-end h-10 mt-7">
+                      @if(!isCommentFormLoading()){
+                        <button
+                        type="reset"
+                        (click)="onCancel()"
+                        class="h-10 w-[6rem] sm:w-[8rem] mt-4 font-medium self-end mr-4
+                        bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 text-[1rem] sm:text-[1.2rem]">
+                          Cancel
+                        </button>
+                      }
+                      <button
+                        [type]="isCommentFormLoading() ? 'button' : 'submit'"
+                        [disabled]="commentForm.invalid || commentForm.pending"
+                        class="h-10 w-[6rem] sm:w-[8rem] mt-4 font-medium box-border
+                        hover:bg-brandShade hover:text-black text-white active:scale-95 bg-black text-[1rem] sm:text-[1.2rem]">
+                          @if(isCommentFormLoading()){. . .}@else{Comment}
+                      </button>
                   </div>
                 }
               </form>
@@ -358,7 +362,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
 
             @for (item of comments; track $index) {
               @if(!item.deletedByUser){
-                <div class="flex flex-col mt-4 h-fit">
+                <div class="flex flex-col mt-8 h-fit">
                   <div class="flex justify-between items-center">
                     <div>
                       <span class="font-medium text-[1.2rem] mr-3">{{ item.username }}</span>
@@ -389,7 +393,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
 
         <hr class="contentElement h-[.05rem] bg-slate-200">
 
-        <section class="flex flex-col items-center 2xl:w-1/2 lg:w-3/4 w-full mt-6 lg:p-0 px-2">
+        <section class="flex flex-col items-center 2xl:w-1/2 lg:w-3/4 w-full mt-6 lg:p-0 xsm:px-6 px-2">
 
           @if(authorArticles$ | async; as authorArticles){
             <h4 class="md:text-[1.9rem] text-[1.6rem] md:mb-6 mb-3 font-bold">More from {{authorData()?.authorName}}</h4>
@@ -496,6 +500,18 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
           100% 0%,
           100% 100%);
       }
+      .errorLabel{
+        font-size:1.2rem;
+        line-height:normal;
+        font-weight:500;
+        color:#FD7E7E;
+        width:fit-content;
+        @media (max-width:768px){
+          font-size:1rem;
+          line-height:95%;
+          margin-top:.15rem;
+        }
+      }
     `,
     encapsulation: ViewEncapsulation.None
 })
@@ -543,26 +559,6 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
 
 
   @ViewChild(TextAreaResizeDirective) textAreaResizeDirective!: TextAreaResizeDirective;
-
-  formBuilder = inject(NonNullableFormBuilder);
-  form = this.formBuilder.group({
-    text: this.formBuilder.control('', {
-      validators: [
-        Validators.maxLength(250),
-        Validators.required,
-        this.trimValidator,
-      ],
-    }),
-  });
-
-  trimValidator(control: AbstractControl) {
-    return control.value.trim() ? null : { blankText: true };
-  }
-
-  onCancel() {
-    this.form.reset();
-    this.textAreaResizeDirective.resetHeight();
-  }
 
   authUser$ = this.firebaseService.authState$;
   uid = model<string>();
@@ -639,8 +635,30 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     });
   }
 
+  isCommentFormLoading = model(false)
+  formBuilder = inject(NonNullableFormBuilder);
+  commentForm = this.formBuilder.group({
+    text: this.formBuilder.control('', {
+      validators: [
+        Validators.maxLength(250),
+        Validators.pattern("^(?!.*([._'¨]{3}))[a-zA-Z0-9@._'¨\\s]*(?:[._'¨]{0,2}[a-zA-Z0-9\\s]*)*$"),
+        Validators.required,
+        this.trimValidator,
+      ],
+    }),
+  });
+
+  trimValidator(control: AbstractControl) {
+    return control.value.trim() ? null : { blankText: true };
+  }
+
+  onCancel() {
+    this.commentForm.reset();
+    this.textAreaResizeDirective.resetHeight();
+  }
   onCommentSubmit() {
-    const formValues = this.form.getRawValue();
+    const formValues = this.commentForm.getRawValue();
+    this.isCommentFormLoading.set(true)
 
     if (this.userInfo() && this.uid()) {
       const articleID = this.id().split('-');
@@ -654,9 +672,10 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
         )
         .subscribe({
           next: (res) => {
-            this.form.reset();
+            this.commentForm.reset();
+            this.isCommentFormLoading.set(false)
           },
-          error: (err) => console.error(err), // Maneja posibles errores
+          error: (err) => console.error(err)
         });
     }
   }

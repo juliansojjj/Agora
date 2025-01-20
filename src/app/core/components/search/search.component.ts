@@ -31,8 +31,11 @@ import { RouterLink } from '@angular/router';
         <div class="w-full grid 2xl:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           @for (item of authorResults(); track $index) {
             <a [routerLink]="['/author',item.authorID]" 
-            class="h-[6rem] px-4 pt-1 bg-white min-w-full  hover:bg-brandGrey flex items-center text-[1.2rem] md:text-[1.4rem]">
-              <img src="https://thispersondoesnotexist.com/" [alt]="'image of '+item.authorName" class="rounded-full h-[4.5rem] mr-4">
+            class="h-[6rem] px-4 pt-1 bg-white min-w-full fill-brandShade hover:fill-black hover:bg-brandGrey flex items-center text-[1.2rem] md:text-[1.4rem]">
+            <svg viewBox="0 0 330 461" class="h-[2.5rem] mr-5">
+                <path d="M286 122C286 189.379 231.379 244 164 244C96.6213 244 42 189.379 42 122C42 54.6213 96.6213 0 164 0C231.379 0 286 54.6213 286 122Z"/>
+                <path d="M240.577 461L330 306L0 306L89.4231 461H240.577Z"/>
+              </svg>
               <span>{{item.authorName}}</span>
             </a>
           }
@@ -42,7 +45,8 @@ import { RouterLink } from '@angular/router';
 
       @if(articleResults().length){
       <section class=" w-full h-fit pt-10">
-        <h3 class="text-[2.5rem] font-semibold mb-4 max-xsm:px-2">Articles</h3>
+        <h3 class="text-[2.5rem] font-semibold mb-2 max-xsm:px-2">Articles</h3>
+        <span class="mb-6 text-[1.1rem] text-slate-400 inline-block">{{articleResults().length}} results found</span>
         <app-ext-standard-grid [articles]="articleResults()"/>
       </section>
       } @else{<span class="text-[1.4rem] max-xsm:px-2">No articles found</span>}
