@@ -186,29 +186,38 @@ export class FirebaseService {
   getArticleComments(id:string):Observable<Comment[]>{
     const ref = collection(this.firestoreService, 'articles',id,'comments');
     
-
     const result = collectionData(query(ref,orderBy('date', 'desc')),{ idField: 'commentId' });
 
     return from(result) as Observable<Comment[]>
   }
 
+  getAllCategories(){
+    const ref = collection(this.firestoreService, 'categories')
+    
+    const result = collectionData(ref)
 
-  // ----------------------- FIRESTORE
-
+    return from(result) as Observable<Category[]>;
+  }
   
   getCategory(url:string) {
     const ref = collection(this.firestoreService, 'categories')
     
-
     const result = collectionData(query(ref,where('url','==',url)))
 
     return from(result) as Observable<Category[]>
   }
   
+  getAllAuthors() {
+    const ref = collection(this.firestoreService, 'authors');
+    
+    const result = collectionData(ref,{ idField: 'authorID' })
+
+    return from(result) as Observable<Author[]>;
+  }
+
   getAuthor(id:string) {
     const ref = doc(this.firestoreService, 'authors', id);
     
-
     const result = docData(ref)
 
     return from(result) as Observable<Author>;
@@ -218,8 +227,6 @@ export class FirebaseService {
   handleFavorite(uid:string,operation:boolean, articleID:string){
     const ref = doc(this.firestoreService, 'users', uid);
     
-
-
     return operation 
     ? from(updateDoc(ref,{favorites:arrayUnion(articleID)})) 
     : from(updateDoc(ref,{favorites:arrayRemove(articleID)})) 
@@ -228,7 +235,6 @@ export class FirebaseService {
   getUserInfo(uid:string):Observable<FirestoreCollectionUser>{
     const ref = doc(this.firestoreService, 'users', uid);
     
-
     const result = docData(ref)
 
     return from(result) as Observable<FirestoreCollectionUser>
@@ -236,15 +242,12 @@ export class FirebaseService {
   getUsers():Observable<FirestoreCollectionUser[]>{
     const ref = collection(this.firestoreService, 'users');
     
-
     const result = collectionData(ref);
     return from(result) as Observable<FirestoreCollectionUser[]>
   }
   checkUsername() {
-    
     const ref = collection(this.firestoreService, 'users');
     
-
     const result = collectionData(ref);
     return (control: AbstractControl) => {
       return from(result).pipe(
@@ -266,8 +269,6 @@ export class FirebaseService {
     if(this.authService.currentUser) {
       const uid = this.authService.currentUser?.uid
       const ref = doc(this.firestoreService, 'users', uid)
-    
-
 
       const firestoreRes = updateDoc(ref,{username:newUsername})
       const authRes = updateProfile(this.authService.currentUser, { displayName: newUsername })
@@ -281,8 +282,6 @@ export class FirebaseService {
       const uid = this.authService.currentUser?.uid
       const ref = doc(this.firestoreService, 'users', uid)
     
-
-
       return from(updateEmail(this.authService.currentUser,newEmail)).pipe(
         map(()=>{
           from(updateDoc(ref,{email:newEmail}))
@@ -301,7 +300,6 @@ export class FirebaseService {
 
   documentUser(username: string, email: string, id:string) {
     const ref = collection(this.firestoreService, 'users');
-    
 
     const res = setDoc(doc(ref, id),
     { 
@@ -315,8 +313,6 @@ export class FirebaseService {
 
   addComment(username: string, uid: string, articleID:string, content:string) {
     const ref = collection(this.firestoreService, 'articles',articleID,'comments');
-    
-
 
     const res = setDoc(doc(ref),
     { 
