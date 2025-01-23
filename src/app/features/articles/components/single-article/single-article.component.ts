@@ -1,6 +1,10 @@
 import {
   AfterContentInit,
+  afterNextRender,
+  afterRender,
+  AfterViewChecked,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   effect,
   ElementRef,
@@ -25,7 +29,7 @@ import {
   contentItems,
   paragraph,
 } from '../../../../shared/interfaces/article.interface';
-import { catchError, EMPTY, map, Observable, of, switchMap, take } from 'rxjs';
+import { catchError, EMPTY, filter, map, Observable, of, pairwise, switchMap, take } from 'rxjs';
 import { NgIf, AsyncPipe, NgClass, DecimalPipe, TitleCasePipe } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -39,7 +43,7 @@ import {
   FirebaseAuthUser,
   FirestoreCollectionUser,
 } from '../../../../shared/interfaces/firebase.interfaces';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import {
   AbstractControl,
   NonNullableFormBuilder,
@@ -60,8 +64,8 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
         AsyncPipe,
         TypeofPipe,
         DatePipe,
-        NgClass,
         TitleCasePipe,
+        NgClass,
         RouterLink,
         ReactiveFormsModule,
         TextAreaResizeDirective,
@@ -109,7 +113,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
                 xsm:px-6
                 mt-0 px-2" 
                 [ngClass]="data.frontImageBanner ? 'normalLanding' : 'flex'">
-                <div #domHeading>
+                <div #domHeading class="w-full">
                   <h1
                     class=" font-bold text-left
                     xl:text-[3.5rem]
@@ -212,14 +216,12 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
               @if($index == data.content.length-1){
 
                 @if(recommendations$ | async; as recommendations){
-                    <a [routerLink]="['/article',urlFormat(recommendations[articleRecommendationIndex()!].articleID!, recommendations[articleRecommendationIndex()!].heading)]" 
-                      class="min-h-fit italic text-[1.2rem] my-4 underline hover:text-brandViolet
-                      2xl:w-1/4 lg:w-1/3 md:w-1/2 xsm:w-4/5 w-full">
-                        Read also: {{recommendations[articleRecommendationIndex()!].heading}}
+                  <a [routerLink]="['/article',urlFormat(recommendationsFiltered()![articleRecommendationIndex()!].articleID!, recommendationsFiltered()![articleRecommendationIndex()!].heading)]" 
+                    class="min-h-fit italic text-[1.2rem] my-4 underline hover:text-brandViolet
+                    2xl:w-1/4 lg:w-1/3 md:w-1/2 xsm:w-4/5 w-full">
+                      Read also: {{recommendationsFiltered()![articleRecommendationIndex()!].heading}}
                   </a>
                 }
-                
-
               }
             }
 
@@ -229,13 +231,11 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
               </p>
             }
             @if ((item | typeof) == 'htmlParagraph') {
-              <p class="my-4 xsm:text-[1.2rem] text-[1.1rem] contentElement" #htmlContent>
-                {{ $any(item).htmlParagraph }}
+              <p class="my-4 xsm:text-[1.2rem] text-[1.1rem] contentElement" #htmlContent [innerHTML]="$any(item).htmlParagraph">
               </p>
             }
             @if ((item | typeof) == 'htmlContent') {
-              <div #htmlContent>
-                {{ $any(item).htmlContent }}
+              <div #htmlContent [innerHTML]="$any(item).htmlContent">
               </div>
             }
             @if ((item | typeof) == 'quote') {
@@ -402,7 +402,7 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
 
           @if(recommendations$ | async; as recommendations){
             <h4 class="md:text-[1.9rem] text-[1.6rem] mt-6 md:mb-6 mb-3 font-bold">More from {{category() | titlecase}}</h4>
-            <app-standard-grid [articles]="recommendations.slice(0,9)"/>
+            <app-standard-grid [articles]="recommendationsFiltered()!.slice(0,9)"/>
           }
         </section>
       </article>
@@ -515,21 +515,39 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
     `,
     encapsulation: ViewEncapsulation.None
 })
-export class SingleArticleComponent implements AfterViewInit, OnInit {
+export class SingleArticleComponent implements OnInit {
   firebaseService = inject(FirebaseService);
+  router = inject(Router)
   id = input.required<string>();
   title = inject(Title);
   menu:boolean = false;
-
-  renderer = inject(Renderer2);
-  @ViewChildren('htmlContent') htmlElements?: QueryList<ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>>;
   
   @ViewChild('domHeading') domHeading?:ElementRef;
+  @ViewChild(TextAreaResizeDirective) textAreaResizeDirective!: TextAreaResizeDirective;
+
+  constructor() {
+    effect(() => {
+      this.title.setTitle(this.heading()?.heading!);
+    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd),pairwise())
+      .subscribe((events) => {
+        const previousUrl = events[0].urlAfterRedirects;
+        const currentUrl = events[1].urlAfterRedirects;
+        
+        if(previousUrl.split('/')[1] == 'article' && currentUrl.split('/')[1] == 'article'){
+          this.commentForm.reset()
+        }
+      }); 
+  }
+
   ngOnInit(): void {
     document.addEventListener('scroll', () => {
       this.headingCheck()
     })  
+    
   }
+
   headingInfo = model('')
   headingCheck(){
     const top = this.domHeading?.nativeElement.getBoundingClientRect().top
@@ -539,26 +557,11 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     else this.headingInfo.set('')
   }
 
-  ngAfterViewInit(): void {
-    this.htmlElements?.changes.subscribe(
-      (query: QueryList<ElementRef<HTMLParagraphElement> | ElementRef<HTMLElement>>) => {
-        query.forEach((item) => {
-          const unparsedString = item.nativeElement.innerText;
-
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(unparsedString, 'text/html');
-          this.renderer.setProperty(
-            item.nativeElement,
-            'innerHTML',
-            doc.body.innerHTML,
-          );
-        });
-      },
-    );
-  }
 
 
-  @ViewChild(TextAreaResizeDirective) textAreaResizeDirective!: TextAreaResizeDirective;
+
+  
+  // -------------- User --------------
 
   authUser$ = this.firebaseService.authState$;
   uid = model<string>();
@@ -582,6 +585,12 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     }),
   );
 
+
+
+
+  
+  // -------------- Articles --------------
+
   data$ = toObservable(this.id).pipe(
     map((url: string) => {
       const id = url.split('-');
@@ -589,6 +598,7 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     }),
     switchMap((id) => this.firebaseService.getSingleArticle(id).pipe(
       map((res:Article)=>{
+        if(!res) this.router.navigate(['/not-found'])
         this.category.set(res.category)
         return res
       })
@@ -604,21 +614,31 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
         return article.authorID
       })
     )),
-    switchMap((authorID:string) => this.firebaseService.getAuthorArticles(authorID,9))
+    switchMap((authorID:string) => this.firebaseService.getAuthorArticles(authorID,10).pipe(
+      map(res=> res.filter(val=>val.articleID !== this.id().split('-')[0]))
+    ))
   );
 
   category = model<string>('')
   articleRecommendationIndex = model<number>()
+  recommendationsFiltered = model<Article[]>()
   recommendations$ = toObservable(this.category).pipe(
     switchMap(category=> this.firebaseService.getMainCategoryArticles(category,15).pipe(
       map((res:Article[])=>{
         this.articleRecommendationIndex.set(Math.round((Math.random()*10)*((res.length-1)/10)))
-        return res.filter(val=>val.articleID !== this.id())
+        this.recommendationsFiltered.set(res.filter(val=>val.articleID && val.articleID !== this.id().split('-')[0]))
+        return res
       })
     ))
   )
 
   heading = toSignal(this.data$);
+
+
+
+
+  
+  // -------------- Comments --------------
 
   comments$ = toObservable(this.id).pipe(
     map((url: string) => {
@@ -627,13 +647,6 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     }),
     switchMap((id) => this.firebaseService.getArticleComments(id)),
   );
-
-
-  constructor() {
-    effect(() => {
-      this.title.setTitle(this.heading()?.heading!);
-    });
-  }
 
   isCommentFormLoading = model(false)
   formBuilder = inject(NonNullableFormBuilder);
@@ -688,6 +701,13 @@ export class SingleArticleComponent implements AfterViewInit, OnInit {
     }
   }
 
+  
+  
+  
+  
+  
+  
+  
   favoriteHandle(operation: boolean) {
     const articleID = this.id().split('-');
 
