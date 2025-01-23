@@ -120,13 +120,7 @@ export class FirebaseService {
     }
   }
 
-  getMainCategoryArticles(category:string, max?:number, dateStart?:Timestamp, end?:number) {
-    const obj = {
-      "date": {
-        "seconds": 1733281200,
-        "nanoseconds": 0
-      },
-    }
+  getMainCategoryArticles(category:string, max:number, dateStart?:Timestamp, end?:number) {
     const categoryArray = category.split(' ')
     const name = categoryArray.join('-').toLowerCase()
 
@@ -136,7 +130,7 @@ export class FirebaseService {
       collectionData(query(ref,
         where('category','==', name),
         orderBy('date', 'desc'),
-        limit(max!*end)), 
+        limit(max*end)), 
         { idField: 'articleID' }
       )
     ) as Observable<Article[]>
@@ -146,7 +140,7 @@ export class FirebaseService {
         where('category','==', name),
         orderBy('date', 'desc'),
         startAfter(dateStart),
-        limit(max!)), 
+        limit(max)), 
         { idField: 'articleID' }
       )
     ) as Observable<Article[]>
@@ -155,13 +149,14 @@ export class FirebaseService {
       collectionData(query(ref,
         where('category','==', name),
         orderBy('date', 'desc'),
-        limit(max!)), 
+        limit(max)), 
         { idField: 'articleID' }
       )
     ) as Observable<Article[]>
   }
 
-  getCategoryArticles(category:string) {
+  getCategoryArticles(category:string, max?:number, start?:Timestamp, end?:number) {
+    console.log(category)
     const categoryArray = category.split(' ')
     const name = categoryArray.join('-').toLowerCase()
     
@@ -170,7 +165,30 @@ export class FirebaseService {
 
     const result = collectionData(query(ref,where('urlTopics','array-contains', name)), { idField: 'articleID' })
 
-    return from(result) as Observable<Article[]>;
+    // return from(result) as Observable<Article[]>;
+
+    if(end) return from(
+      collectionData(query(ref,
+        where('urlTopics','array-contains', name),
+        orderBy('date', 'desc'),
+        limit(max!*end)), 
+        { idField: 'articleID' }
+      )
+    ) as Observable<Article[]>
+
+    else if(start) return from(
+      collectionData(query(ref,
+        where('urlTopics','array-contains', name),
+        orderBy('date', 'desc'),
+        startAfter(start),
+        limit(max!)), 
+        { idField: 'articleID' }
+      )
+    ) as Observable<Article[]>
+    
+    else return from(
+      collectionData(query(ref,where('urlTopics','array-contains', name),orderBy('date', 'desc'),limit(max!)), { idField: 'articleID' })
+    ) as Observable<Article[]>
   }
 
 

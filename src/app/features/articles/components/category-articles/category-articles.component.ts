@@ -75,8 +75,13 @@ import { parse } from 'path';
               <section class="w-full h-fit lg:pt-40 pt-10">
                   <app-ext-standard-grid [articles]="chunksData()!"/>
               </section>
-              @if(!categoryEnd()){
+              @if(!categoryEnd() && category()?.main){
                 <button class="bg-brandViolet text-white font-semibold py-2 w-[7rem] mt-12" (invalid)="isChunkLoading()" (click)="loadChunk()">
+                  @if(isChunkLoading()){. . .}@else{See more}
+                </button>
+              }
+              @if(!categoryEnd() && !category()?.main){
+                <button class="bg-brandViolet text-white font-semibold py-2 w-[7rem] mt-12" (invalid)="isChunkLoading()" (click)="loadTopicChunk()">
                   @if(isChunkLoading()){. . .}@else{See more}
                 </button>
               }
@@ -139,13 +144,61 @@ export class CategoryArticlesComponent {
         this.isChunkLoading.set(false)
     }))).subscribe()
   }
+  loadTopicChunk(){
+    this.isChunkLoading.set(true)
+    this.firebaseService.getCategoryArticles(this.title(),9,this.lastDoc()?.date).pipe(
+      map(((res:any)=>{
+        let newChunk 
+
+        if(res.length == 9) {
+          newChunk = res.slice(0,res.length-1)
+          this.categoryEnd.set(false)
+        }
+        else {
+          newChunk = res
+          this.categoryEnd.set(true)
+        }
+        
+        const oldData = this.chunksData()
+        
+        const newChunksData = [...oldData as Article[], ...newChunk]
+        
+        this.chunksData.set(newChunksData.filter((item:any,index:number)=>{
+          return index == newChunksData.findIndex((obj:any)=>item?.articleID == obj?.articleID)
+          })
+        )
+        
+        this.lastDoc.set(newChunk[newChunk.length-1])
+
+        if(res.length !== 1)this.router.navigate(['/category/'+this.title()], { queryParams: {end: this.end() ? parseInt(this.end() as string) + 1 : 2 },fragment:'PKnxuKkRmS' });
+        this.isChunkLoading.set(false)
+    }))).subscribe()
+  }
 
   initialData$ = toObservable(this.title).pipe(
     switchMap(title=>this.firebaseService.getCategory(title)),
     switchMap((res) => {
       this.category.set(res[0])
 
-      return this.end()
+      if(!res.length) this.router.navigate(['/not-found'])
+      
+      if(!res[0].main){
+        return this.end()
+        ? this.firebaseService.getCategoryArticles(this.title(),8,undefined,parseInt(this.end()! as string)).pipe(
+          map(res=>{
+            this.lastDoc.set(res[res.length-1])
+            this.chunksData.set(res)
+            return res
+          })
+        )
+        : this.firebaseService.getCategoryArticles(this.title(),8).pipe(
+            map(res=>{
+              this.lastDoc.set(res[res.length-1])
+              this.chunksData.set(res)
+              return res
+            })
+          )
+      } else return this.end()
       ? this.firebaseService.getMainCategoryArticles(this.title(),8,undefined,parseInt(this.end()! as string)).pipe(
         map(res=>{
           this.lastDoc.set(res[res.length-1])
