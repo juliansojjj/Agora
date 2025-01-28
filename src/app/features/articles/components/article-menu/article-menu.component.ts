@@ -25,7 +25,9 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
             </button>
           </div>
 
-          <span class="mt-8 md:mb-10 mb-2 text-[1.5rem] font-semibold">{{(subscriptionState$ | async)?.username}}</span>
+          <div class="w-full text-center min-h-[2.4rem] mt-8 md:mb-10 mb-2">
+            <span class="text-[1.5rem] font-semibold">{{(subscriptionState$ | async)?.username}}</span>
+          </div>
 
           @if(authState()){
             <ul class="h-fit w-full md:hidden flex flex-col">

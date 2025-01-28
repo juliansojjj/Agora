@@ -25,8 +25,8 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
             </button>
           </div>
 
-          <div class="w-full text-center min-h-[2.4rem]">
-            <span class="mt-8 md:mb-10 mb-2 text-[1.5rem] font-semibold">{{(subscriptionState$ | async)?.username}}</span>
+          <div class="w-full text-center min-h-[2.4rem] mt-8 md:mb-10 mb-2">
+            <span class="text-[1.5rem] font-semibold">{{(subscriptionState$ | async)?.username}}</span>
           </div>
 
           @if(authState()){
@@ -41,10 +41,10 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
               ><li>Account Settings</li></a>
             </ul>
 
-            <a class="w-full md:block hidden text-start h-16  pl-6 font-medium hover:underline" [routerLink]="['/favorites']" (click)="menuTrigger()"> 
+            <a class="w-full md:block hidden text-start h-16 py-4 pl-6 font-medium hover:underline" [routerLink]="['/favorites']" (click)="menuTrigger()"> 
               Favorites
             </a>
-            <a class="w-full md:block hidden text-start h-16  pl-6 font-medium hover:underline " [routerLink]="['/profile' ]" (click)="menuTrigger()"> 
+            <a class="w-full md:block hidden text-start h-16 py-4 pl-6 font-medium hover:underline " [routerLink]="['/profile' ]" (click)="menuTrigger()"> 
               Account Settings
             </a>
           }

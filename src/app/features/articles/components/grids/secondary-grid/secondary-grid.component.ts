@@ -80,7 +80,7 @@ import { DatePipe, NgClass } from '@angular/common';
               <div class="absolute h-[5.5rem] w-[3.5rem] bg-brandShade lg:block hidden bottom-0 left-0 -ml-[3.5rem]"></div>
               <a [routerLink]="['/article',urlFormat(articles()![$index+2].articleID!, articles()![$index+2].heading)]"
               (mouseover)="cellHoverCheck($index+2)" (mouseout)="cellHoverCheck($index+2)"
-              class="flex flex-col justify-between w-full h-full bg-white hover:bg-brandGrey p-1 sm:p-3 sm:border-0 border-t-2 border-black">
+              class="flex flex-col justify-between w-full h-full bg-white hover:bg-brandGrey p-2 sm:p-3 sm:border-0 border-t-2 border-black">
                 <span class="font-medium lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
                 <div class="flex flex-col">
                   <span class="hidden xl:inline-block text-[1.1rem] font-italic self-end">{{item.authorName}}</span>
@@ -92,7 +92,7 @@ import { DatePipe, NgClass } from '@angular/common';
               <a [routerLink]="['/article',urlFormat(articles()![$index+2].articleID!, articles()![$index+2].heading)]"
               (mouseover)="cellHoverCheck($index+2)" (mouseout)="cellHoverCheck($index+2)"
               [ngClass]="$index == 1 ? 'bg-white  hover:bg-brandGrey sm:bg-brandGrey sm:border-white sm:border-t-4 sm:border-b-4 md:border-t-0 md:border-b-0 md:border-r-4 md:border-l-4 lg:border-r-0 lg:border-l-0 sm:hover:bg-white lg:bg-white lg:hover:bg-brandGrey': 'bg-white  hover:bg-brandGrey'"
-              class="flex flex-col justify-between w-full h-full p-1 sm:p-3 sm:border-0 border-t-2 border-black">
+              class="flex flex-col justify-between w-full h-full p-2 sm:p-3 sm:border-0 border-t-2 border-black">
                 <span class="font-medium lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
                 <div class="flex flex-col">
                   <span class="hidden xl:inline-block text-[1.1rem] font-italic self-end">{{item.authorName}}</span>

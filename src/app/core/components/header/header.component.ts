@@ -43,7 +43,7 @@ import { Author } from 'app/shared/interfaces/author.interface';
     imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass, ReactiveFormsModule],
     template: `
     <header
-      class="sticky top-0 left-0 z-50 h-[7.5rem]   bg-white"
+      class="sticky top-0 left-0 z-50 h-[14vh] bg-white"
       [ngClass]="visibility() ? 'flex' : 'hidden'"
     >
       <nav class="w-full flex justify-between">

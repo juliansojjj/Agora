@@ -46,7 +46,7 @@ import { Article } from 'app/shared/interfaces/article.interface';
     imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass, ReactiveFormsModule],
     template: `
     <header
-      class="w-full flex top-0 left-0 z-50 h-[7.5rem]"
+      class="w-full flex top-0 left-0 z-50 h-[14vh]"
       [ngClass]="banner() ? 'lg:fixed bannerHeader max-lg:sticky max-lg:bg-white' : 'sticky bg-white'" 
     >
       <nav class="w-full flex " [ngClass]="banner() ? 'max-lg:justify-between bannerNav' : 'justify-between'">
