@@ -17,7 +17,7 @@ import { NgClass } from '@angular/common';
       [routerLink]="['/article',urlFormat(highArticle()![0].articleID!, highArticle()![0].heading)]" 
       (mouseover)="cellHoverCheck('high',0)" (mouseout)="cellHoverCheck('high',0)">
         <div class="absolute w-full h-full bottom-0  
-        2xl:grid-rows-[1fr_13.2rem_6.6rem_3.3rem]
+        2xl:grid-rows-[26.4rem_13.2rem_6.6rem_3.3rem]
         xl:grid-rows-[1fr_13.2rem_6.6rem_3.3rem] xl:grid
         flex items-end z-10">
           <div class="lg:block hidden"></div>
@@ -50,8 +50,8 @@ import { NgClass } from '@angular/common';
         </div>
       </a>
 
-      <div class="w-full h-[1rem] bg-brandShade max-md:block hidden"></div>
       <div class="w-full h-[1rem] bg-brandViolet max-md:block hidden"></div>
+      <div class="w-full h-[1rem] bg-brandShade max-md:block hidden"></div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-col w-full lg:h-[46.2rem] relative">
         <div class="w-full h-[46.2rem] absolute top-0 lg:grid hidden grid-rows-[3.3rem_9.9rem_3.3rem_9.9rem_3.3rem_9.9rem_3.3rem_3.3rem]">
@@ -131,8 +131,6 @@ export class Main2GridComponent {
         else this.highCellHover.set('')
     }
   }
-
-
 
   urlFormat(id: string, title: string) {
     const formatTitle = title
