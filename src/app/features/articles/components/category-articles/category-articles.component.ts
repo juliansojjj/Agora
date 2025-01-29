@@ -179,6 +179,7 @@ export class CategoryArticlesComponent {
     switchMap(title=>this.firebaseService.getCategory(title)),
     switchMap((res) => {
       this.category.set(res[0])
+      this.categoryEnd.set(false)
 
       if(!res.length) this.router.navigate(['/not-found'])
       
@@ -206,7 +207,7 @@ export class CategoryArticlesComponent {
           return res
         })
       )
-      : this.firebaseService.getMainCategoryArticles(this.title(),8).pipe(
+      : this.firebaseService.getMainCategoryArticles(this.title(),16).pipe(
         map(res=>{
           this.lastDoc.set(res[res.length-1])
           this.chunksData.set(res)

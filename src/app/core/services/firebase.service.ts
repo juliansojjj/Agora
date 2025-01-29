@@ -130,7 +130,7 @@ export class FirebaseService {
       collectionData(query(ref,
         where('category','==', name),
         orderBy('date', 'desc'),
-        limit(max*end)), 
+        limit(max*end + 8)), 
         { idField: 'articleID' }
       )
     ) as Observable<Article[]>
@@ -156,7 +156,6 @@ export class FirebaseService {
   }
 
   getCategoryArticles(category:string, max?:number, start?:Timestamp, end?:number) {
-    console.log(category)
     const categoryArray = category.split(' ')
     const name = categoryArray.join('-').toLowerCase()
     
