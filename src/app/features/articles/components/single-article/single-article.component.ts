@@ -57,24 +57,26 @@ import { ArticleHeaderComponent } from '../article-header/article-header.compone
 import { ArticleMenuComponent } from '../article-menu/article-menu.component';
 import { Author } from '../../../../shared/interfaces/author.interface';
 import { StandardGridComponent } from "../grids/standard-grid/standard-grid.component";
+import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-skeleton.component";
 
 @Component({
     selector: 'app-single-article',
     imports: [
-        AsyncPipe,
-        TypeofPipe,
-        DatePipe,
-        TitleCasePipe,
-        NgClass,
-        RouterLink,
-        ReactiveFormsModule,
-        TextAreaResizeDirective,
-        CommentsLengthPipe,
-        RouterLink,
-        ArticleHeaderComponent,
-        ArticleMenuComponent,
-        StandardGridComponent
-    ],
+    AsyncPipe,
+    TypeofPipe,
+    DatePipe,
+    TitleCasePipe,
+    NgClass,
+    RouterLink,
+    ReactiveFormsModule,
+    TextAreaResizeDirective,
+    CommentsLengthPipe,
+    RouterLink,
+    ArticleHeaderComponent,
+    ArticleMenuComponent,
+    StandardGridComponent,
+    ArticleSkeletonComponent
+],
     template: `
     @if (data$ | async; as data) {
       <app-article-header [banner]="data.frontImageBanner" [headingInfo]="headingInfo()" [(menu)]="menu"/>
@@ -408,7 +410,8 @@ import { StandardGridComponent } from "../grids/standard-grid/standard-grid.comp
       </article>
 
     } @else {
-      <p>Loading...</p>
+      <app-article-header [headingInfo]="headingInfo()" [(menu)]="menu"/>
+      <app-article-skeleton />
     }
   `,
     styles: `

@@ -7,10 +7,11 @@ import { AsyncPipe } from '@angular/common';
 import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
 import { Author } from '../../../../shared/interfaces/author.interface';
 import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-grid/ext-standard-grid.component';
+import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid-skeleton/ext-standard-grid-skeleton.component";
 
 @Component({
     selector: 'app-author',
-    imports: [AsyncPipe, ExtStandardGridComponent, OrderArticlesByDatePipe],
+    imports: [AsyncPipe, ExtStandardGridComponent, OrderArticlesByDatePipe, ExtStandardGridSkeletonComponent],
     template: `
     @if(id()){
       <div class="relative mt-[2rem]">
@@ -50,10 +51,37 @@ import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-gr
                 <img [src]="authorData.authorImage" alt="fake image of author" class="lg:block hidden xl:w-[21rem] object-cover rounded-full justify-self-end">
                 <div></div>
               </section>
+            } @else {
+              <section class="lg:grid lg:grid-cols-[4%_57%_35%_4%] flex flex-col w-full items-center lg:items-start">
+                <div class="lg:hidden block sm:w-1/3 w-1/2 aspect-square rounded-full skeletonImg"></div>
+                <div></div>
+                <div class="flex flex-col lg:text-left text-center text-[1.4rem]">
+                  <div class="w-full lg:h-[5rem] sm:h-[3.5rem] xsm:h-[3rem] mb-8 h-[2.3rem] skeletonElement"></div>
+                  <div class="w-[85%] lg:h-[2.6rem] sm:h-[2rem] h-[1.7rem] mb-12 skeletonElement"></div>
+
+                  <div class="w-full h-[1.2rem] xsm:h-[1.4rem] mb-4 sm:px-0 px-4 text-left skeletonElement"></div>
+                  <div class="w-full h-[1.2rem] xsm:h-[1.4rem] mb-4 sm:px-0 px-4 text-left skeletonElement"></div>
+                  <div class="w-full h-[1.2rem] xsm:h-[1.4rem] mb-4 sm:px-0 px-4 text-left skeletonElement"></div>
+                  <div class="w-full h-[1.2rem] xsm:h-[1.4rem] mb-4 sm:px-0 px-4 text-left skeletonElement"></div>
+                  <div class="w-[85%] h-[1.2rem] xsm:h-[1.4rem] mb-12 sm:px-0 px-4 text-left skeletonElement"></div>
+
+                  <div class="w-[85%] h-[1.4rem] skeletonElement"></div>
+                </div>
+                <img class="lg:block hidden xl:w-[21rem] aspect-square rounded-full justify-self-end skeletonImg">
+                <div></div>
+              </section>
             }
-            <section class=" w-full h-fit pt-20">
-                <app-ext-standard-grid [articles]="((articles$ | async)! | orderArticlesByDate)"/>
-            </section>
+
+
+            @if(articles$ | async){
+              <section class=" w-full h-fit pt-20">
+                  <app-ext-standard-grid [articles]="((articles$ | async)! | orderArticlesByDate)"/>
+              </section>
+            } @else {
+              <section class=" w-full h-fit pt-20">
+                <app-ext-standard-grid-skeleton />
+              </section>
+            }
 
             </section>
           <div></div>

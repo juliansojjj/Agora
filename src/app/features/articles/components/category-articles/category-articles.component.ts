@@ -14,10 +14,11 @@ import { Category } from '../../../../shared/interfaces/category.interface';
 import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-grid/ext-standard-grid.component';
 import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
 import { parse } from 'path';
+import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid-skeleton/ext-standard-grid-skeleton.component";
 
 @Component({
     selector: 'app-category-articles',
-    imports: [NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe],
+    imports: [NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe, ExtStandardGridSkeletonComponent],
     template: `
       <div class="relative "
       [ngClass]="category() && !category()?.main ? 'xl:mt-[2rem]' : ''">
@@ -31,7 +32,7 @@ import { parse } from 'path';
             </div>
             <div class="aspect-square bg-brandShade w-[6rem] triangleShape -rotate-90 mt-[12rem]"></div>
           </div>  
-        } @else{
+        } @else if(category() && category()?.main){
           <div class="absolute w-full h-fit top-0 left-0 xl:grid hidden grid-cols-[9%_37%_45%_9%] -z-10">
             <div class="aspect-square bg-brandShade w-[9rem] "></div>
 
@@ -65,10 +66,12 @@ import { parse } from 'path';
                     </div>
                     <div class="aspect-square rounded-full bg-brandShade self-end w-[8rem] -mt-[3rem] -mr-[4rem] -z-10 xl:block hidden"></div>
               </section>
-            }@else{
+            }@else if(category() && !category()?.main){
               <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 xsm:px-4 px-2 mt-14 md:text-start text-center">
                 {{category()?.name}}
               </h1>
+            }@else {
+              <div class="skeletonElement w-[50%] h-[5rem] mt-14 lg:-mb-20"></div>
             }
             
             @if(initialData$ | async; as data){
@@ -85,6 +88,10 @@ import { parse } from 'path';
                   @if(isChunkLoading()){. . .}@else{See more}
                 </button>
               }
+            }@else{
+              <section class="w-full h-fit lg:pt-[25rem] pt-10">
+                  <app-ext-standard-grid-skeleton />
+              </section>
             }
           </div>
 

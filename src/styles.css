@@ -12,3 +12,32 @@ body{
     min-height: fit-content !important;
     overflow: auto;
 }
+
+.skeletonImg{
+    opacity:.8;
+    animation:skeletonImg-animation 6s linear infinite alternate;
+    animation-delay:300ms;
+  }
+  @keyframes skeletonImg-animation{
+    0%{
+      background-color:#a9a9a9;
+    }
+    100%{
+      background-color:#d6d6d6;
+    }
+  }
+
+  
+  .skeletonElement{
+    animation:skeleton-animation 2s linear infinite alternate;
+  }
+  @keyframes skeleton-animation{
+    0%{
+      background: linear-gradient(to left, #f1f1f1, #c6c6c6);
+      background-size: 100% 100%;
+    }
+    100%{
+      background: linear-gradient(to left, #f1f1f1, #c6c6c6);
+      background-size: 400% 100%;
+    }
+  }
