@@ -1,7 +1,7 @@
 import { Component, inject, input, Input, model, numberAttribute, OnInit } from '@angular/core';
 import { Article, title } from '../../../../shared/interfaces/article.interface';
 import { bufferCount, catchError, EMPTY, map, Observable, Subscription, switchMap, take, takeLast } from 'rxjs';
-import { NgFor, NgIf, AsyncPipe, NgClass } from '@angular/common';
+import { NgFor, NgIf, AsyncPipe, NgClass, TitleCasePipe } from '@angular/common';
 import {
   NavigationEnd,
   NavigationStart,
@@ -18,7 +18,7 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
 
 @Component({
     selector: 'app-category-articles',
-    imports: [NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe, ExtStandardGridSkeletonComponent],
+    imports: [TitleCasePipe, NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe, ExtStandardGridSkeletonComponent],
     template: `
       <div class="relative "
       [ngClass]="category() && !category()?.main ? 'xl:mt-[2rem]' : ''">
@@ -71,7 +71,9 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
                 {{category()?.name}}
               </h1>
             }@else {
-              <div class="skeletonElement w-[50%] h-[5rem] mt-14 lg:-mb-20"></div>
+              <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 xsm:px-4 px-2 mt-14 md:text-start text-center">
+                {{title() | titlecase}}
+              </h1>
             }
             
             @if(initialData$ | async; as data){

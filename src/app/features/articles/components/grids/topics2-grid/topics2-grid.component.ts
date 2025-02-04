@@ -28,8 +28,8 @@ import { Article } from 'app/shared/interfaces/article.interface';
               </div>
               <span class="p-3 lg:pl-4 h-[7rem] w-full font-semibold lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
               <div class="flex flex-col p-2 pr-4">
-                <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] font-italic self-end">{{item.authorName}}</span>
-                <span class="hidden xsm:inline-block lg:hidden text-[1rem] font-italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
+                <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
+                <span class="hidden xsm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
               </div>
             </a>
           } @else{
@@ -63,8 +63,8 @@ import { Article } from 'app/shared/interfaces/article.interface';
               </div>
               <span class="p-3 lg:pl-4 h-[7rem] w-full font-semibold lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
               <div class="flex flex-col p-2 pr-4">
-                <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] font-italic self-end">{{item.authorName}}</span>
-                <span class="hidden xsm:inline-block lg:hidden text-[1rem] font-italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
+                <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
+                <span class="hidden xsm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
               </div>
             </a>
           } @else{
@@ -98,8 +98,8 @@ import { Article } from 'app/shared/interfaces/article.interface';
               </div>
               <span class="p-3 lg:pl-4 h-[7rem] w-full font-semibold lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
               <div class="flex flex-col p-2 pr-4">
-                <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] font-italic self-end">{{item.authorName}}</span>
-                <span class="hidden xsm:inline-block lg:hidden text-[1rem] font-italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
+                <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
+                <span class="hidden xsm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
               </div>
             </a>
           } @else{
