@@ -1,24 +1,20 @@
+import { NgClass } from '@angular/common';
 import { Component, inject, input, model } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
-  FormControlName,
   NonNullableFormBuilder,
   ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { FirebaseService } from '../../../core/services/firebase.service';
 import { Router, RouterLink } from '@angular/router';
+import { FirebaseService } from '../../../core/services/firebase.service';
 import { PassInputComponent } from '../../../shared/components/pass-input/pass-input.component';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.interfaces';
-import { NgClass, NgIf } from '@angular/common';
 
 
 @Component({
     selector: 'app-signup',
-    imports: [ReactiveFormsModule, RouterLink, PassInputComponent, NgIf, NgClass],
+    imports: [ReactiveFormsModule, RouterLink, PassInputComponent, NgClass],
     template: `
   <div class="relative w-full h-fit">
       <div class="w-full lg:grid lg:grid-cols-[9%_82%_9%] flex flex-col lg:items-start items-center pt-6">

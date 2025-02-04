@@ -1,14 +1,13 @@
+import { NgClass } from '@angular/common';
 import { Component, inject, input, model } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FirebaseService } from '../../../core/services/firebase.service';
 import { Router, RouterLink } from '@angular/router';
+import { FirebaseService } from '../../../core/services/firebase.service';
 import { PassInputComponent } from '../../../shared/components/pass-input/pass-input.component';
-import { catchError, map, throwError } from 'rxjs';
-import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-login',
-    imports: [ReactiveFormsModule, RouterLink, PassInputComponent, NgClass],
+    imports: [ReactiveFormsModule, RouterLink, PassInputComponent],
     template: `
     <div class="relative w-full h-fit">
       <div class="w-full lg:grid lg:grid-cols-[9%_82%_9%] flex flex-col lg:items-start items-center pt-6">

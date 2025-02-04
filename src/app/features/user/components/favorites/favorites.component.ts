@@ -1,16 +1,15 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.interfaces';
-import { EMPTY, from, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { map, of, switchMap } from 'rxjs';
 import { FirebaseService } from '../../../../core/services/firebase.service';
-import { AsyncPipe } from '@angular/common';
-import { Article } from '../../../../shared/interfaces/article.interface';
+import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.interfaces';
 import { StandardGridComponent } from "../../../articles/components/grids/standard-grid/standard-grid.component";
 import { OrderArticlesByDatePipe } from "../../../articles/pipes/order-articles-by-date.pipe";
 
 @Component({
     selector: 'app-favorites',
-    imports: [AsyncPipe, StandardGridComponent, OrderArticlesByDatePipe],
+    imports: [AsyncPipe, StandardGridComponent],
     template: `
   <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%]  flex flex-col items-center md:pt-6 xl:px-0 sm:px-6 px-0">
     <div></div>

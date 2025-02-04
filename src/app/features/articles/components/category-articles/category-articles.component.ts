@@ -1,24 +1,21 @@
-import { Component, inject, input, Input, model, numberAttribute, OnInit } from '@angular/core';
-import { Article, title } from '../../../../shared/interfaces/article.interface';
-import { bufferCount, catchError, EMPTY, map, Observable, Subscription, switchMap, take, takeLast } from 'rxjs';
-import { NgFor, NgIf, AsyncPipe, NgClass, TitleCasePipe } from '@angular/common';
+import { AsyncPipe, NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { Component, inject, input, model } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import {
-  NavigationEnd,
-  NavigationStart,
   Router,
-  RouterLink,
+  RouterLink
 } from '@angular/router';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { map, switchMap } from 'rxjs';
 import { FirebaseService } from '../../../../core/services/firebase.service';
+import { Article } from '../../../../shared/interfaces/article.interface';
 import { Category } from '../../../../shared/interfaces/category.interface';
-import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-grid/ext-standard-grid.component';
 import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
-import { parse } from 'path';
+import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-grid/ext-standard-grid.component';
 import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid-skeleton/ext-standard-grid-skeleton.component";
 
 @Component({
     selector: 'app-category-articles',
-    imports: [TitleCasePipe, NgFor, NgIf, RouterLink, AsyncPipe, NgClass, ExtStandardGridComponent, OrderArticlesByDatePipe, ExtStandardGridSkeletonComponent],
+    imports: [TitleCasePipe, AsyncPipe, NgClass, ExtStandardGridComponent, ExtStandardGridSkeletonComponent],
     template: `
       <div class="relative "
       [ngClass]="category() && !category()?.main ? 'xl:mt-[2rem]' : ''">

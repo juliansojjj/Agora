@@ -6,7 +6,6 @@ import { MenuComponent } from './core/components/menu/menu.component';
 import { AsyncPipe, isPlatformBrowser, JsonPipe, NgClass, NgIf } from '@angular/common';
 import { toSignal, ToSignalOptions } from '@angular/core/rxjs-interop';
 
-import '@fontsource-variable/montserrat';
 import { FooterComponent } from './core/components/footer/footer.component';
 
 

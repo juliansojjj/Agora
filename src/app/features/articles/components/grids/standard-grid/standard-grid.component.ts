@@ -1,11 +1,11 @@
-import { Component, input, model } from '@angular/core';
-import { Article } from '../../../../../shared/interfaces/article.interface';
-import { RouterLink } from '@angular/router';
 import { NgClass, NgStyle } from '@angular/common';
+import { Component, input, model } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Article } from '../../../../../shared/interfaces/article.interface';
 
 @Component({
     selector: 'app-standard-grid',
-    imports: [RouterLink, NgClass, NgStyle],
+    imports: [RouterLink, NgClass],
     template: `
     <div class="w-full relative h-full grid md:grid-cols-3 xsm:grid-cols-2 grid-cols-1 gap-[1rem] place-items-center justify-center place-content-center">
 

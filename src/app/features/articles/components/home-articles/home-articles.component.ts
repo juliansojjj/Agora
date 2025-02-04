@@ -1,46 +1,31 @@
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {
-  AfterContentChecked,
-  AfterViewChecked,
-  AfterViewInit,
   Component,
-  effect,
-  ElementRef,
-  inject,
-  model,
-  ModelSignal,
-  QueryList,
-  ViewChildren,
-  WritableSignal,
+  inject
 } from '@angular/core';
-import { Article, paragraph } from '../../../../shared/interfaces/article.interface';
-import { NgFor, NgIf, AsyncPipe, NgClass } from '@angular/common';
-import { catchError, EMPTY, map, Observable } from 'rxjs';
-import { RouterLink } from '@angular/router';
-import { FirebaseService } from '../../../../core/services/firebase.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   collection,
   doc,
-  serverTimestamp,
-  Timestamp,
-  setDoc,
+  setDoc
 } from '@angular/fire/firestore';
-import { child, set } from '@angular/fire/database';
-import { OrderByDatePipe } from '../../pipes/order-by-date.pipe';
+import { RouterLink } from '@angular/router';
+import { FirebaseService } from '../../../../core/services/firebase.service';
+import { Article } from '../../../../shared/interfaces/article.interface';
 import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
 import { MainGridComponent } from '../grids/main-grid/main-grid.component';
 import { Main2GridComponent } from '../grids/main-grid/main2-grid/main2-grid.component';
 import { SecondaryGridComponent } from '../grids/secondary-grid/secondary-grid.component';
-import { StandardGridComponent } from '../grids/standard-grid/standard-grid.component';
 import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-grid.component";
 import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-grid.component';
+import { StandardGridComponent } from '../grids/standard-grid/standard-grid.component';
 import { TopicsGridComponent } from "../grids/topics-grid/topics-grid.component";
 import { Topics2GridComponent } from "../grids/topics2-grid/topics2-grid.component";
 import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-skeleton.component";
 
 @Component({
     selector: 'app-home-articles',
-    imports: [NgFor, NgIf, RouterLink, AsyncPipe, OrderArticlesByDatePipe, NgClass, MainGridComponent, SecondaryGridComponent, Secondary2GridComponent, Secondary3GridComponent, StandardGridComponent, Main2GridComponent, TopicsGridComponent, Topics2GridComponent, Main2GridSkeletonComponent],
+    imports: [RouterLink, SecondaryGridComponent, Secondary2GridComponent, Secondary3GridComponent, Main2GridComponent, TopicsGridComponent, Topics2GridComponent, Main2GridSkeletonComponent],
     template: `
       <main class="flex flex-col items-center h-fit relative w-full">
         @if(techArticles()){

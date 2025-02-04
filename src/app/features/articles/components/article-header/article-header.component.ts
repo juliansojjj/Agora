@@ -1,49 +1,35 @@
 import {
+  AsyncPipe,
+  DOCUMENT,
+  NgClass,
+  NgIf
+} from '@angular/common';
+import {
   AfterViewChecked,
-  AfterViewInit,
   Component,
-  effect,
   inject,
   input,
   model,
   OnInit,
-  output,
-  QueryList,
-  Renderer2,
-  ViewChild,
-  ViewChildren,
+  Renderer2
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import {
-  AsyncPipe,
-  DOCUMENT,
-  isPlatformBrowser,
-  Location,
-  NgClass,
-  NgIf,
-} from '@angular/common';
-import {
-  ActivatedRoute,
   NavigationEnd,
   Router,
-  RouterLink,
+  RouterLink
 } from '@angular/router';
+import { Article } from 'app/shared/interfaces/article.interface';
+import Fuse, { FuseResult } from 'fuse.js';
+import { debounceTime, filter, of, switchMap } from 'rxjs';
 import { MenuComponent } from '../../../../core/components/menu/menu.component';
 import { FirebaseService } from '../../../../core/services/firebase.service';
-import { authState } from '@angular/fire/auth';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, filter, map, Observable, of, switchMap } from 'rxjs';
-import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.interfaces';
-import { Category } from '../../../../shared/interfaces/category.interface';
-import { TitleStrategyService } from '../../../../core/services/title-strategy.service';
-import { Title } from '@angular/platform-browser';
-import { ElementRef } from '@angular/core';
-import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import Fuse, { FuseResult } from 'fuse.js';
-import { Article } from 'app/shared/interfaces/article.interface';
 
 @Component({
     selector: 'app-article-header',
-    imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass, ReactiveFormsModule],
+    imports: [RouterLink, NgClass, ReactiveFormsModule],
     template: `
     <header
       class="w-full flex top-0 left-0 z-50 h-[14vh]"

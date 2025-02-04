@@ -1,46 +1,31 @@
 import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  effect,
-  inject,
-  input,
-  model,
-  OnInit,
-  output,
-  Renderer2,
-} from '@angular/core';
-import {
-  AsyncPipe,
   DOCUMENT,
-  isPlatformBrowser,
-  Location,
-  NgClass,
-  NgIf,
+  NgClass
 } from '@angular/common';
 import {
-  ActivatedRoute,
+  AfterViewChecked,
+  Component,
+  inject,
+  model,
+  OnInit,
+  Renderer2
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import {
   NavigationEnd,
   Router,
-  RouterLink,
+  RouterLink
 } from '@angular/router';
-import { MenuComponent } from '../menu/menu.component';
-import { FirebaseService } from '../../services/firebase.service';
-import { authState } from '@angular/fire/auth';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, filter, map, Observable, of, switchMap } from 'rxjs';
-import { FirestoreCollectionUser } from '../../../shared/interfaces/firebase.interfaces';
-import { Category } from '../../../shared/interfaces/category.interface';
-import { TitleStrategyService } from '../../services/title-strategy.service';
-import { Title } from '@angular/platform-browser';
-import { NonNullableFormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
-import Fuse, { FuseResult } from 'fuse.js';
 import { Article } from 'app/shared/interfaces/article.interface';
-import { Author } from 'app/shared/interfaces/author.interface';
+import Fuse, { FuseResult } from 'fuse.js';
+import { debounceTime, filter, of, switchMap } from 'rxjs';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
     selector: 'app-header',
-    imports: [RouterLink, AsyncPipe, NgIf, MenuComponent, NgClass, ReactiveFormsModule],
+    imports: [RouterLink, NgClass, ReactiveFormsModule],
     template: `
     <header
       class="sticky top-0 left-0 z-50 h-[14vh] bg-white"
