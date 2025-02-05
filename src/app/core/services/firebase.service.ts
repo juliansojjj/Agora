@@ -1,57 +1,50 @@
-import { inject, Injectable, input } from '@angular/core';
-import { catchError, debounceTime, filter, forkJoin, from, map, Observable, ObservableInput, of, take, throwError } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, debounceTime, forkJoin, from, map, Observable, take, throwError } from 'rxjs';
 
 import {
   Auth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signOut,
-  signInWithEmailAndPassword,
-  updatePassword,
   authState,
-  user,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
   updateEmail,
+  updatePassword,
+  updateProfile,
+  user
 } from '@angular/fire/auth';
 
 import {
-  documentId,
-  addDoc,
+  arrayRemove,
+  arrayUnion,
   collection,
-  Firestore,
+  collectionData,
   doc,
-  getDoc,
-  query,
-  where,
+  docData,
+  documentId,
+  Firestore,
   limit,
   orderBy,
-  DocumentData,
-  setDoc,
-  updateDoc,
-  collectionData,
+  query,
   serverTimestamp,
-  FieldValue,
-  arrayUnion,
-  arrayRemove,
-  docData,
+  setDoc,
   startAfter,
   Timestamp,
-  endAt,
-  limitToLast,
-  startAt,
-  endBefore
+  updateDoc,
+  where
 } from '@angular/fire/firestore';
 
-import {
-  FirebaseAuthUser,
-  FirestoreCollectionUser,
-} from '../../shared/interfaces/firebase.interfaces';
 import { Article } from '../../shared/interfaces/article.interface';
 import { Author } from '../../shared/interfaces/author.interface';
 import { Category } from '../../shared/interfaces/category.interface';
 import { Comment } from '../../shared/interfaces/comment.interface';
-import { limitToFirst } from '@angular/fire/database';
+import {
+  FirebaseAuthSignUser,
+  FirestoreCollectionUser
+} from '../../shared/interfaces/firebase.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -315,17 +308,22 @@ export class FirebaseService {
     } else return throwError(()=>new Error('Your current session is to old, please login again'))
   }
 
-  documentUser(username: string, email: string, id:string) {
+  documentUser(username: string, email: string, id:string, providerId?:string) {
     const ref = collection(this.firestoreService, 'users');
 
-    const res = setDoc(doc(ref, id),
+    return providerId 
+    ? from(setDoc(doc(ref, id),
     { 
       username: username,
       email: email,
-      subscription: false,
-    } )
-
-    return from(res)
+      providerId:providerId
+    } ))
+    : from(setDoc(doc(ref, id),
+    { 
+      username: username,
+      email: email,
+      providerId:'none'
+    } ))
   }
 
   addComment(username: string, uid: string, articleID:string, content:string) {
@@ -360,6 +358,7 @@ export class FirebaseService {
 
     return from(createUser).pipe(
       map(res=>{
+        console.log(res)
         return forkJoin([
           updateProfile(res.user, { displayName: username }),
           this.documentUser(username, email,res.user.uid)
@@ -367,6 +366,22 @@ export class FirebaseService {
       }),
       catchError(err=>throwError(()=>err))
     );
+  }
+
+  googleSignIn(){
+    const provider = new GoogleAuthProvider()
+    
+    return from(signInWithPopup(this.authService,provider).then((res:any)=>{
+      if((res as FirebaseAuthSignUser)._tokenResponse.isNewUser) {
+        return {isNewUser:true,res:res}
+      } else return {isNewUser:false,res:res}
+
+    })).pipe(map(({isNewUser,res})=>{
+      return isNewUser 
+      ? from(this.documentUser(res.user.displayName!, res.user.email!,res.user.uid, res.providerId!))
+      : res
+    })
+    )
   }
 
   login(email: string, password: string){

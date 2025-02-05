@@ -25,10 +25,18 @@ export interface FirebaseAuthUser{
     "appName": string
 }
 
+    export interface FirebaseAuthSignUser{
+    _tokenResponse: {isNewUser:boolean}
+    operationType: string
+    providerId: string
+    user: {displayName:string,email:string,uid:string}
+    }
+
 
 export interface FirestoreCollectionUser {
     username:string
     email:string
-    subscription:boolean
+    providerId:'none'|'google.com'|'apple.com'
+    subscription?:boolean
     favorites?:string[];
 }

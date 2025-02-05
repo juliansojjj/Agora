@@ -657,7 +657,7 @@ export class SingleArticleComponent implements OnInit {
     text: this.formBuilder.control('', {
       validators: [
         Validators.maxLength(250),
-        Validators.pattern("^(?!.*([._'¨]{3}))[a-zA-Z0-9@._'¨\\s]*(?:[._'¨]{0,2}[a-zA-Z0-9\\s]*)*$"),
+        Validators.pattern("^(?!.*[^\u0000-\u007F])[a-zA-Z0-9@#$%&\\(\\)\\[\\]\\{\\}\\*\\+\\-\\=\\.\\!\\?\\,\\;:\\~`'\"\\s]*$"),
         Validators.required,
         this.trimValidator,
       ],

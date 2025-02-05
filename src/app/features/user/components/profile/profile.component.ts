@@ -22,7 +22,7 @@ import { AsyncPipe, NgClass } from '@angular/common';
       text-[2.3rem]">
         Profile
       </h1>
-      @if(firestoreUser$ | async){
+      @if(firestoreUser$ | async; as firestoreUser){
         <form [formGroup]="usernameForm" (ngSubmit)="onUsernameSubmit()" class="md:mt-14 mt-8 md:grid md:grid-cols-[9rem_20rem_2rem_6rem] flex flex-col max-md:items-center max-md:place-content-center md:gap-y-2">
 
           <div class="flex h-fit md:items-center flex-col-reverse md:flex-row-reverse col-span-2">
@@ -89,119 +89,121 @@ import { AsyncPipe, NgClass } from '@angular/common';
         </form>
 
         <!-- ------------------------------------------------------ -->
+         @if(firestoreUser.providerId == 'none'){
 
-        <form [formGroup]="emailForm" (ngSubmit)="onEmailSubmit()" class="mt-3 md:grid md:grid-cols-[9rem_20rem_2rem_6rem] flex flex-col max-md:items-center max-md:place-content-center md:gap-y-2">
+          <form [formGroup]="emailForm" (ngSubmit)="onEmailSubmit()" class="mt-3 md:grid md:grid-cols-[9rem_20rem_2rem_6rem] flex flex-col max-md:items-center max-md:place-content-center md:gap-y-2">
 
-          <div class="flex h-fit md:items-center flex-col-reverse md:flex-row-reverse col-span-2">
-            <input type="text" formControlName="email" id="emailForm" placeholder="********" 
-            [ngClass]="emailForm.controls.email.touched ? 'border-brandShade text-black' : 'border-slate-300 text-slate-400 '"
-            class="peer xsm:w-[20rem] w-[15rem] h-[2.5rem] border-[.2rem]  focus:text-black box-border px-2 focus:outline-none focus:border-brandViolet"/>
-            
-            <label [ngClass]="emailForm.controls.email.touched ? 'text-brandShade' : 'text-slate-300'"
-            class="sm:text-[1.5rem] text-[1.2rem] min-w-[9rem] h-fit font-medium  peer-focus:text-brandViolet" for="emailForm">
-              Email
-            </label>
-          </div>
-          <div></div>
-
-          <button type="submit" [disabled]="emailForm.invalid || emailForm.pending || !emailForm.controls.email.dirty" 
-          [ngClass]="emailForm.controls.email.touched ? 'bg-black  hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300'"
-          class="w-[6rem] h-[2.5rem] hidden md:flex items-center justify-center text-white  font-medium text-[1.2rem]">
-            @if(this.emailFormState() === 'submitting'){...}@else{Update}
-          </button>
-          <div></div>
-
-            <div class="md:w-[22rem] xsm:w-[20rem] w-[15rem] h-[3.5rem] flex flex-col col-span-2 hyphens-auto md:break-all">
-              <span class="errorLabel">{{emailFormError()}}</span>
-              @if(this.emailFormState() === 'successful'){
-                <span class="text-green-400 font-medium">Email updated successfully!</span>
-              }
-
-              @if (
-                emailForm.controls.email.invalid &&
-                (emailForm.controls.email.touched || emailForm.controls.email.dirty)
-              ) {
-                @if (emailForm.controls.email.errors?.['required']) {
-                  <span class="errorLabel">Email is a required field</span>
-                }
-                @if (emailForm.controls.email.errors?.['email']) {
-                  <span class="errorLabel">Please introduce a valid email</span>
-                }
-              }
+            <div class="flex h-fit md:items-center flex-col-reverse md:flex-row-reverse col-span-2">
+              <input type="text" formControlName="email" id="emailForm" placeholder="********" 
+              [ngClass]="emailForm.controls.email.touched ? 'border-brandShade text-black' : 'border-slate-300 text-slate-400 '"
+              class="peer xsm:w-[20rem] w-[15rem] h-[2.5rem] border-[.2rem]  focus:text-black box-border px-2 focus:outline-none focus:border-brandViolet"/>
+              
+              <label [ngClass]="emailForm.controls.email.touched ? 'text-brandShade' : 'text-slate-300'"
+              class="sm:text-[1.5rem] text-[1.2rem] min-w-[9rem] h-fit font-medium  peer-focus:text-brandViolet" for="emailForm">
+                Email
+              </label>
             </div>
-          
-          
-          <div class="w-[15rem] xsm:w-[20rem] md:w-fit h-fit max-md:mt-1 max-md:flex">
+            <div></div>
+
             <button type="submit" [disabled]="emailForm.invalid || emailForm.pending || !emailForm.controls.email.dirty" 
-            [ngClass]="emailForm.controls.email.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black active:scale-95' : 'hidden'"
-            class="w-[6rem] h-[2.5rem] bg-black items-center justify-center  text-white  font-medium text-[1.2rem]">
+            [ngClass]="emailForm.controls.email.touched ? 'bg-black  hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300'"
+            class="w-[6rem] h-[2.5rem] hidden md:flex items-center justify-center text-white  font-medium text-[1.2rem]">
               @if(this.emailFormState() === 'submitting'){...}@else{Update}
             </button>
-            <button (click)="onEmailCancel()" [ngClass]="emailForm.controls.email.touched ? 'block' : 'hidden'" type="button"
-            class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.2rem]">
-              Cancel
-            </button>
-          </div>
-          
-        </form>
-              
-        <!-- ------------------------------------------------------ -->
+            <div></div>
 
-        <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" class="mt-3 md:grid md:grid-cols-[9rem_20rem_2rem_6rem] flex flex-col max-md:items-center max-md:place-content-center md:gap-y-2">
+              <div class="md:w-[22rem] xsm:w-[20rem] w-[15rem] h-[3.5rem] flex flex-col col-span-2 hyphens-auto md:break-all">
+                <span class="errorLabel">{{emailFormError()}}</span>
+                @if(this.emailFormState() === 'successful'){
+                  <span class="text-green-400 font-medium">Email updated successfully!</span>
+                }
 
-          <div class="flex h-fit md:items-center flex-col-reverse md:flex-row-reverse col-span-2">
-            <input type="password" formControlName="password" id="passwordForm" placeholder="********" [ngClass]="passwordForm.controls.password.touched ? 'border-brandShade text-black' : 'border-slate-300 text-slate-400 '"
-            class="peer xsm:w-[20rem] w-[15rem] h-[2.5rem] border-[.2rem]  focus:text-black box-border px-2 focus:outline-none focus:border-brandViolet"/>
-            
-            <label [ngClass]="passwordForm.controls.password.touched ? 'text-brandShade' : 'text-slate-300'"
-            class="sm:text-[1.5rem] text-[1.2rem] min-w-[9rem] h-fit font-medium  peer-focus:text-brandViolet" for="passwordForm">
-              Password
-            </label>
-          </div>
-          <div></div>
-
-          <button type="submit" [disabled]="passwordForm.invalid || passwordForm.pending" 
-          [ngClass]="passwordForm.controls.password.touched ? 'bg-black hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300'"
-          class="w-[6rem] h-[2.5rem] hidden md:flex items-center justify-center  text-white  font-medium text-[1.2rem]">
-            @if(this.passwordFormState() === 'submitting'){...}@else{Update}
-          </button>
-          <div></div>
-
-            <div class="md:w-[22rem] xsm:w-[20rem] w-[15rem] h-[3.5rem] flex flex-col col-span-2 hyphens-auto md:break-all">
-            <span class="errorLabel">{{passwordFormError()}}</span>
-            @if(this.passwordFormState() === 'successful'){
-             <span class="text-green-400 font-medium">Password updated successfully!</span>
-            }
-            @if (
-                  passwordForm.controls.password.invalid &&
-                  (passwordForm.controls.password.touched || passwordForm.controls.password.dirty)
-                  ) {
-                    @if (passwordForm.controls.password.errors?.['required']) {
-                      <span class="errorLabel">Password is a required field</span>
-                    }
-                    @if (passwordForm.controls.password.errors?.['minlength']) {
-                      <span class="errorLabel">The min amount of characters is 6</span>
-                    }
-                    @if (passwordForm.controls.password.errors?.['maxlength']) {
-                      <span class="errorLabel">The max amount of characters is 4096</span>
-                    }
+                @if (
+                  emailForm.controls.email.invalid &&
+                  (emailForm.controls.email.touched || emailForm.controls.email.dirty)
+                ) {
+                  @if (emailForm.controls.email.errors?.['required']) {
+                    <span class="errorLabel">Email is a required field</span>
                   }
+                  @if (emailForm.controls.email.errors?.['email']) {
+                    <span class="errorLabel">Please introduce a valid email</span>
+                  }
+                }
+              </div>
+            
+            
+            <div class="w-[15rem] xsm:w-[20rem] md:w-fit h-fit max-md:mt-1 max-md:flex">
+              <button type="submit" [disabled]="emailForm.invalid || emailForm.pending || !emailForm.controls.email.dirty" 
+              [ngClass]="emailForm.controls.email.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black active:scale-95' : 'hidden'"
+              class="w-[6rem] h-[2.5rem] bg-black items-center justify-center  text-white  font-medium text-[1.2rem]">
+                @if(this.emailFormState() === 'submitting'){...}@else{Update}
+              </button>
+              <button (click)="onEmailCancel()" [ngClass]="emailForm.controls.email.touched ? 'block' : 'hidden'" type="button"
+              class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.2rem]">
+                Cancel
+              </button>
             </div>
-          
-          
-          <div class="w-[15rem] xsm:w-[20rem] md:w-fit h-fit max-md:mt-1 max-md:flex">
+            
+          </form>
+                
+          <!-- ------------------------------------------------------ -->
+
+          <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" class="mt-3 md:grid md:grid-cols-[9rem_20rem_2rem_6rem] flex flex-col max-md:items-center max-md:place-content-center md:gap-y-2">
+
+            <div class="flex h-fit md:items-center flex-col-reverse md:flex-row-reverse col-span-2">
+              <input type="password" formControlName="password" id="passwordForm" placeholder="********" [ngClass]="passwordForm.controls.password.touched ? 'border-brandShade text-black' : 'border-slate-300 text-slate-400 '"
+              class="peer xsm:w-[20rem] w-[15rem] h-[2.5rem] border-[.2rem]  focus:text-black box-border px-2 focus:outline-none focus:border-brandViolet"/>
+              
+              <label [ngClass]="passwordForm.controls.password.touched ? 'text-brandShade' : 'text-slate-300'"
+              class="sm:text-[1.5rem] text-[1.2rem] min-w-[9rem] h-fit font-medium  peer-focus:text-brandViolet" for="passwordForm">
+                Password
+              </label>
+            </div>
+            <div></div>
+
             <button type="submit" [disabled]="passwordForm.invalid || passwordForm.pending" 
-            [ngClass]="passwordForm.controls.password.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black text-white active:scale-95' : 'hidden'"
-            class="w-[6rem] h-[2.5rem] bg-black items-center justify-center font-medium text-[1.2rem]">
+            [ngClass]="passwordForm.controls.password.touched ? 'bg-black hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300'"
+            class="w-[6rem] h-[2.5rem] hidden md:flex items-center justify-center  text-white  font-medium text-[1.2rem]">
               @if(this.passwordFormState() === 'submitting'){...}@else{Update}
             </button>
-            <button (click)="onPasswordCancel()" [ngClass]="passwordForm.controls.password.touched ? 'block' : 'hidden'" type="button"
-            class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.2rem]">
-              Cancel
-            </button>
-          </div>
-          
-        </form>
+            <div></div>
+
+              <div class="md:w-[22rem] xsm:w-[20rem] w-[15rem] h-[3.5rem] flex flex-col col-span-2 hyphens-auto md:break-all">
+              <span class="errorLabel">{{passwordFormError()}}</span>
+              @if(this.passwordFormState() === 'successful'){
+              <span class="text-green-400 font-medium">Password updated successfully!</span>
+              }
+              @if (
+                    passwordForm.controls.password.invalid &&
+                    (passwordForm.controls.password.touched || passwordForm.controls.password.dirty)
+                    ) {
+                      @if (passwordForm.controls.password.errors?.['required']) {
+                        <span class="errorLabel">Password is a required field</span>
+                      }
+                      @if (passwordForm.controls.password.errors?.['minlength']) {
+                        <span class="errorLabel">The min amount of characters is 6</span>
+                      }
+                      @if (passwordForm.controls.password.errors?.['maxlength']) {
+                        <span class="errorLabel">The max amount of characters is 4096</span>
+                      }
+                    }
+              </div>
+            
+            
+            <div class="w-[15rem] xsm:w-[20rem] md:w-fit h-fit max-md:mt-1 max-md:flex">
+              <button type="submit" [disabled]="passwordForm.invalid || passwordForm.pending" 
+              [ngClass]="passwordForm.controls.password.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black text-white active:scale-95' : 'hidden'"
+              class="w-[6rem] h-[2.5rem] bg-black items-center justify-center font-medium text-[1.2rem]">
+                @if(this.passwordFormState() === 'submitting'){...}@else{Update}
+              </button>
+              <button (click)="onPasswordCancel()" [ngClass]="passwordForm.controls.password.touched ? 'block' : 'hidden'" type="button"
+              class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.2rem]">
+                Cancel
+              </button>
+            </div>
+            
+          </form>
+        }
       } 
     </section>
 
