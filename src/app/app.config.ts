@@ -21,8 +21,6 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(), 
       withInMemoryScrolling({scrollPositionRestoration: 'enabled',anchorScrolling:'enabled'})
     ),
-    provideClientHydration(), 
-    provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),
     provideFirebaseApp(() => initializeApp({
       projectId:import.meta.env.NG_APP_PROJECTID,
       appId:import.meta.env.NG_APP_APPID,
