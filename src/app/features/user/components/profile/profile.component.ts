@@ -14,7 +14,7 @@ import { AsyncPipe, NgClass } from '@angular/common';
     <div></div>
 
     <section class="flex flex-col">
-      <h1 class="font-bold text-center xsm:mt-14 mt-0 text-brandViolet
+      <h1 class="md:font-semibold font-medium text-center xsm:mt-14 mt-0 text-brandViolet
       lg:text-[5rem] 
       md:text-start
       sm:text-[3.5rem]

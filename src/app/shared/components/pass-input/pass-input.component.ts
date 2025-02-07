@@ -9,10 +9,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   <div class="relative flex flex-col-reverse w-fit">
     <input [type]="visibility()"  [formControl]="control()" id="pass"
     [ngClass]="inputErrors() && dirtyInput() ? 'border-brandRed' : 'border-brandShade'"
-    class="peer sm:w-[20rem] w-[12rem] sm:h-[2.15rem] h-[1.8rem] sm:border-[.4rem] border-[.35rem]  box-content px-2 focus:outline-none focus:border-brandViolet xsm:text-[1.1rem] text-[1rem]"> 
+    class="peer sm:w-[20rem] xsm:w-[17rem] xxsm:w-[15rem] w-[12rem] sm:h-[2.15rem] h-[1.8rem] sm:border-[.4rem] border-[.35rem]  box-content px-2 focus:outline-none focus:border-brandViolet xsm:text-[1.1rem] text-[1rem]"> 
     
     <label [ngClass]="inputErrors() && dirtyInput() ? 'text-brandRed' : 'text-brandShade'"
-    class="sm:text-[1.7rem] text-[1.3rem] font-semibold  mb-2 text-brandShade peer-focus:text-brandViolet" for="pass">
+    class="sm:text-[1.7rem] text-[1.3rem] font-medium  mb-2 text-brandShade peer-focus:text-brandViolet" for="pass">
       Password
     </label> 
 

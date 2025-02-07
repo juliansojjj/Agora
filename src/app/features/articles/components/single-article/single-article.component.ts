@@ -113,11 +113,11 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
                 lg:w-1/2 lg:p-0 
                 sm:mt-4
                 xsm:px-6
-                mt-0 px-2" 
+                mt-0 px-5" 
                 [ngClass]="data.frontImageBanner ? 'normalLanding' : 'flex'">
                 <div #domHeading class="w-full">
                   <h1
-                    class=" font-bold text-left
+                    class="font-medium lg:font-semibold text-left
                     xl:text-[3.5rem]
                     md:text-[2.5rem]
                     sm:text-[2.25rem]
@@ -176,13 +176,13 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
                 class="relative w-full  lg:w-1/2 object-cover mt-9"
                 [ngClass]="{'normalImage': data.frontImageBanner}"
               />
-              <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4 max-lg:px-2" 
+              <span class=" w-full  lg:w-1/2 self-start lg:self-center mt-3 mb-4 max-lg:px-6" 
               [ngClass]="{'normalImageAlt': data.frontImageBanner}">
                 {{data.frontImageAlt}}
               </span>
 
           <!-- ------------------------------------------------------------------- -->
-        <section class="w-full lg:p-0 xsm:px-6 px-2 flex flex-col items-center">
+        <section class="w-full lg:p-0 xsm:px-6 px-5 flex flex-col items-center">
           
           @if(data.frontImageBanner){
             <div class="contentElement mt-5 mb-3 pr-1 flex justify-between bannerInfo">
@@ -262,18 +262,18 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
                 </div>
             }
             @if ((item | typeof) == 'title') {
-              <h3 class="font-bold md:text-[1.9rem] text-[1.6rem] mt-7 contentElement">
+              <h3 class="font-medium lg:font-semibold md:text-[1.9rem] text-[1.6rem] mt-7 contentElement">
                 {{ $any(item).title }}
               </h3>
             }
             @if ((item | typeof) == 'subtitle') {
-              <h4 class="font-bold md:text-[1.5rem] text-[1.35rem] mt-4 xsm:-mb-4 contentElement">
+              <h4 class="font-medium lg:font-semibold md:text-[1.5rem] text-[1.35rem] mt-4 xsm:-mb-4 contentElement">
                 {{ $any(item).subtitle }}
               </h4>
             }
           }
           <div class="h-fit mb-8 contentElement xsm:text-[1.2rem] text-[1.1rem]">
-            <span class="mr-1 font-bold">Topics</span>
+            <span class="mr-1 font-semibold">Topics</span>
             @for (item of data.topics; track $index) {
                 <a
                   [routerLink]="['/category/' + item.url]"
@@ -288,10 +288,10 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
           <section class="contentElement flex flex-col items-center my-6">
             <div class="w-full h-fit flex sm:flex-row flex-col items-center">
               <img [src]="authorData()?.authorImage" alt="fake image of author"
-              class="h-[7rem] w-[7rem] sm:mr-8 rounded-full">
+              class="h-[7rem] w-[7rem] max-sm:mb-4 sm:mr-8 rounded-full">
 
               <a [routerLink]="['/author',data.authorID]"
-                class=" w-fit h-fit font-bold text-left text-[2rem] underline hover:no-underline hover:bg-black hover:text-white">
+                class=" w-fit h-fit font-medium lg:font-semibold text-left text-[2rem] underline hover:no-underline hover:bg-black hover:text-white">
                 {{data.authorName}}
               </a>
             </div>
@@ -302,9 +302,9 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
 
         </section>
 
-        <section class="contentElement flex flex-col my-6 lg:p-0 xsm:px-6 px-2">
+        <section class="contentElement flex flex-col my-6 lg:p-0 xsm:px-6 px-5">
           @if (comments$ | async; as comments) {
-            <span class="md:text-[1.9rem] text-[1.6rem] font-bold self-center">{{ comments | commentsLength }} Comments</span>
+            <span class="md:text-[1.9rem] text-[1.6rem] font-medium lg:font-semibold self-center">{{ comments | commentsLength }} Comments</span>
 
             @if (!(userInfo$ | async)) {
               <div class="flex flex-col mt-2 w-full ">
@@ -395,15 +395,15 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
 
         <hr class="contentElement h-[.05rem] bg-slate-200">
 
-        <section class="flex flex-col items-center 2xl:w-1/2 lg:w-3/4 w-full mt-6 lg:p-0 xsm:px-6 px-2">
+        <section class="flex flex-col items-center 2xl:w-1/2 lg:w-3/4 w-full mt-6 lg:p-0 xsm:px-6 px-5">
 
           @if(authorArticles$ | async; as authorArticles){
-            <h4 class="md:text-[1.9rem] text-[1.6rem] md:mb-6 mb-3 font-bold">More from {{authorData()?.authorName}}</h4>
+            <h4 class="md:text-[1.9rem] text-[1.6rem] md:mb-6 mb-3 font-medium lg:font-semibold">More from {{authorData()?.authorName}}</h4>
             <app-standard-grid [articles]="authorArticles"/>
           }
 
           @if(recommendations$ | async; as recommendations){
-            <h4 class="md:text-[1.9rem] text-[1.6rem] mt-6 md:mb-6 mb-3 font-bold">More from {{category() | titlecase}}</h4>
+            <h4 class="md:text-[1.9rem] text-[1.6rem] mt-6 md:mb-6 mb-3 font-medium lg:font-semibold">More from {{category() | titlecase}}</h4>
             <app-standard-grid [articles]="recommendationsFiltered()!.slice(0,9)"/>
           }
         </section>
@@ -484,7 +484,7 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
       }
 
       .articleLink {
-        font-weight: 700;
+        font-weight: 600;
         color: #5E0060;
       }
       .articleLink:hover {

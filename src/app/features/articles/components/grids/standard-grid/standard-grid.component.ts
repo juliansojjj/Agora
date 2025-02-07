@@ -25,7 +25,7 @@ import { Article } from '../../../../../shared/interfaces/article.interface';
         <div class="w-full sm:h-1/2 xsm:h-2/3 h-2/5 p-2 z-10"
         [ngClass]="cellHover() == $index.toString() ? ' bg-brandGrey' : 'bg-white'"> 
 
-          <span class="text-[.8rem] leading-[1.2rem] sm:leading-normal sm:text-[1rem] md:text-[.9rem] xl:text-[1rem] font-semibold">{{item.heading}}</span>
+          <span class="text-[1rem] font-medium">{{item.heading}}</span>
 
         </div>
       </a>

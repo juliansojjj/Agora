@@ -36,7 +36,7 @@ import { NgClass } from '@angular/common';
             xl:mb-0 xl:pl-7 xl:px-4
             md:h-[6.6rem] md:mb-[3.3rem] md:py-3
             flex p-5" [ngClass]="highCellHover() == '0' ? 'bg-black text-white' : 'bg-white'">
-              <span class="2xl:text-[1.8rem] md:text-[1.6rem] xsm:text-[1.3rem] text-[1.1rem] font-semibold md:leading-[2.5rem] leading-[2rem]">{{highArticle()![0].heading}}</span>
+              <span class="2xl:text-[1.8rem] md:text-[1.6rem] xsm:text-[1.3rem] text-[1.1rem] font-medium md:leading-[2.5rem] leading-[2rem]">{{highArticle()![0].heading}}</span>
             </div>
             <div class="w-full hidden 2xl:flex justify-end">
               <div class="h-[6.6rem] w-[3.3rem] bg-white"></div>
@@ -80,7 +80,7 @@ import { NgClass } from '@angular/common';
             [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]"
             (mouseover)="cellHoverCheck('medium',$index)" (mouseout)="cellHoverCheck('medium',$index)"
             [ngClass]="mediumCellHover() == $index.toString() ? 'bg-black' : 'bg-white max-lg:bg-brandGrey'">
-              <span class="lg:text-right font-semibold sm:text-[1.2rem] text-[1rem] leading-[1.55rem] whitespace-normal" 
+              <span class="lg:text-right font-medium sm:text-[1.2rem] text-[1rem] leading-[1.55rem] whitespace-normal" 
               [ngClass]="mediumCellHover() == $index.toString() ? 'text-white' : ''">
                 {{item.heading}}
               </span>
@@ -99,7 +99,7 @@ import { NgClass } from '@angular/common';
               [ngClass]="mediumCellHover() == $index.toString() ? 'bg-white' : 'bg-brandShade'">
               </div> -->
               
-              <span class="lg:text-right font-semibold sm:text-[1.2rem] text-[1rem] leading-[1.55rem] whitespace-normal" 
+              <span class="lg:text-right font-medium sm:text-[1.2rem] text-[1rem] leading-[1.55rem] whitespace-normal" 
               [ngClass]="mediumCellHover() == $index.toString() ? 'text-white' : ''">
                 {{item.heading}}
               </span>

@@ -11,7 +11,7 @@ import { Article } from 'app/shared/interfaces/article.interface';
 
       <section class="w-full h-fit flex flex-col">
         <a [routerLink]="['/category/' + category1Url()]"
-                class="text-[1.8rem] xsm:text-[2rem] sm:text-[3rem] font-bold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
+                class="text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
                 {{category1Name()}}
         </a>
 
@@ -26,7 +26,7 @@ import { Article } from 'app/shared/interfaces/article.interface';
                   class="h-full w-full object-cover"
                   [ngClass]="{'scale-105': cellHover() == category1Name()}">
               </div>
-              <span class="p-3 lg:pl-4 h-[7rem] w-full font-semibold lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
+              <span class="p-3 lg:pl-4 h-[7rem] w-full font-medium lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
               <div class="flex flex-col p-2 pr-4">
                 <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
                 <span class="hidden xsm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
@@ -36,7 +36,11 @@ import { Article } from 'app/shared/interfaces/article.interface';
             <div class="w-[2.5rem] h-[1rem] bg-brandShade"></div>
             <a [routerLink]="['/article',urlFormat(category1articles()[$index].articleID!, category1articles()![$index].heading)]"
             class="flex flex-col justify-between w-full h-[7rem] p-2 pl-4 hover:bg-black hover:text-white">
-              <span class="font-semibold xl:text-[1.2rem] lg:text-[1.1rem] text-[1rem]">{{item.heading}}</span>
+              <span class="font-medium xl:text-[1.2rem] lg:text-[1.1rem] text-[1rem]">{{item.heading}}</span>
+              <div class="flex flex-col p-2 pr-2">
+                <span class="hidden sm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
+                <span class="hidden sm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
+              </div>
             </a>
           }
         }
@@ -46,7 +50,7 @@ import { Article } from 'app/shared/interfaces/article.interface';
       
       <section class="w-full h-fit flex flex-col">
         <a [routerLink]="['/category/' + category2Url()]"
-                class="text-[1.8rem] xsm:text-[2rem] sm:text-[3rem] font-bold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
+                class="text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
                 {{category2Name()}}
         </a>
 
@@ -61,7 +65,7 @@ import { Article } from 'app/shared/interfaces/article.interface';
                   class="h-full w-full object-cover"
                   [ngClass]="{'scale-105': cellHover() == category2Name()}">
               </div>
-              <span class="p-3 lg:pl-4 h-[7rem] w-full font-semibold lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
+              <span class="p-3 lg:pl-4 h-[7rem] w-full font-medium lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
               <div class="flex flex-col p-2 pr-4">
                 <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
                 <span class="hidden xsm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
@@ -71,7 +75,11 @@ import { Article } from 'app/shared/interfaces/article.interface';
             <div class="w-[2.5rem] h-[1rem] bg-brandShade"></div>
             <a [routerLink]="['/article',urlFormat(category2articles()[$index].articleID!, category2articles()![$index].heading)]"
             class="flex flex-col justify-between w-full h-[7rem] p-2 pl-4 hover:bg-black hover:text-white">
-              <span class="font-semibold xl:text-[1.2rem] lg:text-[1.1rem] text-[1rem]">{{item.heading}}</span>
+              <span class="font-medium xl:text-[1.2rem] lg:text-[1.1rem] text-[1rem]">{{item.heading}}</span>
+              <div class="flex flex-col p-2 pr-2">
+                <span class="hidden sm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
+                <span class="hidden sm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
+              </div>
             </a>
           }
         }
@@ -81,7 +89,7 @@ import { Article } from 'app/shared/interfaces/article.interface';
       
       <section class="w-full h-fit flex flex-col">
         <a [routerLink]="['/category/' + category3Url()]"
-                class="text-[1.8rem] xsm:text-[2rem] sm:text-[3rem] font-bold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
+                class="text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
                 {{category3Name()}}
         </a>
 
@@ -96,7 +104,7 @@ import { Article } from 'app/shared/interfaces/article.interface';
                   class="h-full w-full object-cover"
                   [ngClass]="{'scale-105': cellHover() == category3Name()}">
               </div>
-              <span class="p-3 lg:pl-4 h-[7rem] w-full font-semibold lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
+              <span class="p-3 lg:pl-4 h-[7rem] w-full font-medium lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
               <div class="flex flex-col p-2 pr-4">
                 <span class="hidden xsm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
                 <span class="hidden xsm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
@@ -106,7 +114,11 @@ import { Article } from 'app/shared/interfaces/article.interface';
             <div class="w-[2.5rem] h-[1rem] bg-brandShade"></div>
             <a [routerLink]="['/article',urlFormat(category3articles()[$index].articleID!, category3articles()![$index].heading)]"
             class="flex flex-col justify-between w-full h-[7rem] p-2 pl-4 hover:bg-black hover:text-white">
-              <span class="font-semibold xl:text-[1.2rem] lg:text-[1.1rem] text-[1rem]">{{item.heading}}</span>
+              <span class="font-medium xl:text-[1.2rem] lg:text-[1.1rem] text-[1rem]">{{item.heading}}</span>
+              <div class="flex flex-col p-2 pr-2">
+                <span class="hidden sm:inline-block lg:hidden text-[1.1rem] italic self-end">{{item.authorName}}</span>
+                <span class="hidden sm:inline-block lg:hidden text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
+              </div>
             </a>
           }
         }

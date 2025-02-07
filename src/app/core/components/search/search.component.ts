@@ -15,19 +15,18 @@ import { RouterLink } from '@angular/router';
     <div></div>
 
     <section class="flex flex-col">
-      <h1 class="font-bold text-center text-brandViolet
+      <h1 class="font-medium lg:font-semibold text-center text-brandViolet
       lg:text-[5rem] 
       md:text-start
-      sm:text-[3.5rem] sm:px-0
-      xsm:text-[3rem] xsm:px-4     
-      px-2 text-[2.3rem]">
+      sm:text-[3.5rem] xsm:px-0
+      text-[3rem] px-5 ">
         Search
       </h1>
 
-      <h2 class="max-sm:p-2 text-[1.4rem] my-6 break-all">'{{search()}}'</h2>
+      <h2 class="xsm:px-0 px-5 text-[1.4rem] my-6 break-all">'{{search()}}'</h2>
 
       @if(authorResults().length){
-        <h3 class="text-[2.5rem] font-semibold mb-4 max-xsm:px-2">Authors</h3>
+        <h3 class="text-[2.5rem] font-medium lg:font-semibold mb-4 xsm:px-0 px-5">Authors</h3>
         <div class="w-full grid 2xl:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           @for (item of authorResults(); track $index) {
             <a [routerLink]="['/author',item.authorID]" 
@@ -41,15 +40,15 @@ import { RouterLink } from '@angular/router';
           }
         </div>
 
-      } @else{<span class="text-[1.4rem] mb-4 max-xsm:px-2">No authors found</span>}
+      } @else{<span class="text-[1.4rem] mb-4 xsm:px-0 px-5">No authors found</span>}
 
       @if(articleResults().length){
       <section class=" w-full h-fit pt-10">
-        <h3 class="text-[2.5rem] font-semibold mb-2 max-xsm:px-2">Articles</h3>
-        <span class="mb-6 text-[1.1rem] text-slate-400 inline-block">{{articleResults().length}} results found</span>
+        <h3 class="text-[2.5rem] font-medium lg:font-semibold mb-2 xsm:px-0 px-5">Articles</h3>
+        <span class="mb-6 text-[1.1rem] text-slate-400 inline-block xsm:px-0 px-5">{{articleResults().length}} results found</span>
         <app-ext-standard-grid [articles]="articleResults()"/>
       </section>
-      } @else{<span class="text-[1.4rem] max-xsm:px-2">No articles found</span>}
+      } @else{<span class="text-[1.4rem] xsm:px-0 px-5">No articles found</span>}
 
     </section>
 

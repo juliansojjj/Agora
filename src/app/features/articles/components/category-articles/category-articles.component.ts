@@ -46,8 +46,8 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
 
           <div class="flex flex-col items-center w-full">
             @if(category() && category()?.main){
-              <section class="flex flex-col w-full  h-fit mt-14 lg:-mb-20">
-                    <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet self-center md:self-start xl:pl-6 sm:px-0 xsm:px-4 px-2">{{category()?.name}}</h1>
+              <section class="flex flex-col w-full  h-fit mt-6 md:mt-14 lg:-mb-20">
+                    <h1 class=" font-medium lg:font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet self-center md:self-start xl:pl-6 sm:px-0 px-4">{{category()?.name}}</h1>
 
                     <div class="w-full xl:grid-cols-[45%_55%] grid h-fit">
                       <div class="w-full -z-10 xl:flex hidden self-end">
@@ -57,18 +57,18 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
                         <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] mr-[3rem]"></div>
                         <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] 2xl:block hidden"></div>
                       </div>
-                      <p class=" sm:px-0 xsm:px-4 px-2 xsm:text-[1.4rem] text-[1rem] xl:text-right text-left self-end w-full max-md:mt-7">
+                      <p class=" sm:px-0 px-5 xsm:text-[1.4rem] text-[1.2rem] xl:text-right text-left self-end w-full max-md:mt-7">
                         {{category()?.main ? category()?.description : ''}}
                       </p>
                     </div>
                     <div class="aspect-square rounded-full bg-brandShade self-end w-[8rem] -mt-[3rem] -mr-[4rem] -z-10 xl:block hidden"></div>
               </section>
             }@else if(category() && !category()?.main){
-              <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 xsm:px-4 px-2 mt-14 md:text-start text-center">
+              <h1 class=" font-medium lg:font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 px-4 mt-6 md:mt-14 md:text-start text-center">
                 {{category()?.name}}
               </h1>
             }@else {
-              <h1 class=" font-bold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 xsm:px-4 px-2 mt-14 md:text-start text-center">
+              <h1 class=" font-medium lg:font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 px-4 mt-6 md:mt-14 md:text-start text-center">
                 {{title() | titlecase}}
               </h1>
             }
@@ -78,12 +78,12 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
                   <app-ext-standard-grid [articles]="chunksData()!"/>
               </section>
               @if(!categoryEnd() && category()?.main){
-                <button class="bg-brandViolet text-white font-semibold py-2 w-[7rem] mt-12" (invalid)="isChunkLoading()" (click)="loadChunk()">
+                <button class="bg-brandViolet text-white font-medium py-2 w-[7rem] mt-12" (invalid)="isChunkLoading()" (click)="loadChunk()">
                   @if(isChunkLoading()){. . .}@else{See more}
                 </button>
               }
               @if(!categoryEnd() && !category()?.main){
-                <button class="bg-brandViolet text-white font-semibold py-2 w-[7rem] mt-12" (invalid)="isChunkLoading()" (click)="loadTopicChunk()">
+                <button class="bg-brandViolet text-white font-medium py-2 w-[7rem] mt-12" (invalid)="isChunkLoading()" (click)="loadTopicChunk()">
                   @if(isChunkLoading()){. . .}@else{See more}
                 </button>
               }

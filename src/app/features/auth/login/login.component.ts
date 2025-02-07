@@ -12,24 +12,24 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
     <div class="relative w-full h-fit">
       <div class="w-full lg:grid lg:grid-cols-[9%_82%_9%] flex flex-col lg:items-start items-center pt-6">
 
-        <a routerLink="/" class="h-fit w-fit justify-self-center sm:mt-4">
-          <img src="agora-shade-isotype.svg" class="sm:h-[5rem] h-[4rem]" />
-        </a>
+        <a routerLink="/" class="h-fit w-fit justify-self-center sm:my-4">
+            <img src="agora-shade-isotype.svg" class="sm:h-[5rem] xsm:h-[4rem] h-[3.2rem]" />
+          </a>
 
-        <div class="w-full flex justify-center lg:justify-between lg:pl-6 lg:mt-10">
+        <div class="w-full flex justify-center lg:justify-between lg:pl-6 mt-1 lg:mt-10">
           <div class="w-fit flex flex-col max-lg:items-center">
             <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col items-center lg:items-start w-fit">
-                <h1 class=" font-bold lg:text-[5rem] md:text-[3.5rem] sm:text-[3rem] text-[2.3rem] text-brandViolet lg:mt-10  md:text-start text-center">Login</h1>
+                <h1 class="font-medium lg:font-bold lg:text-[5rem] md:text-[3.5rem] sm:text-[3rem] text-[2.5rem] text-brandViolet lg:mt-10  md:text-start text-center">Login</h1>
                 
                 
                 <div class="flex flex-col-reverse mt-3 sm:mt-6">
                   <input type="email" formControlName="email" id="email" 
-                  class="peer sm:w-[20rem] w-[12rem] sm:h-[2.15rem] h-[1.8rem] sm:border-[.4rem] border-[.35rem] border-brandShade box-content px-2 focus:outline-none focus:border-brandViolet xsm:text-[1.1rem] text-[1rem]"/>
-                  <label class="sm:text-[1.7rem] text-[1.3rem] font-semibold  mb-2 text-brandShade peer-focus:text-brandViolet" for="email">
+                  class="peer sm:w-[20rem] xsm:w-[17rem] xxsm:w-[15rem] w-[12rem] sm:h-[2.15rem] h-[1.8rem] sm:border-[.4rem] border-[.35rem] border-brandShade box-content px-2 focus:outline-none focus:border-brandViolet xsm:text-[1.1rem] text-[1rem]"/>
+                  <label class="sm:text-[1.7rem] text-[1.3rem] font-medium  mb-2 text-brandShade peer-focus:text-brandViolet" for="email">
                     Email
                   </label>
                 </div>
-                <div class="flex flex-col h-[1.5rem] sm:mt-1 mb-1 sm:w-full w-[13.5rem] sm:pl-2 lg:pl-0">
+                <div class="flex flex-col h-[2rem] mt-1 mb-1 sm:w-full xsm:w-[18.5rem] xxsm:w-[16.5rem] w-[13.5rem] sm:pl-2 lg:pl-0">
                   @if (
                     form.controls.email.invalid &&
                     (form.controls.email.touched || form.controls.email.dirty)
@@ -45,7 +45,7 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
               
 
                 <pass-input [control]="getPass()" [inputErrors]="form.controls.password.errors" [dirtyInput]="form.controls.password.dirty"/>
-                <div class="flex flex-col h-[1.5rem] sm:mt-1 mb-2 sm:w-full w-[13.5rem] sm:pl-2 lg:pl-0">
+                <div class="flex flex-col h-[2rem] mt-1 mb-2 sm:w-full xsm:w-[18.5rem] xxsm:w-[16.5rem] w-[13.5rem] sm:pl-2 lg:pl-0">
                   @if (
                   form.controls.password.invalid &&
                   (form.controls.password.touched || form.controls.password.dirty)
@@ -63,12 +63,12 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
                 </div>
 
                 <button type="submit" [disabled]="form.invalid || form.pending" 
-                class="bg-brandViolet flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] sm:px-8 px-6 sm:text-[1.2rem] text-[1rem] font-semibold mt-1 text-white w-fit hover:bg-brandShade hover:text-black active:scale-95">
-                  @if(isFormSubmitting()){...}@else{Login}
+                class="bg-brandViolet flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] sm:px-8 px-6 sm:text-[1.2rem] text-[1rem] font-medium mt-1 text-white w-fit hover:bg-brandShade hover:text-black active:scale-95">
+                  @if(isFormSubmitting()){. . .}@else{Login}
                 </button>
                   
 
-                <div class="flex flex-col sm:items-center lg:items-start h-[1.5rem] mt-2 mb-1 sm:w-full w-[13.5rem]">
+                <div class="flex flex-col sm:items-center lg:items-start h-[1.5rem] mt-2 mb-1 sm:w-full xsm:w-[18.5rem] xxsm:w-[16.5rem] w-[13.5rem]">
                   <span class="errorLabel">{{formError()}}</span>
                 </div>
 
@@ -85,7 +85,7 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
                 }
             </form>   
 
-            <button class="sm:w-[15rem] w-[12rem] flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] sm:mt-6 mt-5 
+            <button class="sm:w-[15rem] xxsm:w-[15rem] w-[12rem] flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] sm:mt-6 mt-5 
             hover:bg-brandViolet hover:fill-white hover:text-white active:scale-95 bg-brandShade fill-brandViolet text-brandViolet" 
             (click)="googleSign()">
               <svg viewBox="0 0 32 32" class="sm:h-[1.7rem] h-[1.2rem]">
@@ -119,7 +119,7 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
     width:fit-content;
     @media (max-width:768px){
       font-size:1rem;
-      line-height:95%;
+      line-height:105%;
       margin-top:.15rem;
     }
   }

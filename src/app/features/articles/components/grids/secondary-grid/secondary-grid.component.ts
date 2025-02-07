@@ -27,7 +27,7 @@ import { DatePipe, NgClass } from '@angular/common';
         lg:grid-cols-[50%_50%] lg:grid 
         flex flex-col-reverse" >
             <div class="flex flex-col justify-between w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '0' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![0].heading}}</span>
+              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![0].heading}}</span>
               <div class="flex flex-col">
                 <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{articles()![0].authorName}}</span>
                 <span class="hidden xl:inline-block text-[1rem] italic self-end">{{articles()![0].date.toDate() | date:'MM/d/y'}}</span>
@@ -57,7 +57,7 @@ import { DatePipe, NgClass } from '@angular/common';
               <img [src]="articles()![1].frontImage" [alt]="articles()![1].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '1' ? 'scale-105' : ''">
             </div>
             <div class="flex flex-col justify-between w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '1' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![1].heading}}</span>
+              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![1].heading}}</span>
               <div class="flex flex-col">
                 <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{articles()![1].authorName}}</span>
                 <span class="hidden xl:inline-block text-[1rem] italic self-end">{{articles()![1].date.toDate() | date:'MM/d/y'}}</span>
@@ -115,7 +115,7 @@ import { DatePipe, NgClass } from '@angular/common';
               <img [src]="articles()![5].frontImage" [alt]="articles()![5].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '5' ? 'scale-105' : ''">
             </div>
             <div class="flex flex-col justify-between w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '5' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![5].heading}}</span>
+              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![5].heading}}</span>
               <div class="flex flex-col">
                 <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{articles()![5].authorName}}</span>
                 <span class="hidden xl:inline-block text-[1rem] italic self-end">{{articles()![5].date.toDate() | date:'MM/d/y'}}</span>
@@ -132,7 +132,7 @@ import { DatePipe, NgClass } from '@angular/common';
               <img [src]="articles()![6].frontImage" [alt]="articles()![6].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '6' ? 'scale-105' : ''">
             </div>
             <div class="flex flex-col justify-between w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '6' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-semibold lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![6].heading}}</span>
+              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![6].heading}}</span>
               <div class="flex flex-col">
                 <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{articles()![6].authorName}}</span>
                 <span class="hidden xl:inline-block text-[1rem] italic self-end">{{articles()![6].date.toDate() | date:'MM/d/y'}}</span>

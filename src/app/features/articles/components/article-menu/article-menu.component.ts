@@ -12,7 +12,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
     imports: [AsyncPipe, RouterLink, ReactiveFormsModule, NgClass],
     template: `
     @if (menu() ) {
-      <div class="fixed left-0 top-0 w-screen h-screen overflow-x-hidden z-[100] flex justify-end overflow-y-scroll">
+      <div class="fixed left-0 top-0 w-screen h-screen overflow-x-hidden z-[100] flex justify-end overflow-y-scroll bg-white">
         
         <div class="lg:w-[16rem] md:w-3/4 w-screen min-h-screen bg-white flex flex-col items-center pt-[1.25rem] text-[1.1rem]">
             
@@ -25,9 +25,11 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
             </button>
           </div>
 
-          <div class="w-full text-center min-h-[2.4rem] mt-8 md:mb-10 mb-2">
-            <span class="text-[1.5rem] font-semibold">{{(subscriptionState$ | async)?.username}}</span>
-          </div>
+          @if(authState()){
+            <div class="w-full text-center min-h-[2.4rem] mt-8 md:mb-10 mb-2">
+              <span class="text-[1.5rem] font-medium lg:font-semibold">{{(subscriptionState$ | async)?.username}}</span>
+            </div>
+          }
 
           @if(authState()){
             <ul class="h-fit w-full md:hidden flex flex-col">
@@ -49,7 +51,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
             </a>
           }
 
-          <span class="bg-white font-semibold mt-6 mb-2 w-full text-center text-[1.5rem] sm:hidden">Search</span>
+          <span class="bg-white font-medium lg:font-semibold mt-6 mb-2 w-full text-center text-[1.5rem] sm:hidden">Search</span>
 
           <form class="bg-white xsm:w-[68%] w-[80%] max-h-fit sm:hidden flex justify-center relative" [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()">
             <button (click)="searchForm.reset()" [ngClass]="searchForm.controls.search.touched || searchForm.controls.search.dirty ? 'block' : 'invisible'"
@@ -73,7 +75,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
           </form>
 
 
-          <span class="bg-white font-semibold mt-6 mb-2 max-h-fit w-full text-center text-[1.5rem] md:hidden">Categories</span>
+          <span class="bg-white font-medium lg:font-semibold mt-6 mb-2 max-h-fit w-full text-center text-[1.5rem] md:hidden">Categories</span>
           <ul class="h-fit w-full md:hidden flex flex-col">
             <a
               [routerLink]="['/category/tech' ]" (click)="menuTrigger()"
@@ -103,19 +105,17 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
           </ul>
 
           @if(authState()){
-            <div class="flex items-end grow w-full">
-              <button (click)="onLogout()" class="w-full h-fit font-medium flex justify-center py-4 items-center bg-brandShade hover:bg-white hover:text-black  active:scale-95">Cerrar sesión</button>
-            </div>
-          } @else {
-            <div class="flex items-end grow w-full">
+              <button (click)="onLogout()" class="mt-3 w-full h-fit font-medium md:hidden flex justify-center py-4 items-center bg-brandShade hover:bg-white hover:text-black  active:scale-95">Logout</button>
+          
+              <div class="md:flex hidden items-end grow w-full">
+                <button (click)="onLogout()" class="w-full h-fit font-medium flex justify-center py-4 items-center bg-brandShade hover:bg-white hover:text-black  active:scale-95">Logout</button>
+              </div>
+            } @else {
               <a [routerLink]="['/login']"  (click)="menuTrigger()"
-              class=" w-full h-fit py-4 font-medium flex justify-center items-center bg-brandShade hover:bg-white hover:text-black active:scale-95">
+              class="mt-3 w-full h-fit py-4 font-medium flex md:hidden justify-center items-center bg-brandShade hover:bg-white hover:text-black active:scale-95">
               Login
               </a>
-            </div>
           }
-          
-
         </div>
         
 

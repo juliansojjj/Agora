@@ -83,7 +83,7 @@ import { DatePipe, NgClass } from '@angular/common';
         [ngClass]="{
         'bg-brandGrey': cellHover() == $index.toString(),
         'bg-white': cellHover() != $index.toString()}"> 
-          <span class="lg:text-[1.2rem] text-[1rem] font-semibold">{{item.heading}}</span>
+          <span class="lg:text-[1.2rem] text-[1rem] font-medium">{{item.heading}}</span>
           <div class="flex flex-col">
             <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{item.authorName}}</span>
             <span class="hidden xl:inline-block text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
@@ -125,7 +125,7 @@ import { DatePipe, NgClass } from '@angular/common';
         [ngClass]="{
         'bg-brandGrey': cellHover() == ($index+2).toString(),
         'bg-white': cellHover() != ($index+2).toString()}"> 
-          <span class="lg:text-[1.2rem] text-[1rem] font-semibold">{{item.heading}}</span>
+          <span class="lg:text-[1.2rem] text-[1rem] font-medium">{{item.heading}}</span>
           <div class="flex flex-col">
             <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{item.authorName}}</span>
             <span class="hidden xl:inline-block text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
@@ -166,7 +166,7 @@ import { DatePipe, NgClass } from '@angular/common';
         [ngClass]="{
         'bg-brandGrey': cellHover() == ($index+4).toString(),
         'bg-white': cellHover() != ($index+4).toString()}"> 
-          <span class="lg:text-[1.2rem] text-[1rem] font-semibold">{{item.heading}}</span>
+          <span class="lg:text-[1.2rem] text-[1rem] font-medium">{{item.heading}}</span>
         </div>
       </a>
       }
