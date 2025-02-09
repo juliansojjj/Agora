@@ -12,11 +12,11 @@ import { StandardGridSkeletonComponent } from "../../../articles/components/skel
     selector: 'app-favorites',
     imports: [AsyncPipe, StandardGridComponent, StandardGridSkeletonComponent],
     template: `
-  <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%] h-[86vh] flex flex-col items-center md:pt-6 xl:px-0 sm:px-6 px-0">
+  <div class="w-full xl:grid xl:grid-cols-[9%_82%_9%] min-h-[86vh] flex flex-col items-center md:pt-6 xl:px-0 sm:px-6 px-0">
     <div></div>
 
     <div class="flex flex-col">
-      <h1 class="font-medium lg:font-semibold text-center mt-6 md:mt-14 text-brandViolet 
+      <h1 class="font-semibold text-center mt-6 md:mt-14 text-brandViolet 
       lg:text-[5rem] 
       md:text-start
       sm:text-[3.5rem] sm:px-0

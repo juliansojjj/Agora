@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
     <div></div>
 
     <section class="flex flex-col">
-      <h1 class="font-medium lg:font-semibold text-center text-brandViolet
+      <h1 class="font-semibold text-center text-brandViolet
       lg:text-[5rem] 
       md:text-start
       sm:text-[3.5rem] xsm:px-0
@@ -26,7 +26,7 @@ import { RouterLink } from '@angular/router';
       <h2 class="xsm:px-0 px-5 text-[1.4rem] my-6 break-all">'{{search()}}'</h2>
 
       @if(authorResults().length){
-        <h3 class="text-[2.5rem] font-medium lg:font-semibold mb-4 xsm:px-0 px-5">Authors</h3>
+        <h3 class="text-[2.5rem] font-semibold mb-4 xsm:px-0 px-5">Authors</h3>
         <div class="w-full grid 2xl:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           @for (item of authorResults(); track $index) {
             <a [routerLink]="['/author',item.authorID]" 
@@ -44,7 +44,7 @@ import { RouterLink } from '@angular/router';
 
       @if(articleResults().length){
       <section class=" w-full h-fit pt-10">
-        <h3 class="text-[2.5rem] font-medium lg:font-semibold mb-2 xsm:px-0 px-5">Articles</h3>
+        <h3 class="text-[2.5rem] font-semibold mb-2 xsm:px-0 px-5">Articles</h3>
         <span class="mb-6 text-[1.1rem] text-slate-400 inline-block xsm:px-0 px-5">{{articleResults().length}} results found</span>
         <app-ext-standard-grid [articles]="articleResults()"/>
       </section>

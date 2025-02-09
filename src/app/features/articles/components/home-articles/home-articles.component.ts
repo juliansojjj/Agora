@@ -68,7 +68,7 @@ import { ExtStandardGridComponent } from "../grids/standard-grid/ext-standard-gr
         @if(scienceArticles()){
         <section class=" w-full h-fit md:pt-24 pt-12 flex flex-col items-center">
           <a [routerLink]="['/category/science']"
-              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-medium md:font-semibold lg:font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-6 block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-semibold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-6 block w-fit">
                 Science
           </a>
 
@@ -83,7 +83,7 @@ import { ExtStandardGridComponent } from "../grids/standard-grid/ext-standard-gr
         @if(entertainmentArticles()){
         <section class=" w-full h-fit md:pt-24 pt-12 flex flex-col items-center">
           <a [routerLink]="['/category/entertainment']"
-              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] hyphens-auto break-all font-medium md:font-semibold lg:font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-10 block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] hyphens-auto break-all font-semibold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-10 block w-fit">
                 Entertainment
           </a>
 
@@ -98,7 +98,7 @@ import { ExtStandardGridComponent } from "../grids/standard-grid/ext-standard-gr
 
            
         @if(cultureArticles() && filmArticles() && streamingArticles()){
-          <section class="w-[85%] h-fit pt-8">
+          <section class="w-[85%] h-fit pt-8 md:pt-16">
             <app-topics2-grid category1Name="Culture" category1Url="culture" [category1articles]="cultureArticles()!"
             category2Name="Film" category2Url="film" [category2articles]="filmArticles()!"
             category3Name="Streaming" category3Url="streaming" [category3articles]="streamingArticles()!"/>
@@ -108,7 +108,7 @@ import { ExtStandardGridComponent } from "../grids/standard-grid/ext-standard-gr
         @if(mediaArticles()){
         <section class=" w-full h-fit md:pt-24 pt-12 flex flex-col items-center">
           <a [routerLink]="['/category/media']"
-              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-medium md:font-semibold lg:font-bold text-brandViolet self-start underline hover:text-brandShade active:scale-95 lg:mb-[6rem] mb-10 block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-semibold text-brandViolet self-start underline hover:text-brandShade active:scale-95 lg:mb-[6rem] mb-10 block w-fit">
                 Media
           </a>
 
@@ -134,7 +134,7 @@ import { ExtStandardGridComponent } from "../grids/standard-grid/ext-standard-gr
           </section>
         }
         @if(socialGoodArticles()){
-          <section class="w-full h-fit max-md:pt-6 flex flex-col items-center">
+          <section class="w-full h-fit pt-6 flex flex-col items-center">
             <a [routerLink]="['/category/social-good']"
                 class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
                   Social Good

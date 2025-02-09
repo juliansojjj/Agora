@@ -19,7 +19,7 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
         <div class="w-full flex justify-center lg:justify-between lg:pl-6 mt-1 lg:mt-10">
           <div class="w-fit flex flex-col max-lg:items-center">
             <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col items-center lg:items-start w-fit">
-                <h1 class="font-medium lg:font-bold lg:text-[5rem] md:text-[3.5rem] sm:text-[3rem] text-[2.5rem] text-brandViolet lg:mt-10  md:text-start text-center">Login</h1>
+                <h1 class="font-semibold lg:font-bold lg:text-[5rem] md:text-[3.5rem] sm:text-[3rem] text-[2.5rem] text-brandViolet lg:mt-10  md:text-start text-center">Login</h1>
                 
                 
                 <div class="flex flex-col-reverse mt-3 sm:mt-6">

@@ -27,7 +27,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
 
           @if(authState()){
             <div class="w-full text-center min-h-[2.4rem] mt-8 md:mb-10 mb-2">
-              <span class="text-[1.5rem] font-medium lg:font-semibold">{{(subscriptionState$ | async)?.username}}</span>
+              <span class="text-[1.5rem] font-semibold">{{(subscriptionState$ | async)?.username}}</span>
             </div>
           }
 
@@ -51,7 +51,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
             </a>
           }
 
-          <span class="bg-white font-medium lg:font-semibold mt-6 mb-2 block w-full text-center text-[1.5rem] sm:hidden">Search</span>
+          <span class="bg-white font-semibold mt-6 mb-2 block w-full text-center text-[1.5rem] sm:hidden">Search</span>
 
           <form class="bg-white xsm:w-[68%] w-[80%] sm:hidden flex max-h-fit justify-center relative" [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()">
             <button (click)="searchForm.reset()" [ngClass]="searchForm.controls.search.touched || searchForm.controls.search.dirty ? 'block' : 'invisible'"
@@ -75,7 +75,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
           </form>
 
 
-          <span class="bg-white font-medium lg:font-semibold mt-6 mb-2 block max-h-fit text-center text-[1.5rem] md:hidden">Categories</span>
+          <span class="bg-white font-semibold mt-6 mb-2 block max-h-fit text-center text-[1.5rem] md:hidden">Categories</span>
           <ul class="h-fit w-full md:hidden flex flex-col">
             <a
               [routerLink]="['/category/tech' ]" (click)="menuTrigger()"

@@ -117,7 +117,7 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
                 [ngClass]="data.frontImageBanner ? 'normalLanding' : 'flex'">
                 <div #domHeading class="w-full">
                   <h1
-                    class="font-medium lg:font-semibold text-left
+                    class="font-semibold text-left
                     xl:text-[3.5rem]
                     md:text-[2.5rem]
                     sm:text-[2.25rem]
@@ -262,12 +262,12 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
                 </div>
             }
             @if ((item | typeof) == 'title') {
-              <h3 class="font-medium lg:font-semibold md:text-[1.9rem] text-[1.6rem] mt-7 contentElement">
+              <h3 class="font-semibold md:text-[1.9rem] text-[1.6rem] mt-7 contentElement">
                 {{ $any(item).title }}
               </h3>
             }
             @if ((item | typeof) == 'subtitle') {
-              <h4 class="font-medium lg:font-semibold md:text-[1.5rem] text-[1.35rem] mt-4 xsm:-mb-4 contentElement">
+              <h4 class="font-semibold md:text-[1.5rem] text-[1.35rem] mt-4 xsm:-mb-4 contentElement">
                 {{ $any(item).subtitle }}
               </h4>
             }
@@ -291,7 +291,7 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
               class="h-[7rem] w-[7rem] max-sm:mb-4 sm:mr-8 rounded-full">
 
               <a [routerLink]="['/author',data.authorID]"
-                class=" w-fit h-fit font-medium lg:font-semibold text-left text-[2rem] underline hover:no-underline hover:bg-black hover:text-white">
+                class=" w-fit h-fit font-semibold text-left text-[2rem] underline hover:no-underline hover:bg-black hover:text-white">
                 {{data.authorName}}
               </a>
             </div>
@@ -304,7 +304,7 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
 
         <section class="contentElement flex flex-col my-6 lg:p-0 xsm:px-6 px-5">
           @if (comments$ | async; as comments) {
-            <span class="md:text-[1.9rem] text-[1.6rem] font-medium lg:font-semibold self-center">{{ comments | commentsLength }} Comments</span>
+            <span class="md:text-[1.9rem] text-[1.6rem] font-semibold self-center">{{ comments | commentsLength }} Comments</span>
 
             @if (!(userInfo$ | async)) {
               <div class="flex flex-col mt-2 w-full ">
@@ -398,12 +398,12 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
         <section class="flex flex-col items-center 2xl:w-1/2 lg:w-3/4 w-full mt-6 lg:p-0 xsm:px-6 px-5">
 
           @if(authorArticles$ | async; as authorArticles){
-            <h4 class="md:text-[1.9rem] text-[1.6rem] md:mb-6 mb-3 font-medium lg:font-semibold">More from {{authorData()?.authorName}}</h4>
+            <h4 class="md:text-[1.9rem] text-[1.6rem] md:mb-6 mb-3 font-semibold">More from {{authorData()?.authorName}}</h4>
             <app-standard-grid [articles]="authorArticles"/>
           }
 
           @if(recommendations$ | async; as recommendations){
-            <h4 class="md:text-[1.9rem] text-[1.6rem] mt-6 md:mb-6 mb-3 font-medium lg:font-semibold">More from {{category() | titlecase}}</h4>
+            <h4 class="md:text-[1.9rem] text-[1.6rem] mt-6 md:mb-6 mb-3 font-semibold">More from {{category() | titlecase}}</h4>
             <app-standard-grid [articles]="recommendationsFiltered()!.slice(0,9)"/>
           }
         </section>

@@ -21,7 +21,9 @@
 
 :root{
     color-scheme: light;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', Helvetica, sans-serif;
+    /* -webkit-locale: auto; */
+    font-synthesis: none !important;
 }
 
 

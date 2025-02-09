@@ -47,7 +47,7 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
           <div class="flex flex-col items-center w-full">
             @if(category() && category()?.main){
               <section class="flex flex-col w-full  h-fit mt-6 md:mt-14 lg:-mb-20">
-                    <h1 class=" font-medium lg:font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet self-center md:self-start xl:pl-6 sm:px-0 px-4">{{category()?.name}}</h1>
+                    <h1 class="font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet self-center md:self-start xl:pl-6 sm:px-0 px-4">{{category()?.name}}</h1>
 
                     <div class="w-full xl:grid-cols-[45%_55%] grid h-fit">
                       <div class="w-full -z-10 xl:flex hidden self-end">
@@ -64,11 +64,11 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
                     <div class="aspect-square rounded-full bg-brandShade self-end w-[8rem] -mt-[3rem] -mr-[4rem] -z-10 xl:block hidden"></div>
               </section>
             }@else if(category() && !category()?.main){
-              <h1 class=" font-medium lg:font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 px-4 mt-6 md:mt-14 md:text-start text-center">
+              <h1 class="font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 px-4 mt-6 md:mt-14 md:text-start text-center">
                 {{category()?.name}}
               </h1>
             }@else {
-              <h1 class=" font-medium lg:font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 px-4 mt-6 md:mt-14 md:text-start text-center">
+              <h1 class="font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 px-4 mt-6 md:mt-14 md:text-start text-center">
                 {{title() | titlecase}}
               </h1>
             }

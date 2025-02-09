@@ -26,7 +26,7 @@ import { DatePipe, NgClass } from '@angular/common';
 
       </div>
 
-      <div class="bg-brandShade aspect-square h-[6rem] relative"></div>
+      <div class="bg-brandGrey aspect-square h-[6rem] relative"></div>
 
       <div class="w-fit h-full flex-col justify-between relative 
         xl:-mr-[4rem]

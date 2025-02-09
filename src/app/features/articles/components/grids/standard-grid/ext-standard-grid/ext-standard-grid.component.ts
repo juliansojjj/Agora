@@ -33,7 +33,6 @@ import { Article } from '../../../../../../shared/interfaces/article.interface';
           <span class=" block
           text-[.8rem] leading-[1.2rem] font-medium
           xsm:text-[.9rem] xsm:leading-normal 
-          sm:font-semibold
           md:text-[1rem]">
             {{item.heading}}
           </span>

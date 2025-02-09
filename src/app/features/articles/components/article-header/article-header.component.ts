@@ -157,7 +157,7 @@ import { FirebaseService } from '../../../../core/services/firebase.service';
                   @if (!authState()) {
                   <a
                     [routerLink]="['/login']"
-                    class="md:w-32 lg:w-36 2xl:w-40 h-full font-medium md:flex hidden justify-center items-center bg-white hover:bg-black hover:text-white active:scale-95"
+                    class="lg:w-24 w-20 h-full font-medium md:flex hidden justify-center items-center bg-brandViolet text-white hover:bg-white hover:text-black active:scale-95"
                     ><li>Login</li></a
                   >
                   }
