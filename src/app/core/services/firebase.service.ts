@@ -368,22 +368,6 @@ export class FirebaseService {
     );
   }
 
-  googleSignIn(){
-    const provider = new GoogleAuthProvider()
-    
-    return from(signInWithPopup(this.authService,provider).then((res:any)=>{
-      if((res as FirebaseAuthSignUser)._tokenResponse.isNewUser) {
-        return {isNewUser:true,res:res}
-      } else return {isNewUser:false,res:res}
-
-    })).pipe(map(({isNewUser,res})=>{
-      return isNewUser 
-      ? from(this.documentUser(res.user.displayName!, res.user.email!,res.user.uid, res.providerId!))
-      : res
-    })
-    )
-  }
-
   login(email: string, password: string){
     return from(signInWithEmailAndPassword(this.authService,email,password)).pipe(
       map(res=>res),

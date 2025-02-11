@@ -124,16 +124,6 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
                   class="font-medium sm:text-[1.2rem] text-[1rem] mt-1 px-4 lg:px-0 sm:text-start text-center text-brandViolet hover:underline">Already hace an account? Login</a>
                 }
             </form>   
-
-            <button class="sm:w-[15rem] xsm:w-[17rem] xxsm:w-[15rem] w-[12rem] flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] sm:mt-6 mt-5 
-            hover:bg-brandViolet hover:fill-white hover:text-white active:scale-95 bg-brandShade fill-brandViolet text-brandViolet" 
-            (click)="googleSign()">
-              <svg viewBox="0 0 32 32" class="sm:h-[1.7rem] h-[1.2rem]">
-                <path d="M 16.003906 14.0625 L 16.003906 18.265625 L 21.992188 18.265625 C 21.210938 20.8125 19.082031 22.636719 16.003906 22.636719 C 12.339844 22.636719 9.367188 19.664063 9.367188 16 C 9.367188 12.335938 12.335938 9.363281 16.003906 9.363281 C 17.652344 9.363281 19.15625 9.96875 20.316406 10.964844 L 23.410156 7.867188 C 21.457031 6.085938 18.855469 5 16.003906 5 C 9.925781 5 5 9.925781 5 16 C 5 22.074219 9.925781 27 16.003906 27 C 25.238281 27 27.277344 18.363281 26.371094 14.078125 Z"></path>
-              </svg>
-              <span class="sm:text-[1.2rem] text-[1rem] font-medium ml-[.35rem]">Sign with Google</span>
-            </button>
-            
             <div class="h-[2rem] w-full"></div>
           </div>
             
@@ -210,7 +200,6 @@ export class SignupComponent {
       },
       error: (err) => {
         this.isFormSubmitting.set(false)
-        console.log('llegaste al error')
         switch (err.message) {
           case ('Firebase: Error (auth/email-already-in-use).'):
             this.formError.set('That email is already in use')
@@ -236,38 +225,6 @@ export class SignupComponent {
   }
   trimValidator(control:AbstractControl){
     return control.value.trim().length >= 3 ? null : {blankText:true}
-  }
-
-  googleSign(){
-    this.firebaseService.googleSignIn().subscribe({
-      next: () => {
-        this.isFormSubmitting.set(false)
-        if(!this.redirect()){
-          this.router.navigate(['/'])
-        } 
-        if(this.redirect()?.split('-')[0] == 'article') this.router.navigate([`/article/${this.redirect()?.split('-')[1]}`])
-      },
-      error: (err) => {
-        this.isFormSubmitting.set(false)
-        console.log('llegaste al error')
-        switch (err.message) {
-          case ('Firebase: Error (auth/email-already-in-use).'):
-            this.formError.set('That email is already in use')
-            break;
-
-          case ('Firebase: Error (auth/invalid-email).'):
-            this.formError.set('Please enter a valid email')
-            break;
-          
-          case ('Firebase: Error (auth/internal-error).'):
-            this.formError.set('There was an error in your request, please try again later')
-            break;
-
-          default:this.formError.set(err.message)
-        }
-        throw new Error(err.message);
-      }
-    })
   }
 
 }

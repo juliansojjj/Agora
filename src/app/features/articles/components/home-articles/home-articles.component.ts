@@ -1,4 +1,3 @@
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {
   Component,
   inject
@@ -12,21 +11,19 @@ import {
 import { RouterLink } from '@angular/router';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 import { Article } from '../../../../shared/interfaces/article.interface';
-import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
-import { MainGridComponent } from '../grids/main-grid/main-grid.component';
 import { Main2GridComponent } from '../grids/main-grid/main2-grid/main2-grid.component';
 import { SecondaryGridComponent } from '../grids/secondary-grid/secondary-grid.component';
 import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-grid.component";
 import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-grid.component';
+import { ExtStandardGridComponent } from "../grids/standard-grid/ext-standard-grid/ext-standard-grid.component";
 import { StandardGridComponent } from '../grids/standard-grid/standard-grid.component';
 import { TopicsGridComponent } from "../grids/topics-grid/topics-grid.component";
 import { Topics2GridComponent } from "../grids/topics2-grid/topics2-grid.component";
 import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-skeleton.component";
-import { ExtStandardGridComponent } from "../grids/standard-grid/ext-standard-grid/ext-standard-grid.component";
 
 @Component({
     selector: 'app-home-articles',
-    imports: [RouterLink, SecondaryGridComponent, Secondary2GridComponent, Secondary3GridComponent, Main2GridComponent, TopicsGridComponent, Topics2GridComponent, Main2GridSkeletonComponent, ExtStandardGridComponent, StandardGridComponent],
+    imports: [RouterLink, SecondaryGridComponent, Secondary2GridComponent, Secondary3GridComponent, Main2GridComponent, TopicsGridComponent, Topics2GridComponent, Main2GridSkeletonComponent, StandardGridComponent],
     template: `
       <main class="flex flex-col items-center h-fit relative w-full">
         @if(techArticles()){
@@ -193,57 +190,6 @@ export class HomeArticlesComponent {
     socialGoodArticles = toSignal<Article[]>(
       this.firebaseService.getCategoryArticles('social-good',4)
     );
-  
-  
-  multipleDocs:Article[] = []
-
-  docUpload() {
-    // const authorID = 'ChristiannaSilva'
-    // const ref = collection(this.firebaseService.firestoreService, 'articles');
-
-    // this.multipleDocs.
-    // filter((item:any,index:number)=>{
-    //   return index == this.multipleDocs.findIndex(obj=>item?.heading == obj?.heading)
-    // }).
-    // filter((item:any)=>item.authorID == authorID).
-    // forEach((item,index)=>{
-    //   setDoc(doc(ref,'scr0'+authorID+index), item)
-    // })
-    // console.log(this.multipleDocs.
-    //   filter((item:any,index:number)=>{
-    //     return index == this.multipleDocs.findIndex(obj=>item?.heading == obj?.heading)
-    //   }).
-    //   filter((item:any)=>item.authorID == authorID).length)
-
-    const authorID = 'KristyPuchko'
-    const ref = collection(this.firebaseService.firestoreService, 'authors');
-      setDoc(doc(ref,authorID), {
-        authorDescription :"Kristy Puchko is the Film Editor at Mashable. Based in New York City, she's an established film critic and entertainment reporter, who has traveled the world on assignment, covered a variety of film festivals, co-hosted movie-focused podcasts, interviewed a wide array of performers and filmmakers, and had her work published on RogerEbert.com, Vanity Fair, and The Guardian. A member of the Critics Choice Association and GALECA as well as a Top Critic on Rotten Tomatoes, Kristy's primary focus is movies. However, she's also been known to gush over television, podcasts, and board games. You can follow her on Twitter.",
-        authorDesignation :'',
-        authorImage:'"https://thispersondoesnotexist.com/"',
-        authorName:'Kristy Puchko',
-        source:'https://mashable.com/author/kristypuchko'   
-      })
-
-  }
-
-  categoriesArray = []
-  docUpload2() {
-    // let newArray:{}[] = []
-    // const ref = collection(this.firebaseService.firestoreService, 'categories');
-    // this.categoriesArray.forEach(item=>item.forEach(obj=>newArray.push(obj)))
-    // console.log(newArray.filter((item:any,index:number)=>{
-    //   return index == newArray.findIndex((obj:any)=>item?.url == obj?.url)
-    // }))
-
-    // newArray.
-    // filter((item:any,index:number)=>{
-    //   return index == newArray.findIndex((obj:any)=>item?.url == obj?.url)
-    // }).
-    // forEach((item:any)=>setDoc(doc(ref,item.url), {name:item.name,url:item.url}))
-  
-  }
-
 
   urlFormat(id: string, title: string) {
     const formatTitle = title
