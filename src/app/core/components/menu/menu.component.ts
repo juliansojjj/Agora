@@ -14,12 +14,12 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
     @if (menu() ) {
       <div class="fixed left-0 top-0 w-screen h-screen overflow-x-hidden z-[100] flex justify-end overflow-y-scroll">
         
-        <div class="lg:w-[16rem] md:w-3/4 w-screen min-h-screen bg-white flex flex-col items-center pt-[1.25rem] text-[1.1rem]">
+        <div class="lg:w-[16rem] md:w-3/4 w-screen min-h-screen bg-white flex flex-col items-center md:pt-[1.25rem] pt-[3.2rem] text-[1.1rem]">
             
 
           <div class="flex w-full justify-end ">
             <button (click)="menuTrigger()" class="active:scale-95">
-              <svg viewBox="0 0 335 335" class="h-6 pr-7">
+              <svg viewBox="0 0 335 335" class="h-6 md:pr-7 pr-8">
                 <polygon  points="328.96 30.2933333 298.666667 1.42108547e-14 164.48 134.4 30.2933333 1.42108547e-14 1.42108547e-14 30.2933333 134.4 164.48 1.42108547e-14 298.666667 30.2933333 328.96 164.48 194.56 298.666667 328.96 328.96 298.666667 194.56 164.48" />
               </svg>
             </button>
@@ -43,10 +43,10 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
               ><li>Account Settings</li></a>
             </ul>
 
-            <a class="w-full md:block hidden text-start h-16 py-4 pl-6 font-medium hover:underline" [routerLink]="['/favorites']" (click)="menuTrigger()"> 
+            <a class="w-full md:block hidden text-start h-16 pl-6 font-medium hover:underline" [routerLink]="['/favorites']" (click)="menuTrigger()"> 
               Favorites
             </a>
-            <a class="w-full md:block hidden text-start h-16 py-4 pl-6 font-medium hover:underline " [routerLink]="['/profile' ]" (click)="menuTrigger()"> 
+            <a class="w-full md:block hidden text-start h-16 pl-6 font-medium hover:underline " [routerLink]="['/profile' ]" (click)="menuTrigger()"> 
               Account Settings
             </a>
           }

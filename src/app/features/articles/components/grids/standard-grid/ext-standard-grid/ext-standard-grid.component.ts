@@ -7,7 +7,7 @@ import { Article } from '../../../../../../shared/interfaces/article.interface';
     selector: 'app-ext-standard-grid',
     imports: [RouterLink, NgClass],
     template: `
-    <div class="w-full relative h-full place-items-center justify-center grid  
+    <div class="min-w-full relative h-full place-items-center justify-center grid  
     2xl:grid-cols-4
     xl:grid-cols-3
     sm:grid-cols-2
@@ -20,7 +20,7 @@ import { Article } from '../../../../../../shared/interfaces/article.interface';
         <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
         (mouseover)="cellHoverCheck($index)" 
         (mouseout)="cellHoverCheck($index)"
-        class="xsm:w-full w-[95%] h-full sm:aspect-square aspect-[3/1]  overflow-hidden relative flex">
+        class="xsm:w-full min-w-[95%] h-full sm:aspect-square aspect-[3/1]  overflow-hidden relative flex">
 
         <img [src]="item.frontImage" 
         [alt]="item.frontImageAlt" class="w-full h-full object-cover" 

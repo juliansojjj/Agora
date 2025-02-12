@@ -1,61 +1,38 @@
+import { AsyncPipe, DatePipe, NgClass, TitleCasePipe } from '@angular/common';
 import {
-  AfterContentInit,
-  afterNextRender,
-  afterRender,
-  AfterViewChecked,
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   effect,
   ElementRef,
-  HostListener,
   inject,
   input,
   model,
-  ModelSignal,
-  OnDestroy,
   OnInit,
-  QueryList,
-  Renderer2,
-  Signal,
-  signal,
   ViewChild,
-  ViewChildren,
-  ViewEncapsulation,
-  WritableSignal,
+  ViewEncapsulation
 } from '@angular/core';
-import {
-  Article,
-  contentItems,
-  paragraph,
-} from '../../../../shared/interfaces/article.interface';
-import { catchError, EMPTY, filter, map, Observable, of, pairwise, switchMap, take } from 'rxjs';
-import { NgIf, AsyncPipe, NgClass, DecimalPipe, TitleCasePipe } from '@angular/common';
-import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { FirebaseService } from '../../../../core/services/firebase.service';
-import { DocumentSnapshot, SnapshotOptions } from '@angular/fire/firestore';
-import { DataSnapshot } from '@angular/fire/database';
-import { Title } from '@angular/platform-browser';
-import { TypeofPipe } from '../../pipes/typeof.pipe';
-import { OrderByDatePipe } from '../../pipes/order-by-date.pipe';
-import {
-  FirebaseAuthUser,
-  FirestoreCollectionUser,
-} from '../../../../shared/interfaces/firebase.interfaces';
-import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import {
   AbstractControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { MenuComponent } from 'app/core/components/menu/menu.component';
+import { filter, map, of, pairwise, switchMap } from 'rxjs';
+import { FirebaseService } from '../../../../core/services/firebase.service';
+import {
+  Article
+} from '../../../../shared/interfaces/article.interface';
+import { Author } from '../../../../shared/interfaces/author.interface';
+import {
+  FirestoreCollectionUser
+} from '../../../../shared/interfaces/firebase.interfaces';
 import { TextAreaResizeDirective } from '../../directives/text-area-resize.directive';
 import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
-import { CustomDecimalPipePipe } from '../../pipes/custom-decimal-pipe.pipe';
+import { TypeofPipe } from '../../pipes/typeof.pipe';
 import { ArticleHeaderComponent } from '../article-header/article-header.component';
-import { ArticleMenuComponent } from '../article-menu/article-menu.component';
-import { Author } from '../../../../shared/interfaces/author.interface';
 import { StandardGridComponent } from "../grids/standard-grid/standard-grid.component";
 import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-skeleton.component";
 
@@ -73,14 +50,14 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
     CommentsLengthPipe,
     RouterLink,
     ArticleHeaderComponent,
-    ArticleMenuComponent,
+    MenuComponent,
     StandardGridComponent,
     ArticleSkeletonComponent
 ],
     template: `
     @if (data$ | async; as data) {
       <app-article-header [banner]="data.frontImageBanner" [headingInfo]="headingInfo()" [(menu)]="menu"/>
-      <app-article-menu  [(menu)]="menu"/>
+      <app-menu  [(menu)]="menu"/>
 
       <article class="w-full  min-h-screen relative flex flex-col items-center">
           @if (data.frontImageBanner) {
