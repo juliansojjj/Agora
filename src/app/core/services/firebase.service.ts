@@ -7,9 +7,8 @@ import {
   Auth,
   authState,
   createUserWithEmailAndPassword,
-  GoogleAuthProvider,
+  deleteUser,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut,
   updateEmail,
   updatePassword,
@@ -18,10 +17,12 @@ import {
 } from '@angular/fire/auth';
 
 import {
+  addDoc,
   arrayRemove,
   arrayUnion,
   collection,
   collectionData,
+  deleteDoc,
   doc,
   docData,
   documentId,
@@ -42,7 +43,6 @@ import { Author } from '../../shared/interfaces/author.interface';
 import { Category } from '../../shared/interfaces/category.interface';
 import { Comment } from '../../shared/interfaces/comment.interface';
 import {
-  FirebaseAuthSignUser,
   FirestoreCollectionUser
 } from '../../shared/interfaces/firebase.interfaces';
 
@@ -68,6 +68,7 @@ export class FirebaseService {
 
     return from(result) as Observable<Article[]>
   }
+
   getAuthorArticles(authorID:string, max?:number){
     const ref = collection(this.firestoreService, 'articles');
     
@@ -201,6 +202,33 @@ export class FirebaseService {
     return from(result) as Observable<Comment[]>
   }
 
+  getUsernames(uids:string[]):Observable<FirestoreCollectionUser[]>{
+    const ref = collection(this.firestoreService, 'users')
+    
+    if(uids.length <= 30){
+      const result = collectionData(query(ref,where(documentId(),'in',uids)), { idField: 'uid' })
+      return from(result) as Observable<FirestoreCollectionUser[]>
+    }
+    else{
+      const chunkedArrays:string[][] = []
+      for (let i = 0; i < uids.length; i += 30) {
+        chunkedArrays.push(uids.slice(i,i+30))
+      }
+
+      const observables = chunkedArrays.map((chunk) => {
+        return from(
+          collectionData(query(ref, where(documentId(), 'in', chunk)), { idField: 'uid' })
+        ).pipe(take(1)) 
+      })
+
+      return forkJoin(observables).pipe(
+        map((results) => {
+          return results.flat() as FirestoreCollectionUser[]
+        })
+      )
+    }
+  }
+
   getAllCategories(){
     const ref = collection(this.firestoreService, 'categories')
     
@@ -329,9 +357,8 @@ export class FirebaseService {
   addComment(username: string, uid: string, articleID:string, content:string) {
     const ref = collection(this.firestoreService, 'articles',articleID,'comments');
 
-    const res = setDoc(doc(ref),
+    const res = addDoc(ref,
     { 
-      username: username,
       uid:uid,
       content:content,
       date:serverTimestamp(),
@@ -339,7 +366,6 @@ export class FirebaseService {
     } )
 
     return from(res)
-
   }
   deleteComment(articleID:string,commentId:string){
     const ref = collection(this.firestoreService, 'articles',articleID,'comments');
@@ -358,7 +384,6 @@ export class FirebaseService {
 
     return from(createUser).pipe(
       map(res=>{
-        console.log(res)
         return forkJoin([
           updateProfile(res.user, { displayName: username }),
           this.documentUser(username, email,res.user.uid)

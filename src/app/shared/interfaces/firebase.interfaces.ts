@@ -39,4 +39,5 @@ export interface FirestoreCollectionUser {
     providerId:'none'|'google.com'|'apple.com'
     subscription?:boolean
     favorites?:string[];
+    uid?:string;
 }

@@ -35,6 +35,8 @@ import { TypeofPipe } from '../../pipes/typeof.pipe';
 import { ArticleHeaderComponent } from '../article-header/article-header.component';
 import { StandardGridComponent } from "../grids/standard-grid/standard-grid.component";
 import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-skeleton.component";
+import { Comment } from 'app/shared/interfaces/comment.interface';
+import { MatchUsernamePipe } from "../../pipes/match-username.pipe";
 
 @Component({
     selector: 'app-single-article',
@@ -52,7 +54,8 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
     ArticleHeaderComponent,
     MenuComponent,
     StandardGridComponent,
-    ArticleSkeletonComponent
+    ArticleSkeletonComponent,
+    MatchUsernamePipe
 ],
     template: `
     @if (data$ | async; as data) {
@@ -280,8 +283,8 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
         </section>
 
         <section class="contentElement flex flex-col my-6 lg:p-0 xsm:px-6 px-5">
-          @if (comments$ | async; as comments) {
-            <span class="md:text-[1.9rem] text-[1.6rem] font-semibold self-center">{{ comments | commentsLength }} Comments</span>
+          @if (comments$ | async) {
+            <span class="md:text-[1.9rem] text-[1.6rem] font-semibold self-center">{{ comments()! | commentsLength }} Comments</span>
 
             @if (!(userInfo$ | async)) {
               <div class="flex flex-col mt-2 w-full ">
@@ -339,32 +342,38 @@ import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-
               </form>
             }
 
-            @for (item of comments; track $index) {
-              @if(!item.deletedByUser){
-                <div class="flex flex-col mt-8 h-fit">
-                  <div class="flex justify-between items-center">
-                    <div>
-                      <span class="font-medium text-[1.2rem] mr-3">{{ item.username }}</span>
-                      <span>{{ item.date.toDate() | date: 'MM/dd/yyyy' }}</span> 
+            @if(commentsFirstLoad()){
+              @for (item of comments(); track $index) {
+                @if(!item.deletedByUser){
+                  <div class="flex flex-col mt-8 h-fit">
+                    <div class="flex justify-between items-center">
+                      <div>
+                        <div class="font-medium text-[1.2rem] mr-[.6rem] inline">
+                          @if(users()){
+                            <div class="inline" [innerHTML]="users()! | matchUsername : item.uid"></div>
+                          }@else{<div class="w-full skeletonElement h-[1.1rem]"></div>}
+                        </div>
+                        <span>{{ item.date.toDate() | date: 'MM/dd/yyyy' }}</span> 
+                      </div>
+                      @if (item.uid === uid()) {
+                        <button (click)="onCommentDelete(item.commentId!)">
+                          <svg
+                            viewBox="0 0 24 24"
+                            class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandRed active:scale-75">
+                            <g>
+                              <path
+                                d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></path>
+                            </g>
+                          </svg>
+                        </button>
+                      }
                     </div>
-                    @if (item.uid === uid()) {
-                      <button (click)="onCommentDelete(item.commentId!)">
-                        <svg
-                          viewBox="0 0 24 24"
-                          class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandRed active:scale-75">
-                          <g>
-                            <path
-                              d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            ></path>
-                          </g>
-                        </svg>
-                      </button>
-                    }
+                    <p class="text-[1.1rem]">{{ item.content }}</p>
                   </div>
-                  <p class="text-[1.1rem]">{{ item.content }}</p>
-                </div>
+                }
               }
             }
           }
@@ -620,12 +629,24 @@ export class SingleArticleComponent implements OnInit {
   
   // -------------- Comments --------------
 
+  commentsFirstLoad = model(false)
+  comments = model<Comment[]>()
+  users = model<{username: string,uid: string}[]>()
+
   comments$ = toObservable(this.id).pipe(
     map((url: string) => {
       const id = url.split('-');
       return id[0];
     }),
-    switchMap((id) => this.firebaseService.getArticleComments(id)),
+    switchMap((id) => this.firebaseService.getArticleComments(id).pipe(map(res=>{
+      const usersArr = res.map(val=>val.uid)
+      this.firebaseService.getUsernames(Array.from(new Set(usersArr))).subscribe(list=>{
+        this.users.set(list.map(obj=>{return {username:obj.username,uid:obj.uid!}}))
+      })
+      this.comments.set(res)
+      this.commentsFirstLoad.set(true)
+      return res
+    }))),
   );
 
   isCommentFormLoading = model(false)

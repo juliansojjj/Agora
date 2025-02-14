@@ -72,26 +72,26 @@ import { NgClass } from '@angular/common';
         @for (item of articles().slice(4,8); track $index) {
           @if($index == 3){
             <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
-            (mouseover)="cellHoverCheck($index)" (mouseout)="cellHoverCheck($index)"
+            (mouseover)="cellHoverCheck($index+5)" (mouseout)="cellHoverCheck($index+5)"
             class="relative 2xl:flex hidden overflow-hidden
             xl:h-[20rem] 
             lg:h-[19rem]
             sm:h-[14rem] sm:aspect-square
             xsm:h-[12rem]
             aspect-[2/1] h-[9rem]" 
-            [ngClass]="$index % 2 == 0 ? 'evenCell flex-row-reverse sm:flex-col' : 'oddCell sm:items-end sm:flex-col-reverse'">
+            [ngClass]="($index+5) % 2 == 0 ? 'evenCell flex-row-reverse sm:flex-col' : 'oddCell sm:items-end sm:flex-col-reverse'">
 
               <img [src]="item.frontImage" [alt]="item.frontImageAlt" 
               class="w-full  object-cover 
               2xl:h-[13rem] 
               lg:h-[13rem] 
               sm:h-[9rem]" 
-              [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
+              [ngClass]="cellHover() == ($index+5).toString() ? 'scale-105' : ''">
 
               <div class="w-full z-10 lg:p-3 p-1 px-2 h-full" 
               [ngClass]="{
-              'bg-brandGrey': cellHover() == $index.toString(),
-              'bg-white': cellHover() != $index.toString()}"> 
+              'bg-brandGrey': cellHover() == ($index+5).toString(),
+              'bg-white': cellHover() != ($index+5).toString()}"> 
                 <span class="font-medium
                 2xl:text-[1.2rem] 
                 text-[1rem]">{{item.heading}}</span>
@@ -99,26 +99,26 @@ import { NgClass } from '@angular/common';
             </a>
           }@else{
             <a [routerLink]="['/article',urlFormat(item.articleID!, item.heading)]" 
-            (mouseover)="cellHoverCheck($index)" (mouseout)="cellHoverCheck($index)"
+            (mouseover)="cellHoverCheck($index+5)" (mouseout)="cellHoverCheck($index+5)"
             class="relative flex overflow-hidden
             xl:h-[20rem] 
             lg:h-[19rem]
             sm:h-[14rem] sm:aspect-square
             xsm:h-[12rem]
             aspect-[2/1] h-[9rem]" 
-            [ngClass]="$index % 2 == 0 ? 'evenCell flex-row-reverse sm:flex-col' : 'oddCell sm:items-end sm:flex-col-reverse'">
+            [ngClass]="($index+5) % 2 == 0 ? 'evenCell flex-row-reverse sm:flex-col' : 'oddCell sm:items-end sm:flex-col-reverse'">
 
               <img [src]="item.frontImage" [alt]="item.frontImageAlt" 
               class="w-full  object-cover 
               2xl:h-[13rem] 
               lg:h-[13rem] 
               sm:h-[9rem]" 
-              [ngClass]="cellHover() == $index.toString() ? 'scale-105' : ''">
+              [ngClass]="cellHover() == ($index+5).toString() ? 'scale-105' : ''">
 
               <div class="w-full z-10 lg:p-3 p-1 px-2 h-full" 
               [ngClass]="{
-              'bg-brandGrey': cellHover() == $index.toString(),
-              'bg-white': cellHover() != $index.toString()}"> 
+              'bg-brandGrey': cellHover() == ($index+5).toString(),
+              'bg-white': cellHover() != ($index+5).toString()}"> 
                 <span class="font-medium
                 2xl:text-[1.2rem] 
                 text-[1rem]">{{item.heading}}</span>
