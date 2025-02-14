@@ -1,10 +1,10 @@
-import { AsyncPipe, DOCUMENT, NgClass } from '@angular/common';
-import { Component, inject, model, Renderer2 } from '@angular/core';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { Component, inject, model } from '@angular/core';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, map, Observable, switchMap, take } from 'rxjs';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.interfaces';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -68,7 +68,7 @@ import { Router } from '@angular/router';
             <button type="submit" [disabled]="usernameForm.invalid || usernameForm.pending" 
             [ngClass]="usernameForm.controls.username.touched ? 'bg-black hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300 '"
             class="w-[6rem] h-[2.5rem] text-white hidden md:flex items-center justify-center font-medium text-[1.1rem] xsm:text-[1.2rem]">
-              @if(this.userFormState() === 'submitting'){...}@else{Update}
+              @if(this.userFormState() === 'submitting'){. . .}@else{Update}
             </button>
             <div></div>
 
@@ -107,7 +107,7 @@ import { Router } from '@angular/router';
               <button type="submit" [disabled]="usernameForm.invalid || usernameForm.pending" 
               [ngClass]="usernameForm.controls.username.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black text-white active:scale-95' : 'hidden'"
               class="w-[6rem] h-[2.5rem] bg-black items-center justify-center font-medium text-[1.1rem] xsm:text-[1.2rem]">
-                @if(this.userFormState() === 'submitting'){...}@else{Update}
+                @if(this.userFormState() === 'submitting'){. . .}@else{Update}
               </button>
               <button (click)="onUsernameCancel()" [ngClass]="usernameForm.controls.username.touched? 'block' : 'hidden'" type="button"
               class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
@@ -137,7 +137,7 @@ import { Router } from '@angular/router';
               <button type="submit" [disabled]="emailForm.invalid || emailForm.pending || !emailForm.controls.email.dirty" 
               [ngClass]="emailForm.controls.email.touched ? 'bg-black  hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300'"
               class="w-[6rem] h-[2.5rem] hidden md:flex items-center justify-center text-white  font-medium text-[1.1rem] xsm:text-[1.2rem]">
-                @if(this.emailFormState() === 'submitting'){...}@else{Update}
+                @if(this.emailFormState() === 'submitting'){. . .}@else{Update}
               </button>
               <div></div>
 
@@ -165,7 +165,7 @@ import { Router } from '@angular/router';
                 <button type="submit" [disabled]="emailForm.invalid || emailForm.pending || !emailForm.controls.email.dirty" 
                 [ngClass]="emailForm.controls.email.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black active:scale-95' : 'hidden'"
                 class="w-[6rem] h-[2.5rem] bg-black items-center justify-center  text-white  font-medium text-[1.1rem] xsm:text-[1.2rem]">
-                  @if(this.emailFormState() === 'submitting'){...}@else{Update}
+                  @if(this.emailFormState() === 'submitting'){. . .}@else{Update}
                 </button>
                 <button (click)="onEmailCancel()" [ngClass]="emailForm.controls.email.touched ? 'block' : 'hidden'" type="button"
                 class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
@@ -193,7 +193,7 @@ import { Router } from '@angular/router';
               <button type="submit" [disabled]="passwordForm.invalid || passwordForm.pending" 
               [ngClass]="passwordForm.controls.password.touched ? 'bg-black hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300'"
               class="w-[6rem] h-[2.5rem] hidden md:flex items-center justify-center  text-white  font-medium text-[1.1rem] xsm:text-[1.2rem]">
-                @if(this.passwordFormState() === 'submitting'){...}@else{Update}
+                @if(this.passwordFormState() === 'submitting'){. . .}@else{Update}
               </button>
               <div></div>
 
@@ -223,7 +223,7 @@ import { Router } from '@angular/router';
                 <button type="submit" [disabled]="passwordForm.invalid || passwordForm.pending" 
                 [ngClass]="passwordForm.controls.password.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black text-white active:scale-95' : 'hidden'"
                 class="w-[6rem] h-[2.5rem] bg-black items-center justify-center font-medium text-[1.1rem] xsm:text-[1.2rem]">
-                  @if(this.passwordFormState() === 'submitting'){...}@else{Update}
+                  @if(this.passwordFormState() === 'submitting'){. . .}@else{Update}
                 </button>
                 <button (click)="onPasswordCancel()" [ngClass]="passwordForm.controls.password.touched ? 'block' : 'hidden'" type="button"
                 class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
