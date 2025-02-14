@@ -400,6 +400,15 @@ export class FirebaseService {
     )
   }
 
+  eliminateUser(){
+    if(this.authService.currentUser?.uid){
+      const uid = this.authService.currentUser?.uid
+      return from(deleteUser(this.authService.currentUser!)).pipe(map(()=>{
+        return from (deleteDoc(doc(this.firestoreService, 'users',uid)))
+      }))
+    } else return throwError(()=>new Error('No user detected'))
+  }
+
   logout() {
     signOut(this.authService);
     this.router.navigate(['/'])

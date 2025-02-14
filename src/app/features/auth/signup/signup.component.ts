@@ -108,7 +108,7 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
 
                 
                 <button type="submit" [disabled]="form.invalid || form.pending" 
-                class="bg-brandViolet flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] sm:px-8 px-6 sm:text-[1.2rem] text-[1rem] font-medium mt-1 text-white w-fit hover:bg-brandShade hover:text-black active:scale-95">
+                class="bg-brandViolet flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] w-[6rem] xsm:w-[8rem] sm:text-[1.2rem] text-[1rem] font-medium mt-1 text-white  hover:bg-brandShade hover:text-black active:scale-95">
                   @if(isFormSubmitting()){. . .}@else{Register}
                 </button>
                 
