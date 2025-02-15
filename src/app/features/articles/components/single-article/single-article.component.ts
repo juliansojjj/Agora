@@ -283,100 +283,101 @@ import { MatchUsernamePipe } from "../../pipes/match-username.pipe";
         </section>
 
         <section class="contentElement flex flex-col my-6 lg:p-0 xsm:px-6 px-5">
-          @if (comments$ | async) {
-            <span class="md:text-[1.9rem] text-[1.6rem] font-semibold self-center">{{ comments()! | commentsLength }} Comments</span>
+          
+          
+          <span class="md:text-[1.9rem] text-[1.6rem] font-semibold self-center">{{ (comments$ | async)! | commentsLength }} Comments</span>
 
-            @if (!(userInfo$ | async)) {
-              <div class="flex flex-col mt-2 w-full ">
-                <a
-                  [routerLink]="['/login']"
-                  [queryParams]="{
-                    redirect: 'article-' + id().split('-')[0],
-                  }"
-                  class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip 
-                  hover:text-gray-400 text-gray-400 hover:cursor-text font-normal hover:bg-transparent hover:p-0"
-                >
-                  Write your comment here...</a>
-              </div>
-            } @else {
-              <form
-                [formGroup]="commentForm"
-                (ngSubmit)="onCommentSubmit()"
-                class="flex flex-col mt-6 w-full "
-                >
-                <textarea
-                  formControlName="text"
-                  class="focus:outline-none border-b-2 py-1 resize-none h-fit w-full overflow-y-clip"
-                  appTextAreaResize
-                  #textAreaResize="appTextAreaResize"
-                  placeholder="Write your comment here..."
-                ></textarea>
+          @if (!(userInfo$ | async)) {
+            <div class="flex flex-col mt-2 w-full ">
+              <a
+                [routerLink]="['/login']"
+                [queryParams]="{
+                  redirect: 'article-' + id().split('-')[0],
+                }"
+                class="focus:outline-none focus:border-b-2 resize-none h-fit w-full overflow-y-clip 
+                hover:text-gray-400 text-gray-400 hover:cursor-text font-normal hover:bg-transparent hover:p-0"
+              >
+                Write your comment here...</a>
+            </div>
+          } @else {
+            <form
+              [formGroup]="commentForm"
+              (ngSubmit)="onCommentSubmit()"
+              class="flex flex-col mt-6 w-full "
+              >
+              <textarea
+                formControlName="text"
+                class="focus:outline-none border-b-2 py-1 resize-none h-fit w-full overflow-y-clip"
+                appTextAreaResize
+                #textAreaResize="appTextAreaResize"
+                placeholder="Write your comment here..."
+              ></textarea>
 
-                @if (commentForm.controls.text.touched || commentForm.controls.text.dirty) {
+              @if (commentForm.controls.text.touched || commentForm.controls.text.dirty) {
 
-                  <div class="h-5 w-full mt-2">
-                    @if (commentForm.controls.text.errors?.['maxlength']) {
-                      <span class="errorLabel">The max amount of characters is 280</span>
+                <div class="h-5 w-full mt-2">
+                  @if (commentForm.controls.text.errors?.['maxlength']) {
+                    <span class="errorLabel">The max amount of characters is 280</span>
+                  }
+                </div>
+              
+                <div class="flex items-end self-end h-10 mt-7">
+                    @if(!isCommentFormLoading()){
+                      <button
+                      type="reset"
+                      (click)="onCancel()"
+                      class="h-10 w-[6rem] sm:w-[8rem] mt-4 font-medium self-end mr-4
+                      bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 text-[1rem] sm:text-[1.2rem]">
+                        Cancel
+                      </button>
+                    }
+                    <button
+                      [type]="isCommentFormLoading() ? 'button' : 'submit'"
+                      [disabled]="commentForm.invalid || commentForm.pending"
+                      class="h-10 w-[6rem] sm:w-[8rem] mt-4 font-medium box-border
+                      hover:bg-brandShade hover:text-black text-white active:scale-95 bg-black text-[1rem] sm:text-[1.2rem]">
+                        @if(isCommentFormLoading()){. . .}@else{Comment}
+                    </button>
+                </div>
+              }
+            </form>
+          }
+
+          @if (comments$ | async ; as comments) {
+            @for (item of comments; track $index) {
+              @if(!item.deletedByUser){
+                <div class="flex flex-col mt-8 h-fit">
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <div class="font-medium text-[1.2rem] mr-[.6rem] inline">
+                        @if(users()){
+                          <div class="inline" [innerHTML]="users()! | matchUsername : item.uid"></div>
+                        }@else{<div class="w-full skeletonElement h-[1.1rem]"></div>}
+                      </div>
+                      <span>{{ item.date.toDate() | date: 'MM/dd/yyyy' }}</span> 
+                    </div>
+                    @if (item.uid === uid()) {
+                      <button (click)="onCommentDelete(item.commentId!)">
+                        <svg
+                          viewBox="0 0 24 24"
+                          class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandRed active:scale-75">
+                          <g>
+                            <path
+                              d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </button>
                     }
                   </div>
-                
-                  <div class="flex items-end self-end h-10 mt-7">
-                      @if(!isCommentFormLoading()){
-                        <button
-                        type="reset"
-                        (click)="onCancel()"
-                        class="h-10 w-[6rem] sm:w-[8rem] mt-4 font-medium self-end mr-4
-                        bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 text-[1rem] sm:text-[1.2rem]">
-                          Cancel
-                        </button>
-                      }
-                      <button
-                        [type]="isCommentFormLoading() ? 'button' : 'submit'"
-                        [disabled]="commentForm.invalid || commentForm.pending"
-                        class="h-10 w-[6rem] sm:w-[8rem] mt-4 font-medium box-border
-                        hover:bg-brandShade hover:text-black text-white active:scale-95 bg-black text-[1rem] sm:text-[1.2rem]">
-                          @if(isCommentFormLoading()){. . .}@else{Comment}
-                      </button>
-                  </div>
-                }
-              </form>
-            }
-
-            @if(commentsFirstLoad()){
-              @for (item of comments(); track $index) {
-                @if(!item.deletedByUser){
-                  <div class="flex flex-col mt-8 h-fit">
-                    <div class="flex justify-between items-center">
-                      <div>
-                        <div class="font-medium text-[1.2rem] mr-[.6rem] inline">
-                          @if(users()){
-                            <div class="inline" [innerHTML]="users()! | matchUsername : item.uid"></div>
-                          }@else{<div class="w-full skeletonElement h-[1.1rem]"></div>}
-                        </div>
-                        <span>{{ item.date.toDate() | date: 'MM/dd/yyyy' }}</span> 
-                      </div>
-                      @if (item.uid === uid()) {
-                        <button (click)="onCommentDelete(item.commentId!)">
-                          <svg
-                            viewBox="0 0 24 24"
-                            class="stroke-slate-500 fill-none stroke-2 h-6 hover:stroke-none hover:fill-brandRed active:scale-75">
-                            <g>
-                              <path
-                                d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              ></path>
-                            </g>
-                          </svg>
-                        </button>
-                      }
-                    </div>
-                    <p class="text-[1.1rem]">{{ item.content }}</p>
-                  </div>
-                }
+                  <p class="text-[1.1rem]">{{ item.content }}</p>
+                </div>
               }
             }
           }
+          
         </section>
 
         <hr class="contentElement h-[.05rem] bg-slate-200">
@@ -629,8 +630,6 @@ export class SingleArticleComponent implements OnInit {
   
   // -------------- Comments --------------
 
-  commentsFirstLoad = model(false)
-  comments = model<Comment[]>()
   users = model<{username: string,uid: string}[]>()
 
   comments$ = toObservable(this.id).pipe(
@@ -643,8 +642,6 @@ export class SingleArticleComponent implements OnInit {
       this.firebaseService.getUsernames(Array.from(new Set(usersArr))).subscribe(list=>{
         this.users.set(list.map(obj=>{return {username:obj.username,uid:obj.uid!}}))
       })
-      this.comments.set(res)
-      this.commentsFirstLoad.set(true)
       return res
     }))),
   );

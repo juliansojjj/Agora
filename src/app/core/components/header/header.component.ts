@@ -250,8 +250,8 @@ export class HeaderComponent implements AfterViewChecked, OnInit {
       .subscribe((event) => {
         this.routeTitle.set('');
         if (
-          event.url === '/login' ||
-          event.url === '/register' ||
+          event.url.split('?')[0] === '/login' ||
+          event.url.split('?')[0] === '/register' ||
           event.url.split('/')[1] === 'article'
         ) {
           this.visibility.set(false);
