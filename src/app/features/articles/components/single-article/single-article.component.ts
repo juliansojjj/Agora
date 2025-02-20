@@ -31,12 +31,12 @@ import {
 } from '../../../../shared/interfaces/firebase.interfaces';
 import { TextAreaResizeDirective } from '../../directives/text-area-resize.directive';
 import { CommentsLengthPipe } from '../../pipes/comments-length.pipe';
+import { MatchUsernamePipe } from "../../pipes/match-username.pipe";
 import { TypeofPipe } from '../../pipes/typeof.pipe';
 import { ArticleHeaderComponent } from '../article-header/article-header.component';
 import { StandardGridComponent } from "../grids/standard-grid/standard-grid.component";
 import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-skeleton.component";
 import { Comment } from 'app/shared/interfaces/comment.interface';
-import { MatchUsernamePipe } from "../../pipes/match-username.pipe";
 
 @Component({
     selector: 'app-single-article',
@@ -285,7 +285,11 @@ import { MatchUsernamePipe } from "../../pipes/match-username.pipe";
         <section class="contentElement flex flex-col my-6 lg:p-0 xsm:px-6 px-5">
           
           
-          <span class="md:text-[1.9rem] text-[1.6rem] font-semibold self-center">{{ (comments$ | async)! | commentsLength }} Comments</span>
+          @if(commentsData()){
+            <span class="md:text-[1.9rem] text-[1.6rem] font-semibold self-center">{{ commentsData()! | commentsLength }} Comments</span>
+          } @else {
+            <span class="md:text-[1.9rem] text-[1.6rem] font-semibold self-center">Comments</span>
+          }
 
           @if (!(userInfo$ | async)) {
             <div class="flex flex-col mt-2 w-full ">
@@ -343,8 +347,8 @@ import { MatchUsernamePipe } from "../../pipes/match-username.pipe";
             </form>
           }
 
-          @if (comments$ | async ; as comments) {
-            @for (item of comments; track $index) {
+          @if (comments$ | async ) {
+            @for (item of commentsData()!; track $index) {
               @if(!item.deletedByUser){
                 <div class="flex flex-col mt-8 h-fit">
                   <div class="flex justify-between items-center">
@@ -527,6 +531,10 @@ export class SingleArticleComponent implements OnInit {
         
         if(previousUrl.split('/')[1] == 'article' && currentUrl.split('/')[1] == 'article'){
           this.commentForm.reset()
+          const id = currentUrl.split('/')[2].split('-')[0]
+          this.firebaseService.getArticleComments(id).subscribe(res=>{
+            this.commentsData.set(res)
+          })
         }
       }); 
   }
@@ -631,7 +639,7 @@ export class SingleArticleComponent implements OnInit {
   // -------------- Comments --------------
 
   users = model<{username: string,uid: string}[]>()
-
+  commentsData = model<Comment[]>()
   comments$ = toObservable(this.id).pipe(
     map((url: string) => {
       const id = url.split('-');
@@ -642,6 +650,7 @@ export class SingleArticleComponent implements OnInit {
       this.firebaseService.getUsernames(Array.from(new Set(usersArr))).subscribe(list=>{
         this.users.set(list.map(obj=>{return {username:obj.username,uid:obj.uid!}}))
       })
+      this.commentsData.set(res)
       return res
     }))),
   );
