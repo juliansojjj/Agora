@@ -42,7 +42,7 @@ import { Component } from '@angular/core';
       </div>
 
       <div class="w-full h-[1rem] bg-brandViolet max-md:block hidden"></div>
-      <div class="w-full h-[1rem] bg-brandShade max-md:block hidden"></div>
+      <div class="w-full h-[1rem] bg-brandPink max-md:block hidden"></div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-col w-full lg:h-[46.2rem] relative">
         <div class="w-full h-[46.2rem] absolute top-0 lg:grid hidden grid-rows-[3.3rem_9.9rem_3.3rem_9.9rem_3.3rem_9.9rem_3.3rem_3.3rem]">

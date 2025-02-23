@@ -20,6 +20,7 @@ import {
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { MenuComponent } from 'app/core/components/menu/menu.component';
+import { Comment } from 'app/shared/interfaces/comment.interface';
 import { filter, map, of, pairwise, switchMap } from 'rxjs';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 import {
@@ -36,7 +37,6 @@ import { TypeofPipe } from '../../pipes/typeof.pipe';
 import { ArticleHeaderComponent } from '../article-header/article-header.component';
 import { StandardGridComponent } from "../grids/standard-grid/standard-grid.component";
 import { ArticleSkeletonComponent } from "../skeletons/article-skeleton/article-skeleton.component";
-import { Comment } from 'app/shared/interfaces/comment.interface';
 
 @Component({
     selector: 'app-single-article',
@@ -66,7 +66,7 @@ import { Comment } from 'app/shared/interfaces/comment.interface';
           @if (data.frontImageBanner) {
             <section class="h-full w-full flex-col items-center relative bannerLanding">
               <div class="w-full h-full absolute z-10 left-0 bottom-0 grid grid-cols-[14rem_4rem_4rem] grid-rows-[1fr_4rem]" >
-                <div class="bg-brandShade col-span-2 h-full flex flex-col p-7 pt-12">
+                <div class="bg-brandPink col-span-2 h-full flex flex-col p-7 pt-12">
                   <h1 class="font-semibold text-[2.8rem] leading-[3.5rem] mb-8">{{data.heading}}</h1>
                   <h2 class="font-medium text-[1.6rem]">{{data.subheading}}</h2>
                 </div>
@@ -91,7 +91,7 @@ import { Comment } from 'app/shared/interfaces/comment.interface';
           } 
             <div class="w-full justify-between items-start 
                 lg:w-1/2 lg:p-0 
-                sm:mt-4
+                sm:mt-10
                 xsm:px-6
                 mt-0 px-5" 
                 [ngClass]="data.frontImageBanner ? 'normalLanding' : 'flex'">
@@ -101,7 +101,7 @@ import { Comment } from 'app/shared/interfaces/comment.interface';
                     xl:text-[3.5rem]
                     md:text-[2.5rem]
                     sm:text-[2.25rem]
-                    text-[2rem] mb-4"  
+                    text-[2rem] mb-10 leading-[120%]"  
                   >
                     {{ data.heading }}
                   </h1>
@@ -331,7 +331,7 @@ import { Comment } from 'app/shared/interfaces/comment.interface';
                       type="reset"
                       (click)="onCancel()"
                       class="h-10 w-[6rem] sm:w-[8rem] mt-4 font-medium self-end mr-4
-                      bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 text-[1rem] sm:text-[1.2rem]">
+                      bg-white text-brandPink hover:bg-brandRed hover:text-white active:scale-95 text-[1rem] sm:text-[1.2rem]">
                         Cancel
                       </button>
                     }
@@ -339,7 +339,7 @@ import { Comment } from 'app/shared/interfaces/comment.interface';
                       [type]="isCommentFormLoading() ? 'button' : 'submit'"
                       [disabled]="commentForm.invalid || commentForm.pending"
                       class="h-10 w-[6rem] sm:w-[8rem] mt-4 font-medium box-border
-                      hover:bg-brandShade hover:text-black text-white active:scale-95 bg-black text-[1rem] sm:text-[1.2rem]">
+                      hover:bg-brandPink hover:text-black text-white active:scale-95 bg-black text-[1rem] sm:text-[1.2rem]">
                         @if(isCommentFormLoading()){. . .}@else{Comment}
                     </button>
                 </div>
@@ -476,11 +476,11 @@ import { Comment } from 'app/shared/interfaces/comment.interface';
 
       .articleLink {
         font-weight: 600;
-        color: #5E0060;
+        color: #4D0CA7;
       }
       .articleLink:hover {
         color: #ffffff;
-        background-color: #5E0060;
+        background-color: #4D0CA7;
         padding: 0.1rem 0 0.1rem 0;
       }
 

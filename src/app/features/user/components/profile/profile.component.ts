@@ -55,10 +55,10 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
           <form [formGroup]="usernameForm" (ngSubmit)="onUsernameSubmit()" class="md:mt-14 mt-8 md:grid md:grid-cols-[9rem_20rem_2rem_6rem] flex flex-col max-md:items-center max-md:place-content-center md:gap-y-2">
 
             <div class="flex h-fit md:items-center flex-col-reverse md:flex-row-reverse col-span-2">
-              <input type="text" formControlName="username" id="username" [ngClass]="usernameForm.controls.username.touched ? 'border-brandShade text-black' : 'border-slate-300 text-slate-400 '"
+              <input type="text" formControlName="username" id="username" [ngClass]="usernameForm.controls.username.touched ? 'border-brandPink text-black' : 'border-slate-300 text-slate-400 '"
               class="peer xsm:w-[20rem] w-[15rem] h-[2.5rem] border-[.2rem]  focus:text-black box-border px-2 focus:outline-none focus:border-brandViolet"/>
               
-              <label [ngClass]="usernameForm.controls.username.touched ? 'text-brandShade' : 'text-slate-300'"
+              <label [ngClass]="usernameForm.controls.username.touched ? 'text-brandPink' : 'text-slate-300'"
               class="sm:text-[1.5rem] text-[1.2rem] min-w-[9rem] h-fit font-medium  peer-focus:text-brandViolet" for="username">
                 Username
               </label>
@@ -66,7 +66,7 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
             <div></div>
 
             <button type="submit" [disabled]="usernameForm.invalid || usernameForm.pending" 
-            [ngClass]="usernameForm.controls.username.touched ? 'bg-black hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300 '"
+            [ngClass]="usernameForm.controls.username.touched ? 'bg-black hover:bg-brandPink hover:text-black active:scale-95' : 'bg-slate-300 '"
             class="w-[6rem] h-[2.5rem] text-white hidden md:flex items-center justify-center font-medium text-[1.1rem] xsm:text-[1.2rem]">
               @if(this.userFormState() === 'submitting'){. . .}@else{Update}
             </button>
@@ -105,12 +105,12 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
             
             <div class="w-[15rem] xsm:w-[20rem] md:w-fit h-fit max-md:mt-1 max-md:flex">
               <button type="submit" [disabled]="usernameForm.invalid || usernameForm.pending" 
-              [ngClass]="usernameForm.controls.username.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black text-white active:scale-95' : 'hidden'"
+              [ngClass]="usernameForm.controls.username.touched ? 'max-md:block hidden hover:bg-brandPink hover:text-black text-white active:scale-95' : 'hidden'"
               class="w-[6rem] h-[2.5rem] bg-black items-center justify-center font-medium text-[1.1rem] xsm:text-[1.2rem]">
                 @if(this.userFormState() === 'submitting'){. . .}@else{Update}
               </button>
               <button (click)="onUsernameCancel()" [ngClass]="usernameForm.controls.username.touched? 'block' : 'hidden'" type="button"
-              class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
+              class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandPink hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
                 Cancel
               </button>
             </div>
@@ -124,10 +124,10 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
 
               <div class="flex h-fit md:items-center flex-col-reverse md:flex-row-reverse col-span-2">
                 <input type="text" formControlName="email" id="emailForm" placeholder="********" 
-                [ngClass]="emailForm.controls.email.touched ? 'border-brandShade text-black' : 'border-slate-300 text-slate-400 '"
+                [ngClass]="emailForm.controls.email.touched ? 'border-brandPink text-black' : 'border-slate-300 text-slate-400 '"
                 class="peer xsm:w-[20rem] w-[15rem] h-[2.5rem] border-[.2rem]  focus:text-black box-border px-2 focus:outline-none focus:border-brandViolet"/>
                 
-                <label [ngClass]="emailForm.controls.email.touched ? 'text-brandShade' : 'text-slate-300'"
+                <label [ngClass]="emailForm.controls.email.touched ? 'text-brandPink' : 'text-slate-300'"
                 class="sm:text-[1.5rem] text-[1.2rem] min-w-[9rem] h-fit font-medium  peer-focus:text-brandViolet" for="emailForm">
                   Email
                 </label>
@@ -135,7 +135,7 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
               <div></div>
 
               <button type="submit" [disabled]="emailForm.invalid || emailForm.pending || !emailForm.controls.email.dirty" 
-              [ngClass]="emailForm.controls.email.touched ? 'bg-black  hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300'"
+              [ngClass]="emailForm.controls.email.touched ? 'bg-black  hover:bg-brandPink hover:text-black active:scale-95' : 'bg-slate-300'"
               class="w-[6rem] h-[2.5rem] hidden md:flex items-center justify-center text-white  font-medium text-[1.1rem] xsm:text-[1.2rem]">
                 @if(this.emailFormState() === 'submitting'){. . .}@else{Update}
               </button>
@@ -163,12 +163,12 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
               
               <div class="w-[15rem] xsm:w-[20rem] md:w-fit h-fit max-md:mt-1 max-md:flex">
                 <button type="submit" [disabled]="emailForm.invalid || emailForm.pending || !emailForm.controls.email.dirty" 
-                [ngClass]="emailForm.controls.email.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black active:scale-95' : 'hidden'"
+                [ngClass]="emailForm.controls.email.touched ? 'max-md:block hidden hover:bg-brandPink hover:text-black active:scale-95' : 'hidden'"
                 class="w-[6rem] h-[2.5rem] bg-black items-center justify-center  text-white  font-medium text-[1.1rem] xsm:text-[1.2rem]">
                   @if(this.emailFormState() === 'submitting'){. . .}@else{Update}
                 </button>
                 <button (click)="onEmailCancel()" [ngClass]="emailForm.controls.email.touched ? 'block' : 'hidden'" type="button"
-                class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
+                class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandPink hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
                   Cancel
                 </button>
               </div>
@@ -180,10 +180,10 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
             <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" class="mt-3 md:grid md:grid-cols-[9rem_20rem_2rem_6rem] flex flex-col max-md:items-center max-md:place-content-center md:gap-y-2">
 
               <div class="flex h-fit md:items-center flex-col-reverse md:flex-row-reverse col-span-2">
-                <input type="password" formControlName="password" id="passwordForm" placeholder="********" [ngClass]="passwordForm.controls.password.touched ? 'border-brandShade text-black' : 'border-slate-300 text-slate-400 '"
+                <input type="password" formControlName="password" id="passwordForm" placeholder="********" [ngClass]="passwordForm.controls.password.touched ? 'border-brandPink text-black' : 'border-slate-300 text-slate-400 '"
                 class="peer xsm:w-[20rem] w-[15rem] h-[2.5rem] border-[.2rem]  focus:text-black box-border px-2 focus:outline-none focus:border-brandViolet"/>
                 
-                <label [ngClass]="passwordForm.controls.password.touched ? 'text-brandShade' : 'text-slate-300'"
+                <label [ngClass]="passwordForm.controls.password.touched ? 'text-brandPink' : 'text-slate-300'"
                 class="sm:text-[1.5rem] text-[1.2rem] min-w-[9rem] h-fit font-medium  peer-focus:text-brandViolet" for="passwordForm">
                   Password
                 </label>
@@ -191,7 +191,7 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
               <div></div>
 
               <button type="submit" [disabled]="passwordForm.invalid || passwordForm.pending" 
-              [ngClass]="passwordForm.controls.password.touched ? 'bg-black hover:bg-brandShade hover:text-black active:scale-95' : 'bg-slate-300'"
+              [ngClass]="passwordForm.controls.password.touched ? 'bg-black hover:bg-brandPink hover:text-black active:scale-95' : 'bg-slate-300'"
               class="w-[6rem] h-[2.5rem] hidden md:flex items-center justify-center  text-white  font-medium text-[1.1rem] xsm:text-[1.2rem]">
                 @if(this.passwordFormState() === 'submitting'){. . .}@else{Update}
               </button>
@@ -221,12 +221,12 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
               
               <div class="w-[15rem] xsm:w-[20rem] md:w-fit h-fit max-md:mt-1 max-md:flex max-md:mb-6">
                 <button type="submit" [disabled]="passwordForm.invalid || passwordForm.pending" 
-                [ngClass]="passwordForm.controls.password.touched ? 'max-md:block hidden hover:bg-brandShade hover:text-black text-white active:scale-95' : 'hidden'"
+                [ngClass]="passwordForm.controls.password.touched ? 'max-md:block hidden hover:bg-brandPink hover:text-black text-white active:scale-95' : 'hidden'"
                 class="w-[6rem] h-[2.5rem] bg-black items-center justify-center font-medium text-[1.1rem] xsm:text-[1.2rem]">
                   @if(this.passwordFormState() === 'submitting'){. . .}@else{Update}
                 </button>
                 <button (click)="onPasswordCancel()" [ngClass]="passwordForm.controls.password.touched ? 'block' : 'hidden'" type="button"
-                class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandShade hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
+                class="w-[6rem] h-[2.5rem] max-md:ml-3 flex items-center justify-center bg-white text-brandPink hover:bg-brandRed hover:text-white active:scale-95 font-medium text-[1.1rem] xsm:text-[1.2rem]">
                   Cancel
                 </button>
               </div>
@@ -234,7 +234,7 @@ import { FirestoreCollectionUser } from '../../../../shared/interfaces/firebase.
             </form>
           }
 
-          <button (click)="onLogout()" class="self-start mb-6 w-[10rem] xsm:w-[12rem] h-[2.5rem] bg-brandShade hover:bg-white  text-black flex items-center justify-center font-medium text-[1.1rem] xsm:text-[1.2rem] active:scale-95" >
+          <button (click)="onLogout()" class="self-start mb-6 w-[10rem] xsm:w-[12rem] h-[2.5rem] bg-brandPink hover:bg-white  text-black flex items-center justify-center font-medium text-[1.1rem] xsm:text-[1.2rem] active:scale-95" >
             Logout
           </button>
           

@@ -16,7 +16,7 @@ import { DatePipe, NgClass } from '@angular/common';
       grid-cols-1 gap-y-[2rem]">
 
         <div class="col-span-2 lg:block hidden"></div>
-        <div class="h-[3.5rem] lg:block hidden bg-brandShade 2xl:w-[35%] w-1/2 place-self-end"></div>
+        <div class="h-[3.5rem] lg:block hidden bg-brandPinkHigh 2xl:w-[35%] w-1/2 place-self-end"></div>
 
         <!-- -------------------------------------------- -->
 
@@ -27,7 +27,7 @@ import { DatePipe, NgClass } from '@angular/common';
         lg:grid-cols-[50%_50%] lg:grid 
         flex flex-col-reverse" >
             <div class="flex flex-col justify-between w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '0' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![0].heading}}</span>
+              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem] leading-[125%]">{{articles()![0].heading}}</span>
               <div class="flex flex-col">
                 <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{articles()![0].authorName}}</span>
                 <span class="hidden xl:inline-block text-[1rem] italic self-end">{{articles()![0].date.toDate() | date:'MM/d/y'}}</span>
@@ -38,10 +38,10 @@ import { DatePipe, NgClass } from '@angular/common';
             </div>
 
             <div class="absolute hidden lg:grid grid-cols-[3.5rem_3.5rem_3.5rem] grid-rows-[3.5rem_3.5rem] -ml-[10.5rem] -z-20">
-              <div class="bg-brandShade h-[3.5rem] col-span-2 w-full"></div>
+              <div class="bg-brandPinkHigh h-[3.5rem] col-span-2 w-full"></div>
               <div></div>
               <div class="col-span-2"></div>
-              <div class="bg-brandShade h-[3.5rem] aspect-square"></div>
+              <div class="bg-brandPinkHigh h-[3.5rem] aspect-square"></div>
             </div>
           </a>
 
@@ -57,7 +57,7 @@ import { DatePipe, NgClass } from '@angular/common';
               <img [src]="articles()![1].frontImage" [alt]="articles()![1].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '1' ? 'scale-105' : ''">
             </div>
             <div class="flex flex-col justify-between w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '1' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![1].heading}}</span>
+              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem] leading-[125%]">{{articles()![1].heading}}</span>
               <div class="flex flex-col">
                 <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{articles()![1].authorName}}</span>
                 <span class="hidden xl:inline-block text-[1rem] italic self-end">{{articles()![1].date.toDate() | date:'MM/d/y'}}</span>
@@ -68,32 +68,32 @@ import { DatePipe, NgClass } from '@angular/common';
         <!-- -------------------------------------------- -->
         <div class=" lg:block hidden"></div>
         <div class="lg:block hidden relative w-full -z-20">
-          <div class="absolute w-[16rem] h-[16rem]  top-0 bottom-0 my-auto bg-brandShade -ml-[6rem]"></div>
+          <div class="absolute w-[16rem] h-[16rem]  top-0 bottom-0 my-auto bg-brandPinkHigh -ml-[6rem]"></div>
         </div>
-        <div class="h-[3.5rem] lg:block hidden bg-brandShade 2xl:w-[35%] w-1/2 place-self-end"></div>
+        <div class="h-[3.5rem] lg:block hidden bg-brandPinkHigh 2xl:w-[35%] w-1/2 place-self-end"></div>
 
         <!-- -------------------------------------------- -->
 
         <div class="w-full h-[20rem] flex md:flex-row flex-col items-end relative">
           @for (item of articles().slice(2,5); track $index) {
             @if($index == 0){
-              <div class="absolute h-[5.5rem] w-[3.5rem] bg-brandShade lg:block hidden bottom-0 left-0 -ml-[3.5rem]"></div>
+              <div class="absolute h-[5.5rem] w-[3.5rem] bg-brandPinkHigh lg:block hidden bottom-0 left-0 -ml-[3.5rem]"></div>
               <a [routerLink]="['/article',urlFormat(articles()![$index+2].articleID!, articles()![$index+2].heading)]"
               (mouseover)="cellHoverCheck($index+2)" (mouseout)="cellHoverCheck($index+2)"
               class="flex flex-col justify-between w-full h-full bg-white hover:bg-brandGrey p-2 sm:p-3 sm:border-0 border-t-2 border-black">
-                <span class="font-medium lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
+                <span class="font-medium lg:text-[1.2rem] text-[1rem] leading-[130%]">{{item.heading}}</span>
                 <div class="flex flex-col">
                   <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{item.authorName}}</span>
                   <span class="hidden xl:inline-block text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
                 </div>
               </a>
             }@else {
-              <div class="h-[5.5rem] w-[12rem] bg-brandShade lg:block hidden"></div>
+              <div class="h-[5.5rem] w-[12rem] bg-brandPinkHigh lg:block hidden"></div>
               <a [routerLink]="['/article',urlFormat(articles()![$index+2].articleID!, articles()![$index+2].heading)]"
               (mouseover)="cellHoverCheck($index+2)" (mouseout)="cellHoverCheck($index+2)"
               [ngClass]="$index == 1 ? 'bg-white  hover:bg-brandGrey sm:bg-brandGrey sm:border-white sm:border-t-4 sm:border-b-4 md:border-t-0 md:border-b-0 md:border-r-4 md:border-l-4 lg:border-r-0 lg:border-l-0 sm:hover:bg-white lg:bg-white lg:hover:bg-brandGrey': 'bg-white  hover:bg-brandGrey'"
               class="flex flex-col justify-between w-full h-full p-2 sm:p-3 sm:border-0 border-t-2 border-black">
-                <span class="font-medium lg:text-[1.2rem] text-[1rem]">{{item.heading}}</span>
+                <span class="font-medium lg:text-[1.2rem] text-[1rem] leading-[130%]">{{item.heading}}</span>
                 <div class="flex flex-col">
                   <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{item.authorName}}</span>
                   <span class="hidden xl:inline-block text-[1rem] italic self-end">{{item.date.toDate() | date:'MM/d/y'}}</span>
@@ -115,7 +115,7 @@ import { DatePipe, NgClass } from '@angular/common';
               <img [src]="articles()![5].frontImage" [alt]="articles()![5].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '5' ? 'scale-105' : ''">
             </div>
             <div class="flex flex-col justify-between w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '5' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![5].heading}}</span>
+              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem] leading-[125%]">{{articles()![5].heading}}</span>
               <div class="flex flex-col">
                 <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{articles()![5].authorName}}</span>
                 <span class="hidden xl:inline-block text-[1rem] italic self-end">{{articles()![5].date.toDate() | date:'MM/d/y'}}</span>
@@ -132,7 +132,7 @@ import { DatePipe, NgClass } from '@angular/common';
               <img [src]="articles()![6].frontImage" [alt]="articles()![6].frontImageAlt" class="h-full w-full object-cover " [ngClass]="cellHover() == '6' ? 'scale-105' : ''">
             </div>
             <div class="flex flex-col justify-between w-full lg:h-full sm:h-[10rem] xsm:h-[8rem] h-[11rem] p-3 " [ngClass]="cellHover() == '6' ? 'text-white bg-black' : 'bg-white'"> 
-              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem]">{{articles()![6].heading}}</span>
+              <span class="font-medium lg:text-[1.4rem] md:text-[1.3rem] text-[1.2rem] leading-[125%]">{{articles()![6].heading}}</span>
               <div class="flex flex-col">
                 <span class="hidden xl:inline-block text-[1.1rem] italic self-end">{{articles()![6].authorName}}</span>
                 <span class="hidden xl:inline-block text-[1rem] italic self-end">{{articles()![6].date.toDate() | date:'MM/d/y'}}</span>

@@ -18,17 +18,17 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
 
         <div class="absolute w-full h-fit top-0 left-0 xl:grid grid-cols-[50%_41%_9%] z-30 hidden">
           <div></div>
-          <div class="aspect-square bg-brandShade w-[6rem] justify-self-end mr-[3rem] -mt-[1.5rem]"></div>
+          <div class="aspect-square bg-brandPinkHigh w-[6rem] justify-self-end mr-[3rem] -mt-[1.5rem]"></div>
           <div></div>
         </div>
 
         <div class="absolute w-full h-fit top-0 left-0 -z-10 xl:grid hidden grid-cols-[9%_82%_9%]">
           <div></div>
           <div class="grid grid-cols-[61%_39%]">
-            <div class="aspect-[2/1] h-[6rem] -ml-[1rem] bg-brandShade"></div>
+            <div class="aspect-[2/1] h-[6rem] -ml-[1rem] bg-brandPinkHigh"></div>
             <div class="flex justify-end relative mt-6">
-              <div class="aspect-square bg-brandShade w-[11rem] rounded-full absolute bottom-0 right-0 mb-[4.5rem]"></div>
-              <div class="aspect-square bg-brandShade w-[9rem] triangleShape mt-[13.5rem] mr-[18.5rem]"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[11rem] rounded-full absolute bottom-0 right-0 mb-[4.5rem]"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[9rem] triangleShape mt-[13.5rem] mr-[18.5rem]"></div>
             </div>
           </div>
           <div></div>
@@ -44,9 +44,9 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
                 <div></div>
                 <div class="flex flex-col lg:text-left text-center text-[1.4rem]">
                   <h1 class="font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet">{{authorData.authorName}}</h1>
-                  <h2 class="font-semibold lg:text-[2.6rem] sm:text-[2rem] text-[1.7rem] text-brandShade mb-4">{{authorData.authorDesignation}}</h2>
+                  <h2 class="font-semibold lg:text-[2.6rem] sm:text-[2rem] text-[1.7rem] text-brandPink mb-4">{{authorData.authorDesignation}}</h2>
                   <p class="text-[1.2rem] xsm:text-[1.4rem] mb-4 sm:px-0 px-5 text-left">{{authorData.authorDescription}}</p>
-                  <a [href]="authorData.source" target="_blank" class="text-[1.4rem] sm:px-0 px-4 w-fit font-medium text-brandShade hover:bg-brandShade hover:text-black">Check author here</a>
+                  <a [href]="authorData.source" target="_blank" class="text-[1.4rem] sm:px-0 px-4 w-fit font-medium text-brandPink hover:bg-brandPinkHigh hover:text-black">Check author here</a>
                 </div>
                 <img [src]="authorData.authorImage" alt="fake image of author" class="lg:block hidden xl:w-[21rem] object-cover rounded-full justify-self-end">
                 <div></div>

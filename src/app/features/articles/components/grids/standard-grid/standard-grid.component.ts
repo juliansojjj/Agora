@@ -1,4 +1,4 @@
-import { NgClass, NgStyle } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, input, model } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Article } from '../../../../../shared/interfaces/article.interface';

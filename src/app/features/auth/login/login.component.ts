@@ -3,10 +3,11 @@ import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } 
 import { Router, RouterLink } from '@angular/router';
 import { FirebaseService } from '../../../core/services/firebase.service';
 import { PassInputComponent } from '../../../shared/components/pass-input/pass-input.component';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-login',
-    imports: [ReactiveFormsModule, RouterLink, PassInputComponent],
+    imports: [ReactiveFormsModule, RouterLink, PassInputComponent, NgClass],
     template: `
     <div class="relative w-full h-fit">
       <div class="w-full lg:grid lg:grid-cols-[9%_82%_9%] flex flex-col lg:items-start items-center pt-6">
@@ -23,8 +24,9 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
                 
                 <div class="flex flex-col-reverse mt-3 sm:mt-6">
                   <input type="email" formControlName="email" id="email" 
-                  class="peer sm:w-[20rem] xsm:w-[17rem] xxsm:w-[15rem] w-[12rem] sm:h-[2.15rem] h-[1.8rem] sm:border-[.4rem] border-[.35rem] border-brandShade box-content px-2 focus:outline-none focus:border-brandViolet xsm:text-[1.1rem] text-[1rem]"/>
-                  <label class="sm:text-[1.7rem] text-[1.3rem] font-medium  mb-2 text-brandShade peer-focus:text-brandViolet" for="email">
+                  [ngClass]="form.controls.email.dirty && form.controls.email.errors ? 'border-brandRed' : 'border-brandPinkHigh'"
+                  class="peer sm:w-[20rem] xsm:w-[17rem] xxsm:w-[15rem] w-[12rem] sm:h-[2.15rem] h-[1.8rem] sm:border-[.4rem] border-[.35rem] box-content px-2 focus:outline-none focus:border-brandViolet xsm:text-[1.1rem] text-[1rem]"/>
+                  <label class="sm:text-[1.7rem] text-[1.3rem] font-medium  mb-2 text-brandPink peer-focus:text-brandViolet" for="email">
                     Email
                   </label>
                 </div>
@@ -62,7 +64,8 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
                 </div>
 
                 <button type="submit" [disabled]="form.invalid || form.pending" 
-                class="bg-brandViolet flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] w-[6rem] xsm:w-[8rem] sm:text-[1.2rem] text-[1rem] font-medium mt-1 text-white hover:bg-brandShade hover:text-black active:scale-95">
+                class=" flex items-center justify-center h-[2.2rem] sm:h-[2.8rem] w-[6rem] xsm:w-[8rem] sm:text-[1.2rem] text-[1rem] font-medium mt-1"
+                [ngClass]="form.invalid && (form.touched|| form.dirty) ? 'bg-brandPinkHigh2 text-brandPink' : 'hover:bg-brandPinkHigh hover:text-black active:scale-95 bg-brandViolet text-white'">
                   @if(isFormSubmitting()){. . .}@else{Login}
                 </button>
                   
@@ -86,14 +89,14 @@ import { PassInputComponent } from '../../../shared/components/pass-input/pass-i
           </div>
             
             <div class="w-fit h-full lg:flex hidden flex-col mt-5">
-              <div class="aspect-square bg-brandShade w-[6rem]  self-end"></div>
-              <div class="aspect-square bg-brandShade w-[6rem]  mr-[6rem]"></div>
-              <div class="aspect-square bg-brandShade w-[6rem]  self-end"></div>
-              <div class="aspect-square bg-brandShade w-[6rem]"></div>
-              <div class="aspect-square bg-brandShade w-[6rem]  self-end"></div>
-              <div class="aspect-square bg-brandShade w-[6rem]"></div>
-              <div class="aspect-square bg-brandShade w-[6rem]  self-end"></div>
-              <div class="aspect-square bg-brandShade w-[6rem]"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem]  self-end"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem]  mr-[6rem]"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem]  self-end"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem]"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem]  self-end"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem]"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem]  self-end"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem]"></div>
               </div>
         </div>
 

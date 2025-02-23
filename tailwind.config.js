@@ -11,9 +11,11 @@ module.exports = {
       },
       colors: {
         brandGrey:"#F8F8F8",
-        brandViolet:"#5E0060",
+        brandViolet:"#4D0CA7",
         brandRed:"#FD7E7E",
-        brandShade:"#EBDFEB"
+        brandPink:"#EBDFEB",
+        brandPinkHigh:"#FAF2FA",
+        brandPinkHigh2:"#FFFAFF",
       },
     },
   },

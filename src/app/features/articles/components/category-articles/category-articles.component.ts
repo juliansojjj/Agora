@@ -1,15 +1,13 @@
-import { AsyncPipe, NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { AsyncPipe, NgClass, TitleCasePipe } from '@angular/common';
 import { Component, inject, input, model } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import {
-  Router,
-  RouterLink
+  Router
 } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 import { Article } from '../../../../shared/interfaces/article.interface';
 import { Category } from '../../../../shared/interfaces/category.interface';
-import { OrderArticlesByDatePipe } from '../../pipes/order-articles-by-date.pipe';
 import { ExtStandardGridComponent } from '../grids/standard-grid/ext-standard-grid/ext-standard-grid.component';
 import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid-skeleton/ext-standard-grid-skeleton.component";
 
@@ -22,20 +20,20 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
         
         @if(category() && !category()?.main){
           <div class="absolute w-full h-fit top-0 left-0 xl:grid hidden grid-cols-[9%_82%_9%]">
-            <div class="aspect-square bg-brandShade w-[6rem] triangleShape justify-self-end"></div>
+            <div class="aspect-square bg-brandPinkHigh w-[6rem] triangleShape justify-self-end"></div>
             <div class="justify-self-end flex w-fit">
-              <div class="aspect-square bg-brandShade w-[6rem] h-[6rem] mt-[6rem]"></div>
-              <div class="aspect-square bg-brandShade w-[6rem] h-[6rem]"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem] h-[6rem] mt-[6rem]"></div>
+              <div class="aspect-square bg-brandPinkHigh w-[6rem] h-[6rem]"></div>
             </div>
-            <div class="aspect-square bg-brandShade w-[6rem] triangleShape -rotate-90 mt-[12rem]"></div>
+            <div class="aspect-square bg-brandPinkHigh w-[6rem] triangleShape -rotate-90 mt-[12rem]"></div>
           </div>  
         } @else if(category() && category()?.main){
           <div class="absolute w-full h-fit top-0 left-0 xl:grid hidden grid-cols-[9%_37%_45%_9%] -z-10">
-            <div class="aspect-square bg-brandShade w-[9rem] "></div>
+            <div class="aspect-square bg-brandPinkHigh w-[9rem] "></div>
 
             <div></div>
             
-            <div class="aspect-square triangleShape bg-brandShade w-[12rem] h-[13rem] rotate-180 justify-self-end -mr-[6rem]"></div>
+            <div class="aspect-square triangleShape bg-brandPinkHigh w-[12rem] h-[13rem] rotate-180 justify-self-end -mr-[6rem]"></div>
 
             <div></div>
           </div>
@@ -51,17 +49,17 @@ import { ExtStandardGridSkeletonComponent } from "../skeletons/ext-standard-grid
 
                     <div class="w-full xl:grid-cols-[45%_55%] grid h-fit">
                       <div class="w-full -z-10 xl:flex hidden self-end">
-                        <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] mr-[3rem]"></div>
-                        <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] mr-[3rem]"></div>
-                        <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] mr-[3rem]"></div>
-                        <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] mr-[3rem]"></div>
-                        <div class="aspect-square triangleShape bg-brandShade w-[6rem] h-[6rem] 2xl:block hidden"></div>
+                        <div class="aspect-square triangleShape bg-brandPinkHigh w-[6rem] h-[6rem] mr-[3rem]"></div>
+                        <div class="aspect-square triangleShape bg-brandPinkHigh w-[6rem] h-[6rem] mr-[3rem]"></div>
+                        <div class="aspect-square triangleShape bg-brandPinkHigh w-[6rem] h-[6rem] mr-[3rem]"></div>
+                        <div class="aspect-square triangleShape bg-brandPinkHigh w-[6rem] h-[6rem] mr-[3rem]"></div>
+                        <div class="aspect-square triangleShape bg-brandPinkHigh w-[6rem] h-[6rem] 2xl:block hidden"></div>
                       </div>
-                      <p class=" sm:px-0 px-5 xsm:text-[1.4rem] text-[1.2rem] xl:text-right text-left self-end w-full max-md:mt-7">
+                      <p class=" sm:px-0 px-5 xsm:text-[1.4rem] text-[1.2rem] xl:text-right text-left self-end w-full max-md:mt-7 ">
                         {{category()?.main ? category()?.description : ''}}
                       </p>
                     </div>
-                    <div class="aspect-square rounded-full bg-brandShade self-end w-[8rem] -mt-[3rem] -mr-[4rem] -z-10 xl:block hidden"></div>
+                    <div class="aspect-square rounded-full bg-brandPinkHigh self-end w-[8rem] -mt-[3rem] -mr-[4rem] -z-10 xl:block hidden"></div>
               </section>
             }@else if(category() && !category()?.main){
               <h1 class="font-semibold lg:text-[5rem] sm:text-[3.5rem] xsm:text-[3rem] text-[2.3rem] text-brandViolet xl:pl-6 sm:px-0 px-4 mt-6 md:mt-14 md:text-start text-center">

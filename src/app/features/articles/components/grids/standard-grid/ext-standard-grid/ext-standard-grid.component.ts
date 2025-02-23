@@ -1,4 +1,4 @@
-import { NgClass, NgStyle } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, input, model } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Article } from '../../../../../../shared/interfaces/article.interface';
@@ -31,9 +31,9 @@ import { Article } from '../../../../../../shared/interfaces/article.interface';
         [ngClass]="cellHover() == $index.toString() ? ' bg-brandGrey' : 'bg-white'"> 
 
           <span class=" block
-          text-[.8rem] leading-[1.2rem] font-medium
-          xsm:text-[.9rem] xsm:leading-normal 
-          md:text-[1rem]">
+          text-[.8rem] font-medium
+          xsm:text-[.9rem] 
+          md:text-[1rem] leading-[125%]">
             {{item.heading}}
           </span>
         </div>

@@ -17,7 +17,7 @@ import { Component } from '@angular/core';
       px-2 text-[2.3rem]">
         About Agora
       </h1>
-      <h2 class="font-semibold text-center text-brandShade 
+      <h2 class="font-semibold text-center text-brandPink 
       xl:p-0
       lg:text-[3rem] 
       md:text-start
@@ -29,7 +29,7 @@ import { Component } from '@angular/core';
       <p class="w-[75%] sm:w-1/2 my-3 max-lg:text-center lg:text-[1.3rem] sm:text-[1.2rem] text-[1.1rem]">Agora is a mock news website. The project, branding, and website were created from scratch, using Figma for design, Angular as the web framework and Firebase for the backend and user authentication.
       </p>
 
-      <h2 class="font-semibold text-center text-brandShade  mt-4
+      <h2 class="font-semibold text-center text-brandPink  mt-4
       xl:p-0
       lg:text-[3rem] 
       md:text-start

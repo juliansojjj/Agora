@@ -21,7 +21,7 @@ import { FirebaseService } from 'app/core/services/firebase.service';
       </h1> 
 
 
-      <h2 class="font-semibold text-center md:mt-10 mt-3 mb-2 text-brandShade 
+      <h2 class="font-semibold text-center md:mt-10 mt-3 mb-2 text-brandPink 
       lg:text-[3.5rem] 
       md:text-start
       sm:text-[3rem] sm:px-0
@@ -41,7 +41,7 @@ import { FirebaseService } from 'app/core/services/firebase.service';
         </div>
       }
 
-      <h2 class="font-semibold text-center md:mt-10 mt-3 mb-2 text-brandShade 
+      <h2 class="font-semibold text-center md:mt-10 mt-3 mb-2 text-brandPink 
       lg:text-[3.5rem] 
       md:text-start
       sm:text-[3rem] sm:px-0
@@ -61,7 +61,7 @@ import { FirebaseService } from 'app/core/services/firebase.service';
         </div>
       }
       
-      <h2 class="font-semibold text-center md:mt-10 mt-3 mb-2 text-brandShade 
+      <h2 class="font-semibold text-center md:mt-10 mt-3 mb-2 text-brandPink 
       lg:text-[3.5rem] 
       md:text-start
       sm:text-[3rem] sm:px-0

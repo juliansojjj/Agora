@@ -34,7 +34,7 @@ import { NgClass } from '@angular/common';
               'bg-white': cellHover() != $index.toString()}"> 
                 <span class="font-medium
                 2xl:text-[1.2rem] 
-                text-[1rem]">{{item.heading}}</span>
+                text-[1rem] leading-[125%]">{{item.heading}}</span>
               </div>
             </a>
           }@else{
@@ -61,7 +61,7 @@ import { NgClass } from '@angular/common';
               'bg-white': cellHover() != $index.toString()}"> 
                 <span class="font-medium
                 2xl:text-[1.2rem] 
-                text-[1rem]">{{item.heading}}</span>
+                text-[1rem] leading-[125%]">{{item.heading}}</span>
               </div>
             </a>
           }
@@ -94,7 +94,7 @@ import { NgClass } from '@angular/common';
               'bg-white': cellHover() != ($index+5).toString()}"> 
                 <span class="font-medium
                 2xl:text-[1.2rem] 
-                text-[1rem]">{{item.heading}}</span>
+                text-[1rem] leading-[125%]">{{item.heading}}</span>
               </div>
             </a>
           }@else{
@@ -121,7 +121,7 @@ import { NgClass } from '@angular/common';
               'bg-white': cellHover() != ($index+5).toString()}"> 
                 <span class="font-medium
                 2xl:text-[1.2rem] 
-                text-[1rem]">{{item.heading}}</span>
+                text-[1rem] leading-[125%]">{{item.heading}}</span>
               </div>
             </a>
           }

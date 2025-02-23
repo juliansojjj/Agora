@@ -1,8 +1,6 @@
 import {
-  AsyncPipe,
   DOCUMENT,
-  NgClass,
-  NgIf
+  NgClass
 } from '@angular/common';
 import {
   AfterViewChecked,
@@ -24,7 +22,6 @@ import {
 import { Article } from 'app/shared/interfaces/article.interface';
 import Fuse, { FuseResult } from 'fuse.js';
 import { debounceTime, filter, of, switchMap } from 'rxjs';
-import { MenuComponent } from '../../../../core/components/menu/menu.component';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 
 @Component({
@@ -42,7 +39,7 @@ import { FirebaseService } from '../../../../core/services/firebase.service';
           <div class="absolute right-0 top-0 w-[4rem] h-[4rem] -z-10 mr-12" [ngClass]="banner() ? 'bannerShadow' : 'hidden'"></div>
         </a>
 
-          <span class="w-fit h-fit self-center hidden 2xl:block text-[1.2rem] font-medium pl-14 pr-2"
+          <span class="w-fit h-fit self-center hidden 2xl:block text-[1.1rem] font-medium pl-16 pr-2"
           [ngClass]="banner() ? 'bannerArticleTitle' : ''">{{headingInfo()}}</span>
 
           <div class="xl:w-fit w-full h-full relative md:grid md:grid-rows-2 flex xl:justify-end">
@@ -136,23 +133,23 @@ import { FirebaseService } from '../../../../core/services/firebase.service';
               <ul class="h-full md:flex hidden">
                   <a
                     [routerLink]="['/category/tech']"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 lg:w-36 2xl:w-40 h-full"
+                    class="hover:bg-white bg-brandPink text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 lg:w-36 2xl:w-40 h-full"
                   ><li>Tech</li></a>
                   <a
                     [routerLink]="['/category/culture']"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 2xl:w-40 lg:w-36 h-full"
+                    class="hover:bg-white bg-brandPink text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 2xl:w-40 lg:w-36 h-full"
                   ><li>Culture</li></a>
                   <a
                     [routerLink]="['/category/science']"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 2xl:w-40 lg:w-36 h-full"
+                    class="hover:bg-white bg-brandPink text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 2xl:w-40 lg:w-36 h-full"
                   ><li>Science</li></a>
                   <a
                     [routerLink]="['/category/entertainment']"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 2xl:w-40 lg:w-36 h-full"
+                    class="hover:bg-white bg-brandPink text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 2xl:w-40 lg:w-36 h-full"
                   ><li>Entertainment</li></a>
                   <a
                     [routerLink]="['/category/media']"
-                    class="hover:bg-white bg-brandShade text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 2xl:w-40 lg:w-36 h-full"
+                    class="hover:bg-white bg-brandPink text-black text-center font-medium flex justify-center items-center hover:text-black md:w-32 2xl:w-40 lg:w-36 h-full"
                   ><li>Media</li></a>
                   @if (!authState()) {
                   <a

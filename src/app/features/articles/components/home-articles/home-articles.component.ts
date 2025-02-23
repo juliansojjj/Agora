@@ -3,11 +3,6 @@ import {
   inject
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-  collection,
-  doc,
-  setDoc
-} from '@angular/fire/firestore';
 import { RouterLink } from '@angular/router';
 import { FirebaseService } from '../../../../core/services/firebase.service';
 import { Article } from '../../../../shared/interfaces/article.interface';
@@ -15,7 +10,6 @@ import { Main2GridComponent } from '../grids/main-grid/main2-grid/main2-grid.com
 import { SecondaryGridComponent } from '../grids/secondary-grid/secondary-grid.component';
 import { Secondary2GridComponent } from "../grids/secondary2-grid/secondary2-grid.component";
 import { Secondary3GridComponent } from '../grids/secondary3-grid/secondary3-grid.component';
-import { ExtStandardGridComponent } from "../grids/standard-grid/ext-standard-grid/ext-standard-grid.component";
 import { StandardGridComponent } from '../grids/standard-grid/standard-grid.component';
 import { TopicsGridComponent } from "../grids/topics-grid/topics-grid.component";
 import { Topics2GridComponent } from "../grids/topics2-grid/topics2-grid.component";
@@ -40,7 +34,7 @@ import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-s
         @if(artificialIntelligenceArticles()){
           <section class="w-full h-fit pt-16 flex flex-col items-center">
             <a [routerLink]="['/category/artificial-intelligence']"
-                class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
+                class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandPink self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
                   Artificial Intelligence
             </a>
 
@@ -52,7 +46,7 @@ import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-s
         @if(appleArticles()){
           <section class="w-full h-fit max-md:pt-6 flex flex-col items-center">
             <a [routerLink]="['/category/apple']"
-                class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
+                class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandPink self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
                   Apple
             </a>
 
@@ -65,7 +59,7 @@ import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-s
         @if(scienceArticles()){
         <section class=" w-full h-fit md:pt-24 pt-12 flex flex-col items-center">
           <a [routerLink]="['/category/science']"
-              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-semibold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-6 block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-semibold text-brandViolet self-start underline hover:text-brandPink active:scale-95 mb-6 block w-fit">
                 Science
           </a>
 
@@ -80,7 +74,7 @@ import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-s
         @if(entertainmentArticles()){
         <section class=" w-full h-fit md:pt-24 pt-12 flex flex-col items-center">
           <a [routerLink]="['/category/entertainment']"
-              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] hyphens-auto break-all font-semibold text-brandViolet self-start underline hover:text-brandShade active:scale-95 mb-10 block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] hyphens-auto break-all font-semibold text-brandViolet self-start underline hover:text-brandPink active:scale-95 mb-10 block w-fit">
                 Entertainment
           </a>
 
@@ -105,7 +99,7 @@ import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-s
         @if(mediaArticles()){
         <section class=" w-full h-fit md:pt-24 pt-12 flex flex-col items-center">
           <a [routerLink]="['/category/media']"
-              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-semibold text-brandViolet self-start underline hover:text-brandShade active:scale-95 lg:mb-[6rem] mb-10 block w-fit">
+              class="pl-7 sm:pl-10 md:pl-20 text-[2.5rem] xsm:text-[3rem] sm:text-[4rem] md:text-[5rem] font-semibold text-brandViolet self-start underline hover:text-brandPink active:scale-95 lg:mb-[6rem] mb-10 block w-fit">
                 Media
           </a>
 
@@ -121,7 +115,7 @@ import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-s
         @if(socialMediaArticles()){
           <section class="w-full h-fit pt-24 flex flex-col items-center">
             <a [routerLink]="['/category/social-media']"
-                class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
+                class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandPink self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
                   Social Media
             </a>
 
@@ -133,7 +127,7 @@ import { Main2GridSkeletonComponent } from "../skeletons/main2-grid/main2-grid-s
         @if(socialGoodArticles()){
           <section class="w-full h-fit pt-6 flex flex-col items-center">
             <a [routerLink]="['/category/social-good']"
-                class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandShade self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
+                class="pl-7 sm:pl-10 md:pl-20 text-[2rem] sm:text-[3rem] font-medium lg:font-semibold text-brandPink self-start underline hover:text-brandViolet active:scale-95 mb-6 block w-fit">
                   Social Good
             </a>
 

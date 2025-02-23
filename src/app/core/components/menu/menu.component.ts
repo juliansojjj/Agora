@@ -105,14 +105,14 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validator
           </ul>
 
           @if(authState()){
-              <button (click)="onLogout()" class="mt-3 w-full h-fit font-medium md:hidden flex justify-center py-4 items-center bg-brandShade hover:bg-white hover:text-black  active:scale-95">Logout</button>
+              <button (click)="onLogout()" class="mt-3 w-full h-fit font-medium md:hidden flex justify-center py-4 items-center bg-brandPink hover:bg-white hover:text-black  active:scale-95">Logout</button>
           
               <div class="md:flex hidden items-end grow w-full">
-                <button (click)="onLogout()" class="w-full h-fit font-medium flex justify-center py-4 items-center bg-brandShade hover:bg-white hover:text-black  active:scale-95">Logout</button>
+                <button (click)="onLogout()" class="w-full h-fit font-medium flex justify-center py-4 items-center bg-brandPink hover:bg-white hover:text-black  active:scale-95">Logout</button>
               </div>
             } @else {
               <a [routerLink]="['/login']"  (click)="menuTrigger()"
-              class="mt-3 w-full h-fit py-4 font-medium flex md:hidden justify-center items-center bg-brandShade hover:bg-white hover:text-black active:scale-95">
+              class="mt-3 w-full h-fit py-4 font-medium flex md:hidden justify-center items-center bg-brandPink hover:bg-white hover:text-black active:scale-95">
               Login
               </a>
           }
