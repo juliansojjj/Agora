@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 
       <div class="w-full max-sm:h-[55vh] max-lg:h-[60vh] lg:max-h-[86vh] relative">
         <div class="absolute w-full h-full left-0 bottom-0  
-        2xl:grid-rows-[26.4rem_13.2rem_6.6rem_3.3rem]
+        3xl:grid-rows-[26.4rem_13.2rem_6.6rem_3.3rem]
         xl:grid-rows-[1fr_13.2rem_6.6rem_3.3rem] xl:grid
         flex items-end z-10">
           <div class="lg:block hidden"></div>
@@ -21,17 +21,17 @@ import { Component } from '@angular/core';
           </div>
 
           <div class="lg:grid
-          2xl:grid-cols-[6.6rem_1fr_13.2rem] 
+          3xl:grid-cols-[6.6rem_1fr_13.2rem] 
           xl:grid-cols-[6.6rem_1fr_3.3rem] 
           lg:grid-cols-[3.3rem_1fr_3.3rem] flex">
             <div></div>
             
-            <div class="max-lg:min-w-[100vw] flex-col h-fit bg-white flex p-5">
+            <div class="max-lg:min-w-[100vw] max-xl:min-w-[67vw] flex-col h-fit bg-white flex p-5">
               <div class="w-full h-[2rem] mb-[.6rem] skeletonElement"></div>
               <div class="w-[85%] h-[2rem] skeletonElement"></div>
             </div>
 
-            <div class="w-full hidden 2xl:flex justify-end">
+            <div class="w-full hidden 3xl:flex justify-end">
             </div>
           </div>
 
